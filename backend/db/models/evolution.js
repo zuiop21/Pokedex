@@ -3,6 +3,11 @@ const {
   Model, Sequelize
 } = require('sequelize');
 const sequelize = require('../../config/database');
+
+// Evolution Model: Defines the evolution relationship between Pokémon
+// This model represents how one Pokémon evolves into another.
+// It includes a double foreign key referencing the same "Pokemons" table 
+// to establish evolution chains. Evolution conditions are also stored here.
 const Evolution = sequelize.define("Evolutions", {
   id: {
     allowNull: false,

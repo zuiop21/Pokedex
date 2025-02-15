@@ -3,6 +3,10 @@ const {
   Model, Sequelize
 } = require('sequelize');
 const sequelize = require('../../config/database');
+
+// Favourite Model: Represents the many-to-many relationship between Users and Pokémons
+// This model allows users to mark Pokémons as their favourites.
+// It uses a junction table structure with foreign keys linking to both Users and Pokémons.
 const Favourite = sequelize.define("Favourites", {
   id: {
     allowNull: false,

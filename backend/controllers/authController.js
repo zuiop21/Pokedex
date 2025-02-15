@@ -3,13 +3,16 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 require("dotenv").config({ path: `${process.cwd()}/.env` });
 
+//This method generates a JWT (JSONWebToken) for the current user
+//It's expiration and secret key are defined in the .env file
 const generateToken = (payload) => {
   return jwt.sign(payload, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
 
-const signUp = async (req, res, next) => {
+//Register method
+const register = async (req, res, next) => {
   const body = req.body;
 
   const newUser = await User.create({
@@ -40,6 +43,7 @@ const signUp = async (req, res, next) => {
   });
 };
 
+//Login method
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -52,6 +56,8 @@ const login = async (req, res, next) => {
 
   const result = await User.findOne({ where: { email: email } });
 
+  //Check if there is a user with the given email, 
+  //and if the given password matches with the encrypted one
   if (!result || !(await bcrypt.compare(password, result.password))) {
     return res.status(401).json({
       status: "Error",
@@ -69,4 +75,4 @@ const login = async (req, res, next) => {
   })
 };
 
-module.exports = { signUp, login };
+module.exports = {register, login };

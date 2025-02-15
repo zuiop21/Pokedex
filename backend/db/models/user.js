@@ -4,6 +4,11 @@ const {
 } = require('sequelize');
 const bcrypt = require("bcrypt");
 const sequelize = require('../../config/database');
+
+// User Model: Represents the users in the system
+// This model stores user credentials, including email and password.
+// The password is hashed using bcrypt for security.
+// A virtual field (confirmPassword) ensures that password confirmation matches before saving.
 const User = sequelize.define("Users", {
   id: {
     allowNull: false,

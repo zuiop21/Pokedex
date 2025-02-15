@@ -3,6 +3,10 @@ const {
   Model, Sequelize
 } = require('sequelize');
 const sequelize = require('../../config/database');
+
+// Pokemon Model: Represents the core attributes of a Pokémon
+// This model stores fundamental data such as height, weight, abilities, and other characteristics.
+// It also includes metadata like region, level, and category.
 const Pokemon = sequelize.define("Pokemons", {
   id: {
     allowNull: false,

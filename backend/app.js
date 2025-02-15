@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config({path: `${process.cwd()}/.env`});
 const authRoute = require("./routes/authRoute")
+require("./db/models/associations")
 
 const app = express();
 app.use(express.json()); //JSON body parsing middleware

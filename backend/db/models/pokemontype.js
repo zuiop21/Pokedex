@@ -3,6 +3,11 @@ const {
   Model, Sequelize
 } = require('sequelize');
 const sequelize = require('../../config/database');
+
+// PokemonType Model: Defines the many-to-many relationship between Pokémons and Types
+// This model links Pokémon to their respective types and identifies weaknesses.
+// It includes foreign keys referencing both the Pokemons and Types tables.
+// Soft deletion is supported with the deletedAt field.
 const PokemonType = sequelize.define("PokemonTypes", {
   id: {
     allowNull: false,

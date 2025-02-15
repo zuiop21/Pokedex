@@ -1,4 +1,4 @@
-//* This is the config file for the database connection
+// This is the config file for the database connection
 require("dotenv").config({ path: `${process.cwd()}/.env` });
 
 module.exports = {

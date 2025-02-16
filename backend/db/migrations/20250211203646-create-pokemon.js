@@ -9,28 +9,41 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      name: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        unique: true //There should be only one "Pikachu"
+      },
       height: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.DOUBLE
       },
       weight: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.DOUBLE
       },
       ability: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       category: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       description: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       gender: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       region: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       level: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       createdAt: {

@@ -17,7 +17,17 @@ const Type = sequelize.define("Types" ,{
     type: Sequelize.INTEGER
   },
   name: {
-    type: Sequelize.STRING
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull : {
+        msg: "Name cannot be null"
+      },
+      notEmpty : {
+       msg: "Name cannot be empty"
+      },
+    },
+    
   },
   createdAt: {
     allowNull: false,

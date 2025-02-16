@@ -1,8 +1,6 @@
-'use strict';
-const {
-  Model, Sequelize
-} = require('sequelize');
-const sequelize = require('../../config/database');
+"use strict";
+const { Model, Sequelize } = require("sequelize");
+const sequelize = require("../../config/database");
 
 // PokemonType Model: Defines the many-to-many relationship between Pokémons and Types
 // This model links Pokémon to their respective types and identifies weaknesses.
@@ -13,40 +11,68 @@ const PokemonType = sequelize.define("PokemonTypes", {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
   },
   pokemon_id: {
+    allowNull: false,
     type: Sequelize.INTEGER,
     references: {
       model: "Pokemons",
-      key: "id"
+      key: "id",
     },
     onUpdate: "CASCADE",
-    onDelete: "CASCADE"
+    onDelete: "CASCADE",
+    validate: {
+      notNull : {
+        msg: "Pokemon id cannot be null"
+      },
+      isNumeric : {
+        msg: "Pokemon id must be a number"
+      }
+    },
   },
   type_id: {
+    allowNull: false,
     type: Sequelize.INTEGER,
     references: {
       model: "Types",
-      key: "id"
+      key: "id",
     },
     onUpdate: "CASCADE",
-    onDelete: "CASCADE"
+    onDelete: "CASCADE",
+    validate: {
+      notNull: {
+        msg: "Type id cannot be null",
+      },
+      isNumeric: {
+        msg: "Type id must be a number",
+      },
+    },
   },
   is_weakness: {
-    type: Sequelize.BOOLEAN
+    allowNull: false,
+    type: Sequelize.BOOLEAN,
+    validate: {
+      notNull: {
+        msg: "IsWeakness cannot be null",
+      },
+      isIn: {
+        args: [[true, false]],
+        msg: "IsWeakness must be either true or false"
+      }
+    }
   },
   createdAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
   },
   updatedAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
   },
   deletedAt: {
-    type: Sequelize.DATE
-  }
+    type: Sequelize.DATE,
+  },
 });
 
 module.exports = PokemonType;

@@ -1,18 +1,33 @@
 const User = require("../db/models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 require("dotenv").config({ path: `${process.cwd()}/.env` });
-
-//This method generates a JWT (JSONWebToken) for the current user
-//It's expiration and secret key are defined in the .env file
+/**
+ * Generates a JWT (JSON Web Token) for the current user.
+ * The token's expiration and secret key are defined in the .env file.
+ *
+ * @param {Object} payload - The payload to encode in the JWT.
+ * @returns {string} The generated JWT.
+ */
 const generateToken = (payload) => {
   return jwt.sign(payload, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
 
-//Register method
-const register = async (req, res, next) => {
+/**
+ * Registers a new user.
+ *
+ * @function
+ * @async
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ * @returns {Promise<void>}
+ */
+const register = catchAsync(async (req, res, next) => {
   const body = req.body;
 
   const newUser = await User.create({
@@ -22,6 +37,10 @@ const register = async (req, res, next) => {
     role: body.role,
   });
 
+  if (!newUser) {
+    return next(new AppError("Failed to create the user", 400));
+  }
+
   const result = newUser.toJSON();
   delete result.password;
   delete result.deletedAt;
@@ -30,49 +49,97 @@ const register = async (req, res, next) => {
     id: result.id,
   });
 
-  if (!result) {
-    return res.status(400).json({
-      status: "Error",
-      message: "Failed to create the user",
-    });
-  }
-
   return res.status(201).json({
     status: "Success",
     data: result,
   });
-};
+});
 
-//Login method
-const login = async (req, res, next) => {
+/**
+ * Logs in an existing user.
+ *
+ * @function
+ * @async
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ * @returns {Promise<void>}
+ */
+const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({
-      status: "Error",
-      message: "Please provide email and password",
-    });
+    return next(new AppError("Please provide email and password", 400));
   }
 
   const result = await User.findOne({ where: { email: email } });
 
-  //Check if there is a user with the given email, 
+  //Check if there is a user with the given email,
   //and if the given password matches with the encrypted one
   if (!result || !(await bcrypt.compare(password, result.password))) {
-    return res.status(401).json({
-      status: "Error",
-      message: "Incorrect email or password",
-    });
+    return next(new AppError("Incorrect email or password", 401));
   }
 
   const token = generateToken({
-    id: result.id
-  })
+    id: result.id,
+  });
 
   return res.json({
     status: "Success",
-    token
-  })
+    token,
+  });
+});
+
+/**
+ * Authenticates a user based on the provided JWT.
+ *
+ * @function
+ * @async
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ * @returns {Promise<void>}
+ */
+const authentication = catchAsync(async (req, res, next) => {
+  // Get the token from headers
+  let idToken = "";
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    idToken = req.headers.authorization.split(" ")[1];
+  }
+  if (!idToken) {
+    return next(new AppError("Please login to get access", 401));
+  }
+  // Token verification
+  const tokenDetail = jwt.verify(idToken, process.env.JWT_SECRET_KEY);
+  // Get the user detail from db and add to req object
+  const freshUser = await User.findByPk(tokenDetail.id);
+
+  if (!freshUser) {
+    return next(new AppError("User no longer exists", 400));
+  }
+  req.user = freshUser;
+  return next();
+});
+
+/**
+ * Restricts access to certain routes based on having admin role.
+ *
+ * @function
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ * @returns {Promise<void>}
+ */
+const restricted = (req, res, next) => {
+  if (req.user.role != "admin") {
+    return next(
+      new AppError("You do not have permission to perform this action", 403)
+    );
+  }
+  return next();
 };
 
-module.exports = {register, login };
+module.exports = { register, login, authentication, restricted };

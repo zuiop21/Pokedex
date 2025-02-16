@@ -14,29 +14,113 @@ const Pokemon = sequelize.define("Pokemons", {
     primaryKey: true,
     type: Sequelize.INTEGER
   },
+  name: {
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull : {
+        msg: "Name cannot be null"
+      },
+      notEmpty : {
+       msg: "Name cannot be empty"
+      },
+    },
+  },
   height: {
-    type: Sequelize.INTEGER
+    allowNull: false,
+    type: Sequelize.DOUBLE,
+    validate: {
+      notNull : {
+        msg: "Height cannot be null"
+      },
+      isDecimal : {
+        msg: "Weight must be a decimal"
+      }
+    },
   },
   weight: {
-    type: Sequelize.INTEGER
+    allowNull: false,
+    type: Sequelize.DOUBLE,
+    validate: {
+      notNull : {
+        msg: "Weight cannot be null"
+      },
+      isDecimal : {
+        msg: "Weight must be a decimal"
+      }
+    },
   },
   ability: {
-    type: Sequelize.STRING
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull : {
+        msg: "Ability cannot be null"
+      },
+      notEmpty : {
+        msg: "Ability cannot be empty"
+      },
+    },
   },
   category: {
-    type: Sequelize.STRING
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull : {
+        msg: "Category cannot be null"
+      },
+      notEmpty : {
+        msg: "Category cannot be empty"
+      },
+    },
   },
   description: {
-    type: Sequelize.STRING
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull : {
+        msg: "Description cannot be null"
+      },
+      notEmpty : {
+        msg: "Description cannot be empty"
+      },
+    },
   },
   gender: {
-    type: Sequelize.INTEGER
+    allowNull: false,
+    type: Sequelize.INTEGER,
+    validate: {
+      notNull : {
+        msg: "Gender cannot be null"
+      },
+      isNumeric : { 
+        msg: "Gender must be a number"
+      }
+    }
   },
   region: {
-    type: Sequelize.STRING
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull : {
+        msg: "Region cannot be null"
+      },
+      notEmpty : {
+        msg: "Region cannot be empty"
+      },
+    },
   },
   level: {
-    type: Sequelize.INTEGER
+    allowNull: false,
+    type: Sequelize.INTEGER,
+    validate: {
+      notNull : {
+        msg: "Level cannot be null"
+      },
+      isNumeric : {
+        msg: "Level must be a number"
+      }
+    },
   },
   createdAt: {
     allowNull: false,

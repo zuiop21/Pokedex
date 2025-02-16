@@ -15,22 +15,40 @@ const Favourite = sequelize.define("Favourites", {
     type: Sequelize.INTEGER
   },
   user_id: {
+    allowNull: false,
     type: Sequelize.INTEGER,
     references: {
       model: "Users",
       key: "id"
     },
     onUpdate: "CASCADE",
-    onDelete: "CASCADE"
+    onDelete: "CASCADE",
+    validate: {
+      notNull: {
+        msg: "User id cannot be null"
+      },
+      isNumeric: {
+        msg: "User id must be a number"
+      }
+    }
   },
   pokemon_id: {
+    allowNull: false,
     type: Sequelize.INTEGER,
       references: {
       model: "Pokemons",
       key: "id"
     },
     onUpdate: "CASCADE",
-    onDelete: "CASCADE"
+    onDelete: "CASCADE",
+    validate: {
+      notNull: {
+        msg: "Pokemon id cannot be null"
+      },
+      isNumeric: {
+        msg: "Pokemon id must be a number"
+      }
+    }
   },
   createdAt: {
     allowNull: false,

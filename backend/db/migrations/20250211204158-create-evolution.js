@@ -10,6 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       pokemon_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: "Pokemons",
@@ -19,6 +20,7 @@ module.exports = {
         onDelete: "CASCADE"
       },
       evolves_to_id: {
+        allowNull: true, //Some pokemons might be fully evolved, therefore this value can be null 
         type: Sequelize.INTEGER,
         references: {
           model: "Pokemons",
@@ -28,6 +30,7 @@ module.exports = {
         onDelete: "CASCADE"
       },
       condition: {
+        allowNull: true, //Some pokemons might be fully evolved, therefore this value can be null 
         type: Sequelize.STRING
       },
       createdAt: {

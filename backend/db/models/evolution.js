@@ -16,25 +16,44 @@ const Evolution = sequelize.define("Evolutions", {
     type: Sequelize.INTEGER
   },
   pokemon_id: {
+    allowNull: false,
     type: Sequelize.INTEGER,
     references: {
       model: "Pokemons",
       key: "id"
     },
     onUpdate: "CASCADE",
-    onDelete: "CASCADE"
+    onDelete: "CASCADE",
+    validate: {
+      notNull: {
+        msg: "Pokemon id cannot be null"
+      },
+      isNumeric: {
+        msg: "Pokemon id must be a number"
+      }
+    }
   },
   evolves_to_id: {
+    allowNull: true, //Some pokemons might be fully evolved, therefore this value can be null 
     type: Sequelize.INTEGER,
     references: {
       model: "Pokemons",
       key: "id"
     },
     onUpdate: "CASCADE",
-    onDelete: "CASCADE"
+    onDelete: "CASCADE",
+    validate: {
+      isNumeric: {
+        msg: "Evolves to id must be a number"
+      }
+    }
   },
   condition: {
-    type: Sequelize.STRING
+    allowNull: true, //Some pokemons might be fully evolved, therefore this value can be null 
+    type: Sequelize.STRING,
+    notEmpty: {
+      msg: "Condition cannot be empty"
+    },
   },
   createdAt: {
     allowNull: false,

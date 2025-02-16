@@ -10,6 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       pokemon_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: "Pokemons",
@@ -19,6 +20,7 @@ module.exports = {
         onDelete: "CASCADE"
       },
       type_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: "Types",
@@ -28,6 +30,7 @@ module.exports = {
         onDelete: "CASCADE"
       },
       is_weakness: {
+        allowNull: false,
         type: Sequelize.BOOLEAN
       },
       createdAt: {

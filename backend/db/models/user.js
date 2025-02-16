@@ -4,6 +4,7 @@ const {
 } = require('sequelize');
 const bcrypt = require("bcrypt");
 const sequelize = require('../../config/database');
+const AppError = require('../../utils/appError');
 
 // User Model: Represents the users in the system
 // This model stores user credentials, including email and password.
@@ -17,13 +18,48 @@ const User = sequelize.define("Users", {
     type: Sequelize.INTEGER
   },
   role: {
-    type: Sequelize.STRING
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull : {
+        msg: "Role cannot be null"
+      },
+      notEmpty : {
+        msg: "Role cannot be empty"
+      },
+      isIn: {
+        args: [['admin', 'user']],
+        msg: "Role must be either 'admin' or 'user'"
+      }
+    },
+    
   },
   email: {
-    type: Sequelize.STRING
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull : {
+        msg: "Email cannot be null"
+      },
+      notEmpty : {
+       msg: "Email cannot be empty"
+      },
+      isEmail : {
+        msg: "Invalid email"
+      }
+    },
   },
   password: {
-    type: Sequelize.STRING
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull : {
+        msg: "Password cannot be null"
+      },
+      notEmpty : {
+       msg: "Password cannot be empty"
+      },
+    },
   },
   confirmPassword: {
     type: Sequelize.VIRTUAL,
@@ -32,8 +68,8 @@ const User = sequelize.define("Users", {
         const hashPassword = bcrypt.hashSync(value, 10);
         this.setDataValue("password", hashPassword);
       } else {
-        throw new Error(
-          'Password and confirm password must be the same'
+        throw new AppError(
+          'Password and confirm password must be the same', 400
         )
       }
     }

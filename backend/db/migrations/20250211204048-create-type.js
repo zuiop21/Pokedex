@@ -10,7 +10,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.STRING,
+        unique: true //The type should be unique, because there is no point having two "Fire" types.
       },
       createdAt: {
         allowNull: false,

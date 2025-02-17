@@ -42,4 +42,12 @@ const Type = sequelize.define("Types" ,{
   }
 });
 
+Type.prototype.toJSON = function () {
+  const values = Object.assign({}, this.get());
+  delete values.createdAt;
+  delete values.updatedAt;
+  delete values.deletedAt;
+  return values;
+};
+
 module.exports= Type;

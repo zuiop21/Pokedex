@@ -63,4 +63,12 @@ const Favourite = sequelize.define("Favourites", {
   }
 });
 
+Favourite.prototype.toJSON = function () {
+  const values = Object.assign({}, this.get());
+  delete values.createdAt;
+  delete values.updatedAt;
+  delete values.deletedAt;
+  return values;
+};
+
 module.exports = Favourite;

@@ -16,34 +16,11 @@ const createType = catchAsync(async (req, res, next) => {
 
   return res.status(201).json({
     status: "Success",
-    data: newType,
+    data: newType.toJSON(),
   });
 });
 
-//TODO lehet id kell name helyett
-const updateType = catchAsync(async (req, res, next) => {
-  const { name } = req.params;
-  const body = req.body;
 
-  const type = await Type.findOne({
-    where: {
-      name: name,
-    },
-  });
-
-  if (!type) {
-    return next(new AppError(`Type with name ${name} not found`, 404));
-  }
-
-  type.name = body.name;
-
-  await type.save();
-
-  return res.json({
-    status: "Success",
-    data: type,
-  });
-});
 
 const deleteType = catchAsync(async (req, res, next) => {
   const { name } = req.params;
@@ -61,8 +38,8 @@ const deleteType = catchAsync(async (req, res, next) => {
 
   return res.json({
     status: "Success",
-    message: "Type deleted successfully",
+    message: `Type with name ${name} deleted successfully` ,
   });
 });
 
-module.exports = { createType, updateType,deleteType };
+module.exports = { createType, deleteType };

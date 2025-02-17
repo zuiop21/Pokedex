@@ -51,9 +51,11 @@ const Evolution = sequelize.define("Evolutions", {
   condition: {
     allowNull: true, //Some pokemons might be fully evolved, therefore this value can be null 
     type: Sequelize.STRING,
-    notEmpty: {
-      msg: "Condition cannot be empty"
-    },
+    validate: {
+      notEmpty: {
+        msg: "Condition cannot be empty"
+      }
+    }
   },
   createdAt: {
     allowNull: false,
@@ -67,5 +69,13 @@ const Evolution = sequelize.define("Evolutions", {
     type: Sequelize.DATE
   }
 });
+
+Evolution.prototype.toJSON = function () {
+  const values = Object.assign({}, this.get());
+  delete values.createdAt;
+  delete values.updatedAt;
+  delete values.deletedAt;
+  return values;
+};
 
 module.exports = Evolution

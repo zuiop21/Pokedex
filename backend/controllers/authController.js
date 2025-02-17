@@ -42,8 +42,8 @@ const register = catchAsync(async (req, res, next) => {
   }
 
   const result = newUser.toJSON();
-  delete result.password;
-  delete result.deletedAt;
+
+
 
   result.token = generateToken({
     id: result.id,

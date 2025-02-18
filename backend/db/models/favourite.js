@@ -1,8 +1,6 @@
-'use strict';
-const {
-  Model, Sequelize
-} = require('sequelize');
-const sequelize = require('../../config/database');
+"use strict";
+const { Model, Sequelize } = require("sequelize");
+const sequelize = require("../../config/database");
 
 // Favourite Model: Represents the many-to-many relationship between Users and Pokémons
 // This model allows users to mark Pokémons as their favourites.
@@ -12,57 +10,58 @@ const Favourite = sequelize.define("Favourites", {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
   },
   user_id: {
     allowNull: false,
     type: Sequelize.INTEGER,
     references: {
       model: "Users",
-      key: "id"
+      key: "id",
     },
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
     validate: {
       notNull: {
-        msg: "User id cannot be null"
+        msg: "User id cannot be null",
       },
       isNumeric: {
-        msg: "User id must be a number"
-      }
-    }
+        msg: "User id must be a number",
+      },
+    },
   },
   pokemon_id: {
     allowNull: false,
     type: Sequelize.INTEGER,
-      references: {
+    references: {
       model: "Pokemons",
-      key: "id"
+      key: "id",
     },
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
     validate: {
       notNull: {
-        msg: "Pokemon id cannot be null"
+        msg: "Pokemon id cannot be null",
       },
       isNumeric: {
-        msg: "Pokemon id must be a number"
-      }
-    }
+        msg: "Pokemon id must be a number",
+      },
+    },
   },
   createdAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
   },
   updatedAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
   },
   deletedAt: {
-    type: Sequelize.DATE
-  }
+    type: Sequelize.DATE,
+  },
 });
 
+// ToJSON method to remove timestamps from the model
 Favourite.prototype.toJSON = function () {
   const values = Object.assign({}, this.get());
   delete values.createdAt;

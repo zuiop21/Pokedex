@@ -1,8 +1,6 @@
-'use strict';
-const {
-  Model, Sequelize
-} = require('sequelize');
-const sequelize = require('../../config/database');
+"use strict";
+const { Model, Sequelize } = require("sequelize");
+const sequelize = require("../../config/database");
 
 // Pokemon Model: Represents the core attributes of a Pokémon
 // This model stores fundamental data such as height, weight, abilities, and other characteristics.
@@ -12,17 +10,17 @@ const Pokemon = sequelize.define("Pokemons", {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
   },
   name: {
     allowNull: false,
     type: Sequelize.STRING,
     validate: {
-      notNull : {
-        msg: "Name cannot be null"
+      notNull: {
+        msg: "Name cannot be null",
       },
-      notEmpty : {
-       msg: "Name cannot be empty"
+      notEmpty: {
+        msg: "Name cannot be empty",
       },
     },
   },
@@ -30,35 +28,35 @@ const Pokemon = sequelize.define("Pokemons", {
     allowNull: false,
     type: Sequelize.DOUBLE,
     validate: {
-      notNull : {
-        msg: "Height cannot be null"
+      notNull: {
+        msg: "Height cannot be null",
       },
-      isDecimal : {
-        msg: "Weight must be a decimal"
-      }
+      isDecimal: {
+        msg: "Weight must be a decimal",
+      },
     },
   },
   weight: {
     allowNull: false,
     type: Sequelize.DOUBLE,
     validate: {
-      notNull : {
-        msg: "Weight cannot be null"
+      notNull: {
+        msg: "Weight cannot be null",
       },
-      isDecimal : {
-        msg: "Weight must be a decimal"
-      }
+      isDecimal: {
+        msg: "Weight must be a decimal",
+      },
     },
   },
   ability: {
     allowNull: false,
     type: Sequelize.STRING,
     validate: {
-      notNull : {
-        msg: "Ability cannot be null"
+      notNull: {
+        msg: "Ability cannot be null",
       },
-      notEmpty : {
-        msg: "Ability cannot be empty"
+      notEmpty: {
+        msg: "Ability cannot be empty",
       },
     },
   },
@@ -66,11 +64,11 @@ const Pokemon = sequelize.define("Pokemons", {
     allowNull: false,
     type: Sequelize.STRING,
     validate: {
-      notNull : {
-        msg: "Category cannot be null"
+      notNull: {
+        msg: "Category cannot be null",
       },
-      notEmpty : {
-        msg: "Category cannot be empty"
+      notEmpty: {
+        msg: "Category cannot be empty",
       },
     },
   },
@@ -78,11 +76,11 @@ const Pokemon = sequelize.define("Pokemons", {
     allowNull: false,
     type: Sequelize.STRING,
     validate: {
-      notNull : {
-        msg: "Description cannot be null"
+      notNull: {
+        msg: "Description cannot be null",
       },
-      notEmpty : {
-        msg: "Description cannot be empty"
+      notEmpty: {
+        msg: "Description cannot be empty",
       },
     },
   },
@@ -90,23 +88,23 @@ const Pokemon = sequelize.define("Pokemons", {
     allowNull: false,
     type: Sequelize.INTEGER,
     validate: {
-      notNull : {
-        msg: "Gender cannot be null"
+      notNull: {
+        msg: "Gender cannot be null",
       },
-      isNumeric : { 
-        msg: "Gender must be a number"
-      }
-    }
+      isNumeric: {
+        msg: "Gender must be a number",
+      },
+    },
   },
   region: {
     allowNull: false,
     type: Sequelize.STRING,
     validate: {
-      notNull : {
-        msg: "Region cannot be null"
+      notNull: {
+        msg: "Region cannot be null",
       },
-      notEmpty : {
-        msg: "Region cannot be empty"
+      notEmpty: {
+        msg: "Region cannot be empty",
       },
     },
   },
@@ -114,27 +112,42 @@ const Pokemon = sequelize.define("Pokemons", {
     allowNull: false,
     type: Sequelize.INTEGER,
     validate: {
-      notNull : {
-        msg: "Level cannot be null"
+      notNull: {
+        msg: "Level cannot be null",
       },
-      isNumeric : {
-        msg: "Level must be a number"
-      }
+      isNumeric: {
+        msg: "Level must be a number",
+      },
+    },
+  },
+  is_base_form: {
+    allowNull: false,
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    validate: {
+      notNull: {
+        msg: "IsBaseForm cannot be null",
+      },
+      isIn: {
+        args: [[true, false]],
+        msg: "IsBaseForm must be either true or false",
+      },
     },
   },
   createdAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
   },
   updatedAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
   },
   deletedAt: {
-    type: Sequelize.DATE
-  }
+    type: Sequelize.DATE,
+  },
 });
 
+// ToJSON method to remove timestamps from the model
 Pokemon.prototype.toJSON = function () {
   const values = Object.assign({}, this.get());
   delete values.createdAt;
@@ -143,4 +156,4 @@ Pokemon.prototype.toJSON = function () {
   return values;
 };
 
-module.exports = Pokemon
+module.exports = Pokemon;

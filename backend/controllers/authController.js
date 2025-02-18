@@ -4,6 +4,12 @@ const bcrypt = require("bcrypt");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 require("dotenv").config({ path: `${process.cwd()}/.env` });
+
+/**
+ * @file authController.js
+ * @description Controller for handling authentication-related operations.
+ */
+
 /**
  * Generates a JWT (JSON Web Token) for the current user.
  * The token's expiration and secret key are defined in the .env file.
@@ -30,6 +36,7 @@ const generateToken = (payload) => {
 const register = catchAsync(async (req, res, next) => {
   const body = req.body;
 
+  // Create a new user
   const newUser = await User.create({
     email: body.email,
     password: body.password,
@@ -37,18 +44,19 @@ const register = catchAsync(async (req, res, next) => {
     role: body.role,
   });
 
+  // If the user creation fails, throw an error
   if (!newUser) {
     return next(new AppError("Failed to create the user", 400));
   }
 
   const result = newUser.toJSON();
 
-
-
+  // Generate a JWT token for the user
   result.token = generateToken({
     id: result.id,
   });
 
+  // Return the response
   return res.status(201).json({
     status: "Success",
     data: result,
@@ -68,10 +76,12 @@ const register = catchAsync(async (req, res, next) => {
 const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
+  // Check if email and password are provided
   if (!email || !password) {
     return next(new AppError("Please provide email and password", 400));
   }
 
+  // Find the user with the given email
   const result = await User.findOne({ where: { email: email } });
 
   //Check if there is a user with the given email,
@@ -80,10 +90,12 @@ const login = catchAsync(async (req, res, next) => {
     return next(new AppError("Incorrect email or password", 401));
   }
 
+  // Generate a JWT token for the user
   const token = generateToken({
     id: result.id,
   });
 
+  // Return the response
   return res.json({
     status: "Success",
     token,

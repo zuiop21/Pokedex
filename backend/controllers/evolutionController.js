@@ -3,98 +3,65 @@ const Evolution = require("../db/models/evolution");
 const Pokemon = require("../db/models/pokemon");
 const AppError = require("../utils/appError");
 
-//TODO if the evolves_to_id is null, then the condition should be null as well
-//TODO put the validation logic into model
-//TODO körkörös függöség 1-2, 2-3, 3-1 -> is_base boolean
+/**
+ * @file evolutionController.js
+ * @description Controller for handling evolution-related operations.
+ */
 
+/**
+ * Creates a new evolution record.
+ *
+ * @function createEvolution
+ * @async
+ * @param {Object} req - Express request object.
+ * @param {Object} req.body - The request body.
+ * @param {number} req.body.pokemon_id - The ID of the Pokémon that is evolving.
+ * @param {number} req.body.evolves_to_id - The ID of the Pokémon it evolves to.
+ * @param {string} req.body.condition - The condition under which the evolution occurs.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a promise that resolves to void.
+ * @throws {AppError} - Throws an error if the evolution creation fails.
+ */
 const createEvolution = catchAsync(async (req, res, next) => {
   const { pokemon_id, evolves_to_id, condition } = req.body;
+  const finalCondition = evolves_to_id === null ? null : condition;
 
-  // Check that a Pokémon does not evolve into itself
-  if (pokemon_id === evolves_to_id) {
-    return next(new AppError("A Pokémon cannot evolve into itself", 400));
-  }
-
-  // Ellenőrizzük az eredeti Pokémon létezését
-  const pokemon = await Pokemon.findByPk(pokemon_id);
-  if (!pokemon) {
-    return next(new AppError(`Pokémon with id ${pokemon_id} not found`, 404));
-  }
-
-  let evolvedPokemon = null;
-  // Csak akkor ellenőrizzük a fejlődött formát, ha evolves_to_id meg van adva
-  if (evolves_to_id !== null && evolves_to_id !== undefined) {
-    evolvedPokemon = await Pokemon.findByPk(evolves_to_id);
-    if (!evolvedPokemon) {
-      return next(
-        new AppError(`Pokémon with id ${evolves_to_id} not found`, 404)
-      );
-    }
-  }
-
-  // 0. Ellenőrizzük, hogy a forrás Pokémon (pokemon_id) még nem rendelkezik evolúciós kapcsolattal.
-  // Ez akadályozza, hogy egy Pokémonnak több evolúciója legyen, például 2-4, ha már létezik 2-3.
-  const existingSourceEvolution = await Evolution.findOne({
-    where: { pokemon_id },
-  });
-  if (existingSourceEvolution) {
-    return next(
-      new AppError(`Pokémon ${pokemon.name} already has an evolution`, 400)
-    );
-  }
-
-    // 1. Check that no other Pokémon already evolves into the same target.
-  // This ensures that more than one Pokémon cannot evolve into the same Pokémon.
-  if (evolves_to_id !== null && evolves_to_id !== undefined) {
-    const existingTargetEvolution = await Evolution.findOne({
-      where: { evolves_to_id },
-    });
-    if (existingTargetEvolution) {
-      return next(new AppError(`Pokémon ${evolvedPokemon.name} is already the evolved form for another Pokémon`, 400));
-    }
-  }
-
-  // 2. Ellenőrizzük, hogy ne lehessen fordított evolúció:
-  // Ha már létezik olyan kapcsolat, ahol a forrás és a cél cserélve van (pl. 1-2 létezik, ezért 2-1 nem engedélyezett)
-  if (evolves_to_id !== null && evolves_to_id !== undefined) {
-    const existingReverseEvolution = await Evolution.findOne({
-      where: {
-        pokemon_id: evolves_to_id,
-        evolves_to_id: pokemon_id,
-      },
-    });
-    if (existingReverseEvolution) {
-      return next(new AppError(`Reverse evolution is not allowed`, 400));
-    }
-  }
-
-  // Létrehozzuk az evolution rekordot
+  // Create the evolution record
   const newEvolution = await Evolution.create({
     pokemon_id,
     evolves_to_id,
-    condition,
+    condition: finalCondition,
   });
 
+  // If the evolution creation fails, throw an error
   if (!newEvolution) {
     return next(new AppError("Failed to create the evolution", 400));
   }
 
-  const response = {
-    id: newEvolution.id,
-    pokemon: pokemon.name,
-    evolves_to: evolvedPokemon ? evolvedPokemon.name : null,
-    condition: newEvolution.condition,
-  };
-
+  // Return the response
   return res.status(201).json({
     status: "Success",
-    data: response,
+    data: newEvolution.toJSON(),
   });
 });
 
+/**
+ * Reads an evolution by its ID.
+ *
+ * @function
+ * @async
+ * @param {Object} req - Express request object.
+ * @param {Object} req.params - Request parameters.
+ * @param {string} req.params.id - Evolution ID.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a JSON response with the evolution data or an error message.
+ */
 const readEvolution = catchAsync(async (req, res, next) => {
   const { id } = req.params;
 
+  // Find the evolution record by its ID
   const evolution = await Evolution.findByPk(id, {
     attributes: ["condition"],
     include: [
@@ -111,26 +78,45 @@ const readEvolution = catchAsync(async (req, res, next) => {
     ],
   });
 
+  // If the evolution record is not found, throw an error
   if (!evolution) {
     return next(new AppError(`Evolution with id ${id} not found`, 404));
   }
 
+  // Return the response
   return res.json({
     status: "Success",
     data: evolution.toJSON(),
   });
 });
 
+/**
+ * Deletes an evolution by its ID.
+ *
+ * @function
+ * @async
+ * @param {Object} req - Express request object.
+ * @param {Object} req.params - Request parameters.
+ * @param {string} req.params.id - Evolution ID.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a JSON response with a success message or an error message.
+ */
 const deleteEvolution = catchAsync(async (req, res, next) => {
   const { id } = req.params;
+
+  // Find the evolution record by its ID
   const evolution = await Evolution.findByPk(id);
 
+  // If the evolution record is not found, throw an error
   if (!evolution) {
     return next(new AppError(`Evolution with id ${id} not found`, 404));
   }
 
+  // Delete the evolution record
   await evolution.destroy();
 
+  // Return the response
   return res.json({
     status: "Success",
     message: `Evolution with id ${id} deleted successfully`,

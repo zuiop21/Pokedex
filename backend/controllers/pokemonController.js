@@ -5,14 +5,27 @@ const PokemonType = require("../db/models/pokemontype");
 const Type = require("../db/models/type");
 const sequelize = require("../config/database");
 
+/**
+ * @file pokemonController.js
+ * @description Controller for handling Pokémon-related operations.
+ */
+
+/**
+ * @function createPokemon
+ * @description Creates a new Pokémon and associates it with its types.
+ * @param {Object} req - Express request object containing Pokémon data in the body.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a JSON response with the created Pokémon data.
+ */
 const createPokemon = catchAsync(async (req, res, next) => {
   const body = req.body;
 
-  // Tranzakció indítása
+  // Transaction creation
   const transaction = await sequelize.transaction();
 
   try {
-    // 1. Létrehozod a Pokémon rekordot a tranzakción belül
+    // Create a new Pokémon in the transaction
     const newPokemon = await Pokemon.create(
       {
         level: body.level,
@@ -24,19 +37,21 @@ const createPokemon = catchAsync(async (req, res, next) => {
         category: body.category,
         description: body.description,
         region: body.region,
+        is_base_form: body.is_base_form,
       },
       { transaction }
     );
 
+    // If the Pokémon creation fails, throw an error
     if (!newPokemon) {
       throw new AppError("Failed to create the Pokémon", 400);
     }
 
-    // 2. Feltételezzük, hogy body.types egy tömb,
-    // pl.: [ { name: "Fire", is_weakness: true }, { name: "Water", is_weakness: false } ]
+    //Assume that body.types is an array,
+    //Like: [ { name: "Fire", is_weakness: true }, { name: "Water", is_weakness: false } ]
     const typesArray = body.types;
 
-    // 3. A típusok feldolgozása: lekérjük a típus rekordot a típus név alapján
+    //Process the types: get the type record based on the type name
     const pokemonTypeData = await Promise.all(
       typesArray.map(async (typeObj) => {
         const typeRecord = await Type.findOne({
@@ -56,13 +71,14 @@ const createPokemon = catchAsync(async (req, res, next) => {
       })
     );
 
-    // 4. Létrehozod a kapcsoló rekordokat (PokemonTypes) a tranzakción belül
+    //Create the association records (PokemonTypes) within the transaction with bulkCreate
+    //BulkCreate is used to create multiple records at once
     await PokemonType.bulkCreate(pokemonTypeData, { transaction });
 
-    // Tranzakció commit
+    // Transaction commit
     await transaction.commit();
 
-    // 5. Lekérjük a létrehozott Pokémon-t a kapcsolódó típusokkal együtt
+    // Find the created Pokémon with its types
     const createdPokemon = await Pokemon.findOne({
       where: { id: newPokemon.id },
       include: [
@@ -77,20 +93,31 @@ const createPokemon = catchAsync(async (req, res, next) => {
       ],
     });
 
-    // toJSON meghívása, hogy a válaszban ne szerepeljenek a nem kívánt mezők
+    // Return the response
     return res.status(201).json({
       status: "Success",
       data: createdPokemon.toJSON(),
     });
   } catch (error) {
+    // If an error occurs, rollback the transaction
     await transaction.rollback();
     return next(error);
   }
 });
 
+/**
+ * @function readPokemon
+ * @description Retrieves a Pokémon by its name along with its associated types.
+ * @param {Object} req - Express request object containing Pokémon name in the params.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a JSON response with the Pokémon data.
+ */
 const readPokemon = catchAsync(async (req, res, next) => {
   const { name } = req.params;
-  const pokemons = await Pokemon.findOne({
+
+  // Find the Pokémon by its name with its associated types
+  const pokemon = await Pokemon.findOne({
     where: { name: name },
     include: [
       {
@@ -104,26 +131,43 @@ const readPokemon = catchAsync(async (req, res, next) => {
     ],
   });
 
-  return res.json({
-    status: "Success",
-    data: pokemons.toJSON(),
-  });
-});
-
-//TODO update types
-const updatePokemon = catchAsync(async (req, res, next) => {
-  const { name } = req.params;
-  const body = req.body;
-
-  const pokemon = await Pokemon.findOne({
-    where: { name: name },
-  });
-
+  // If the Pokémon is not found, throw an error
   if (!pokemon) {
     return next(new AppError(`Pokemon with name ${name} not found`, 404));
   }
 
-    (pokemon.level = body.level),
+  // Return the response
+  return res.json({
+    status: "Success",
+    data: pokemon.toJSON(),
+  });
+});
+
+//TODO update types??
+/**
+ * @function updatePokemon
+ * @description Updates an existing Pokémon's details.
+ * @param {Object} req - Express request object containing Pokémon name in the params and updated data in the body.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a JSON response with the updated Pokémon data.
+ */
+const updatePokemon = catchAsync(async (req, res, next) => {
+  const { name } = req.params;
+  const body = req.body;
+
+  // Find the Pokémon by its name
+  const pokemon = await Pokemon.findOne({
+    where: { name: name },
+  });
+
+  // If the Pokémon is not found, throw an error
+  if (!pokemon) {
+    return next(new AppError(`Pokemon with name ${name} not found`, 404));
+  }
+
+  // Update the Pokémon's details
+  (pokemon.level = body.level),
     (pokemon.gender = body.gender),
     (pokemon.height = body.height),
     (pokemon.weight = body.weight),
@@ -134,24 +178,38 @@ const updatePokemon = catchAsync(async (req, res, next) => {
     (pokemon.region = body.region),
     await pokemon.save();
 
+  // Return the response
   return res.json({
     status: "Success",
     data: pokemon.toJSON(),
   });
 });
 
+/**
+ * @function deletePokemon
+ * @description Deletes a Pokémon by its name.
+ * @param {Object} req - Express request object containing Pokémon name in the params.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a JSON response confirming the deletion.
+ */
 const deletePokemon = catchAsync(async (req, res, next) => {
   const { name } = req.params;
+
+  // Find the Pokémon by its name
   const pokemon = await Pokemon.findOne({
     where: { name: name },
   });
 
+  // If the Pokémon is not found, throw an error
   if (!pokemon) {
     return next(new AppError(`Pokemon with name ${name} not found`, 404));
   }
 
+  // Delete the Pokémon
   await pokemon.destroy();
 
+  // Return the response
   return res.json({
     status: "Success",
     message: "Pokemon deleted successfully",

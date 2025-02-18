@@ -12,7 +12,11 @@ require("./db/models/associations");
 require("./utils/catchAsync");
 
 const app = express();
-app.use(express.json()); //JSON body parsing middleware
+
+//JSON body parsing middleware
+app.use(express.json());
+
+//Port
 const PORT = process.env.APP_PORT || 4000;
 
 //Routes
@@ -22,7 +26,7 @@ app.use(pokemonRoute);
 app.use(favouriteRoute);
 app.use(evolutionRoute);
 
-//Route in case the original route was not found
+//Route not found
 app.use(
   "*",
   catchAsync(async (req, res, next) => {
@@ -30,6 +34,7 @@ app.use(
   })
 );
 
+//Global error handler
 app.use(globalErrorHandler);
 
 app.listen(PORT, () => {

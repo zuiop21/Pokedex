@@ -1,10 +1,8 @@
-'use strict';
-const {
-  Model, Sequelize
-} = require('sequelize');
+"use strict";
+const { Model, Sequelize } = require("sequelize");
 const bcrypt = require("bcrypt");
-const sequelize = require('../../config/database');
-const AppError = require('../../utils/appError');
+const sequelize = require("../../config/database");
+const AppError = require("../../utils/appError");
 
 // User Model: Represents the users in the system
 // This model stores user credentials, including email and password.
@@ -15,78 +13,79 @@ const User = sequelize.define("Users", {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
   },
   role: {
     allowNull: false,
     type: Sequelize.STRING,
     validate: {
-      notNull : {
-        msg: "Role cannot be null"
+      notNull: {
+        msg: "Role cannot be null",
       },
-      notEmpty : {
-        msg: "Role cannot be empty"
+      notEmpty: {
+        msg: "Role cannot be empty",
       },
       isIn: {
-        args: [['admin', 'user']],
-        msg: "Role must be either 'admin' or 'user'"
-      }
+        args: [["admin", "user"]],
+        msg: "Role must be either 'admin' or 'user'",
+      },
     },
-    
   },
   email: {
     allowNull: false,
     type: Sequelize.STRING,
     validate: {
-      notNull : {
-        msg: "Email cannot be null"
+      notNull: {
+        msg: "Email cannot be null",
       },
-      notEmpty : {
-       msg: "Email cannot be empty"
+      notEmpty: {
+        msg: "Email cannot be empty",
       },
-      isEmail : {
-        msg: "Invalid email"
-      }
+      isEmail: {
+        msg: "Invalid email",
+      },
     },
   },
   password: {
     allowNull: false,
     type: Sequelize.STRING,
     validate: {
-      notNull : {
-        msg: "Password cannot be null"
+      notNull: {
+        msg: "Password cannot be null",
       },
-      notEmpty : {
-       msg: "Password cannot be empty"
+      notEmpty: {
+        msg: "Password cannot be empty",
       },
     },
   },
   confirmPassword: {
     type: Sequelize.VIRTUAL,
     set(value) {
-      if(value==this.password) {
+      if (value == this.password) {
         const hashPassword = bcrypt.hashSync(value, 10);
         this.setDataValue("password", hashPassword);
       } else {
         throw new AppError(
-          'Password and confirm password must be the same', 400
-        )
+          "Password and confirm password must be the same",
+          400
+        );
       }
-    }
+    },
   },
   createdAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
   },
   updatedAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
   },
   deletedAt: {
-    type: Sequelize.DATE
-  }
+    type: Sequelize.DATE,
+  },
 });
 
+// ToJSON method to remove timestamps from the model
 User.prototype.toJSON = function () {
   const values = Object.assign({}, this.get());
   delete values.createdAt;

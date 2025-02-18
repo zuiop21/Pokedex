@@ -1,6 +1,11 @@
 const AppError = require("../utils/appError");
 
 /**
+ * @file errorController.js
+ * @description Controller for handling errors.
+ */
+
+/**
  * Sends error response in development mode with detailed error information.
  *
  * @param {Object} error - The error object.
@@ -38,7 +43,7 @@ const sendErrorProd = (error, res) => {
     });
   }
 
-  //Logger
+  // Log the error
   console.log(error.name, error.message, stack);
   return res.status(500).json({
     status: "Error",

@@ -23,12 +23,12 @@ const PokemonType = sequelize.define("PokemonTypes", {
     onUpdate: "CASCADE",
     onDelete: "CASCADE",
     validate: {
-      notNull : {
-        msg: "Pokemon id cannot be null"
+      notNull: {
+        msg: "Pokemon id cannot be null",
       },
-      isNumeric : {
-        msg: "Pokemon id must be a number"
-      }
+      isNumeric: {
+        msg: "Pokemon id must be a number",
+      },
     },
   },
   type_id: {
@@ -58,9 +58,9 @@ const PokemonType = sequelize.define("PokemonTypes", {
       },
       isIn: {
         args: [[true, false]],
-        msg: "IsWeakness must be either true or false"
-      }
-    }
+        msg: "IsWeakness must be either true or false",
+      },
+    },
   },
   createdAt: {
     allowNull: false,
@@ -75,6 +75,7 @@ const PokemonType = sequelize.define("PokemonTypes", {
   },
 });
 
+// ToJSON method to remove timestamps from the model
 PokemonType.prototype.toJSON = function () {
   const values = Object.assign({}, this.get());
   delete values.createdAt;

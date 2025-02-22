@@ -25,6 +25,8 @@ const AppError = require("../utils/appError");
  */
 const createEvolution = catchAsync(async (req, res, next) => {
   const { pokemon_id, evolves_to_id, condition } = req.body;
+
+  //If the evolves_to_id is not provided, set it to null
   const finalCondition = evolves_to_id === null ? null : condition;
 
   // Create the evolution record
@@ -47,7 +49,7 @@ const createEvolution = catchAsync(async (req, res, next) => {
 });
 
 /**
- * Reads an evolution by its ID.
+ * Reads an evolution by a pokemon's ID.
  *
  * @function
  * @async
@@ -59,10 +61,13 @@ const createEvolution = catchAsync(async (req, res, next) => {
  * @returns {Promise<void>} - Returns a JSON response with the evolution data or an error message.
  */
 const readEvolution = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
+  const { pokemon_id } = req.params;
 
-  // Find the evolution record by its ID
-  const evolution = await Evolution.findByPk(id, {
+  // Find the evolution record for a pokemon with ID
+  const evolution = await Evolution.findOne({
+    where: {
+      pokemon_id: pokemon_id,
+    },
     attributes: ["condition"],
     include: [
       {
@@ -80,18 +85,20 @@ const readEvolution = catchAsync(async (req, res, next) => {
 
   // If the evolution record is not found, throw an error
   if (!evolution) {
-    return next(new AppError(`Evolution with id ${id} not found`, 404));
+    return next(
+      new AppError(`Evolution with pokemon id ${pokemon_id} not found`, 404)
+    );
   }
 
   // Return the response
-  return res.json({
+  return res.status(200).json({
     status: "Success",
     data: evolution.toJSON(),
   });
 });
 
 /**
- * Deletes an evolution by its ID.
+ * Deletes an evolution by a pokemon's ID.
  *
  * @function
  * @async
@@ -103,23 +110,32 @@ const readEvolution = catchAsync(async (req, res, next) => {
  * @returns {Promise<void>} - Returns a JSON response with a success message or an error message.
  */
 const deleteEvolution = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
+  const { pokemon_id } = req.params;
 
-  // Find the evolution record by its ID
-  const evolution = await Evolution.findByPk(id);
+  // Find the evolution record for a pokemon with ID
+  const evolution = await Evolution.findOne({
+    where: {
+      pokemon_id: pokemon_id,
+    },
+  });
 
   // If the evolution record is not found, throw an error
   if (!evolution) {
-    return next(new AppError(`Evolution with id ${id} not found`, 404));
+    return next(
+      new AppError(
+        `The pokemon with id ${pokemon_id} doesn't have an evolution yet`,
+        404
+      )
+    );
   }
 
   // Delete the evolution record
   await evolution.destroy();
 
   // Return the response
-  return res.json({
+  return res.status(204).json({
     status: "Success",
-    message: `Evolution with id ${id} deleted successfully`,
+    message: `The evolution belonging to pokemon with id ${pokemon_id} was deleted successfully`,
   });
 });
 

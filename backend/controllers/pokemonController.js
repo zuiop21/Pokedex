@@ -107,18 +107,17 @@ const createPokemon = catchAsync(async (req, res, next) => {
 
 /**
  * @function readPokemon
- * @description Retrieves a Pokémon by its name along with its associated types.
+ * @description Retrieves a Pokémon by its ID along with its associated types.
  * @param {Object} req - Express request object containing Pokémon name in the params.
  * @param {Object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  * @returns {Promise<void>} - Returns a JSON response with the Pokémon data.
  */
 const readPokemon = catchAsync(async (req, res, next) => {
-  const { name } = req.params;
+  const { id } = req.params;
 
   // Find the Pokémon by its name with its associated types
-  const pokemon = await Pokemon.findOne({
-    where: { name: name },
+  const pokemon = await Pokemon.findByPk(id, {
     include: [
       {
         model: Type,
@@ -133,7 +132,7 @@ const readPokemon = catchAsync(async (req, res, next) => {
 
   // If the Pokémon is not found, throw an error
   if (!pokemon) {
-    return next(new AppError(`Pokemon with name ${name} not found`, 404));
+    return next(new AppError(`Pokemon with id ${id} not found`, 404));
   }
 
   // Return the response
@@ -143,7 +142,7 @@ const readPokemon = catchAsync(async (req, res, next) => {
   });
 });
 
-//TODO update types??
+//TODO update types for pokemon
 /**
  * @function updatePokemon
  * @description Updates an existing Pokémon's details.
@@ -153,17 +152,17 @@ const readPokemon = catchAsync(async (req, res, next) => {
  * @returns {Promise<void>} - Returns a JSON response with the updated Pokémon data.
  */
 const updatePokemon = catchAsync(async (req, res, next) => {
-  const { name } = req.params;
+  const { id } = req.params;
   const body = req.body;
 
   // Find the Pokémon by its name
-  const pokemon = await Pokemon.findOne({
-    where: { name: name },
-  });
+  const pokemon = await Pokemon.findByPk(id);
 
   // If the Pokémon is not found, throw an error
   if (!pokemon) {
-    return next(new AppError(`Pokemon with name ${name} not found`, 404));
+    return next(
+      new AppError(`Pokemon with name ${pokemon.name} not found`, 404)
+    );
   }
 
   // Update the Pokémon's details
@@ -176,10 +175,11 @@ const updatePokemon = catchAsync(async (req, res, next) => {
     (pokemon.category = body.category),
     (pokemon.description = body.description),
     (pokemon.region = body.region),
-    await pokemon.save();
+    (pokemon.is_base_form = body.is_base_form);
+  await pokemon.save();
 
   // Return the response
-  return res.json({
+  return res.status(200).json({
     status: "Success",
     data: pokemon.toJSON(),
   });
@@ -194,25 +194,23 @@ const updatePokemon = catchAsync(async (req, res, next) => {
  * @returns {Promise<void>} - Returns a JSON response confirming the deletion.
  */
 const deletePokemon = catchAsync(async (req, res, next) => {
-  const { name } = req.params;
+  const { id } = req.params;
 
   // Find the Pokémon by its name
-  const pokemon = await Pokemon.findOne({
-    where: { name: name },
-  });
+  const pokemon = await Pokemon.findByPk(id);
 
   // If the Pokémon is not found, throw an error
   if (!pokemon) {
-    return next(new AppError(`Pokemon with name ${name} not found`, 404));
+    return next(new AppError(`Pokemon with id ${id} not found`, 404));
   }
 
   // Delete the Pokémon
   await pokemon.destroy();
 
   // Return the response
-  return res.json({
+  return res.status(204).json({
     status: "Success",
-    message: "Pokemon deleted successfully",
+    message: `${pokemon.name} deleted successfully`,
   });
 });
 

@@ -3,7 +3,7 @@ const AppError = require("../utils/appError");
 const Favourite = require("../db/models/favourite");
 const Pokemon = require("../db/models/pokemon");
 const User = require("../db/models/user");
-//TODO validációk kiszervezése
+
 /**
  * @file favouriteController.js
  * @description Controller for handling favourite-related operations.
@@ -15,7 +15,6 @@ const User = require("../db/models/user");
  * @function createFavourite
  * @async
  * @param {Object} req - Express request object.
- * @param {Object} req.body - Request body.
  * @param {number} req.body.user_id - ID of the user.
  * @param {string} req.body.pokemon_name - Name of the Pokémon.
  * @param {Object} res - Express response object.
@@ -23,35 +22,22 @@ const User = require("../db/models/user");
  * @returns {Promise<void>} - Returns a promise that resolves to void.
  */
 const createFavourite = catchAsync(async (req, res, next) => {
-  const { user_id, pokemon_name } = req.body;
-
-  // Check if the user exists
-  const user = await User.findByPk(user_id);
-
-  // If the user does not exist, return an error
-  if (!user) {
-    return next(new AppError(`User with id ${user_id} not found`, 404));
-  }
+  const { pokemon_id } = req.params;
+  const user = req.user;
 
   // Check if the Pokémon exists
-  const pokemon = await Pokemon.findOne({
-    where: {
-      name: pokemon_name,
-    },
-  });
+  const pokemon = await Pokemon.findByPk(pokemon_id);
 
   // If the Pokémon does not exist, return an error
   if (!pokemon) {
-    return next(
-      new AppError(`Pokémon with name ${pokemon_name} not found`, 404)
-    );
+    return next(new AppError(`Pokémon with id ${pokemon_id} not found`, 404));
   }
 
   // Check if the user has already liked the Pokémon
   const existingFavourite = await Favourite.findOne({
     where: {
-      user_id: user_id,
-      pokemon_id: pokemon.id,
+      user_id: user.id,
+      pokemon_id: pokemon_id,
     },
   });
 
@@ -59,7 +45,7 @@ const createFavourite = catchAsync(async (req, res, next) => {
   if (existingFavourite) {
     return next(
       new AppError(
-        `User with id ${user_id} has already liked the Pokémon called ${pokemon_name}`,
+        `User with id ${user.id} has already liked the Pokémon with id ${pokemon_id}`,
         400
       )
     );
@@ -67,8 +53,8 @@ const createFavourite = catchAsync(async (req, res, next) => {
 
   // Create a new favourite record
   const favourite = await Favourite.create({
-    user_id: user_id,
-    pokemon_id: pokemon.id,
+    user_id: user.id,
+    pokemon_id: pokemon_id,
   });
 
   // If the creation fails, return an error
@@ -90,22 +76,19 @@ const createFavourite = catchAsync(async (req, res, next) => {
  * @async
  * @param {Object} req - Express request object.
  * @param {Object} req.params - Request parameters.
- * @param {number} req.params.id - ID of the user.
  * @param {Object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  * @returns {Promise<void>} - Returns a promise that resolves to void.
  */
 const readFavourite = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-
   // Find the user by ID
-  const user = await User.findByPk(id, {
+  const user = await User.findByPk(req.user.id, {
     attributes: [],
     include: [
       {
         model: Pokemon,
         as: "pokemons",
-        attributes: ["name"],
+        attributes: ["id", "name"],
         through: {
           attributes: [],
         },
@@ -113,20 +96,18 @@ const readFavourite = catchAsync(async (req, res, next) => {
     ],
   });
 
-  // If the user does not exist, return an error
-  if (!user) {
-    return next(new AppError(`User with id ${id} not found`, 404));
-  }
-
   // If the user has no favourite Pokémon, return an error
   if (!user.pokemons || !user.pokemons.length) {
     return next(
-      new AppError(`No favourite Pokémon found for user with id ${id}`, 404)
+      new AppError(
+        `No favourite Pokémon found for user with id ${req.user.id}`,
+        404
+      )
     );
   }
 
   // Return the response
-  return res.json({
+  return res.status(200).json({
     status: "Success",
     data: user,
   });
@@ -146,12 +127,13 @@ const readFavourite = catchAsync(async (req, res, next) => {
  * @returns {Promise<void>} - Returns a promise that resolves to void.
  */
 const deleteFavourite = catchAsync(async (req, res, next) => {
-  const { user_id, pokemon_id } = req.body;
+  const { pokemon_id } = req.params;
+  const user = req.user;
 
   // Check if the favourite record exists
   const favourite = await Favourite.findOne({
     where: {
-      user_id: user_id,
+      user_id: user.id,
       pokemon_id: pokemon_id,
     },
   });
@@ -160,7 +142,7 @@ const deleteFavourite = catchAsync(async (req, res, next) => {
   if (!favourite) {
     return next(
       new AppError(
-        `Favourite with user_id ${user_id} and pokemon_id ${pokemon_id} not found`,
+        `User ${user.id} doesn't like pokemon with id ${pokemon_id}`,
         404
       )
     );
@@ -170,9 +152,9 @@ const deleteFavourite = catchAsync(async (req, res, next) => {
   await favourite.destroy();
 
   // Return the response
-  return res.json({
+  return res.status(204).json({
     status: "Success",
-    message: `User with id ${user_id} no longer likes ${pokemon.name}`,
+    message: `User ${user.id} no longer likes pokemon with id${pokemon_id}`,
   });
 });
 

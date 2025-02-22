@@ -38,33 +38,29 @@ const createType = catchAsync(async (req, res, next) => {
 
 /**
  * @function deleteType
- * @description Deletes a type by name.
+ * @description Deletes a type by ID.
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  * @returns {Promise<void>} - Returns a promise that resolves to void.
  */
 const deleteType = catchAsync(async (req, res, next) => {
-  const { name } = req.params;
+  const { id } = req.params;
   // Find the type by name
-  const type = await Type.findOne({
-    where: {
-      name: name,
-    },
-  });
+  const type = await Type.findByPk(id);
 
   // If the type does not exist, return an error
   if (!type) {
-    return next(new AppError(`Type with name ${name} not found`, 404));
+    return next(new AppError(`Type with id ${id} not found`, 404));
   }
 
   // Delete the type
   await type.destroy();
 
   // Return the response
-  return res.json({
+  return res.status(204).json({
     status: "Success",
-    message: `Type with name ${name} deleted successfully`,
+    message: `The ${type.name} type was deleted successfully`,
   });
 });
 

@@ -5,7 +5,9 @@
   "scripts": {
     "server": "nodemon app.js",
     "migration": "npx sequelize-cli db:migrate",
-    "immigration": "npx sequelize-cli db:migrate:undo:all"
+    "immigration": "npx sequelize-cli db:migrate:undo:all",
+    "sow": "npx sequelize-cli db:seed:all",
+    "reap": "npx sequelize-cli db:seed:undo:all"
   },
   "keywords": [],
   "author": "",

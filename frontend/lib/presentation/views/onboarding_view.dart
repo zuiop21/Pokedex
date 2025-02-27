@@ -5,6 +5,7 @@ import 'package:frontend/bloc/landing_page_bloc.dart';
 import 'package:frontend/constants/app_assets.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/onboarding_page.dart';
+import 'package:frontend/presentation/widgets/flow_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingView extends StatefulWidget {
@@ -29,11 +30,20 @@ class _OnboardingViewState extends State<OnboardingView> {
     super.dispose();
   }
 
+  void _handleNavigation(BuildContext context, int page) {
+    if (page == 0) {
+      context.read<LandingPageBloc>().add(LandingPageEvent(page: 1));
+    } else {
+      Navigator.of(context).pushNamed("/auth/onboarding/option");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => LandingPageBloc(),
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: BlocConsumer<LandingPageBloc, LandingPageState>(
             listener: (context, state) {
@@ -58,16 +68,12 @@ class _OnboardingViewState extends State<OnboardingView> {
                           subtitle:
                               "Access a vast list of Pokémons from every generation ever made by Nintendo",
                           imagePath: AppAssets.trainer2,
-                          flexImage: 70,
-                          flexText: 30,
                         ),
                         OnboardingPage(
                           title: "Keep your Pokédex up to date",
                           subtitle:
                               "Register and keep your profile, favourite Pokémons, settings and much more!",
                           imagePath: AppAssets.trainer6,
-                          flexImage: 70,
-                          flexText: 30,
                         ),
                       ],
                     ),
@@ -88,49 +94,26 @@ class _OnboardingViewState extends State<OnboardingView> {
                   ),
                   Expanded(
                     flex: 14,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 30),
-                      child: FractionallySizedBox(
-                        widthFactor: 1,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (state.page == 0) {
-                              context
-                                  .read<LandingPageBloc>()
-                                  .add(LandingPageEvent(page: 1));
-                            } else {
-                              Navigator.of(context)
-                                  .pushNamed("/auth/onboarding");
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.blue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(32),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                          ),
-                          child: AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 300),
-                            transitionBuilder:
-                                (Widget child, Animation<double> animation) {
-                              return FadeTransition(
-                                opacity: animation,
-                                child: child,
-                              );
-                            },
-                            child: AutoSizeText(
-                              state.buttonTexts[state.page],
-                              key: ValueKey<String>(
-                                  state.buttonTexts[state.page]),
-                              style: const TextStyle(
-                                  fontSize: 24, color: Colors.white),
-                              minFontSize: 18,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
+                    child: FlowButton(
+                      paddingVertical: 30,
+                      onPressed: () => _handleNavigation(context, state.page),
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        transitionBuilder:
+                            (Widget child, Animation<double> animation) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                        child: AutoSizeText(
+                          state.buttonTexts[state.page],
+                          key: ValueKey<String>(state.buttonTexts[state.page]),
+                          style: const TextStyle(
+                              fontSize: 22, color: Colors.white),
+                          minFontSize: 18,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),

@@ -1,5 +1,7 @@
 class AppAssets {
   static const String splashLogo = 'assets/images/splash_logo.png';
+  static const String appleLogo = 'assets/images/apple_logo.png';
+  static const String googleLogo = 'assets/images/google_logo.png';
   static const String trainer1 = 'assets/images/trainer1.jpeg';
   static const String trainer2 = 'assets/images/trainer2.jpeg';
   static const String trainer3 = 'assets/images/trainer3.jpeg';

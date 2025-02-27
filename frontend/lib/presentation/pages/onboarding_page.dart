@@ -7,16 +7,11 @@ class OnboardingPage extends StatelessWidget {
   final String subtitle;
   final String imagePath;
 
-  final int flexImage;
-  final int flexText;
-
   const OnboardingPage({
     super.key,
     required this.imagePath,
     required this.title,
     required this.subtitle,
-    required this.flexImage,
-    required this.flexText,
   });
 
   @override
@@ -25,7 +20,7 @@ class OnboardingPage extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            flex: flexImage,
+            flex: 70,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Image.asset(
@@ -35,7 +30,7 @@ class OnboardingPage extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: flexText,
+            flex: 30,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(

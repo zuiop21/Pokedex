@@ -1,71 +1,87 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/constants/app_assets.dart';
-import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/onboarding_page.dart';
+import 'package:frontend/presentation/widgets/auth_button.dart';
+import 'package:frontend/presentation/widgets/flow_button.dart';
 
 class OnboardingAuthView extends StatelessWidget {
-  const OnboardingAuthView({super.key});
+  final String title;
+  final String pageTitle;
+  final String pageSubTitle;
+  final String imagePath;
+  const OnboardingAuthView(
+      {super.key,
+      required this.title,
+      required this.pageTitle,
+      required this.pageSubTitle,
+      required this.imagePath});
+
+  void _handleAppleSignIn() {
+    // TODO: Implement Apple Sign-In logic
+  }
+
+  void _handleGoogleSignIn() {
+    // TODO: Implement Google Sign-In logic
+  }
+
+  void _handleEmailSignIn() {
+    // TODO: Implement Email Sign-In logic
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(title),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(flex: 8, child: Container()),
+            Spacer(),
             Expanded(
               flex: 65,
               child: OnboardingPage(
-                imagePath: AppAssets.trainer3,
-                title: "Are you ready for this adventure?",
-                subtitle:
-                    "Simply create an account and start exploring the world of Pokémons today!",
-                flexImage: 70,
-                flexText: 30,
+                imagePath: imagePath,
+                title: pageTitle,
+                subtitle: pageSubTitle,
+              ),
+            ),
+            Spacer(),
+            Expanded(
+              flex: 10,
+              child: AuthButton(
+                iconPath: AppAssets.appleLogo,
+                text: "Continue with Apple ",
+                onPressed: _handleAppleSignIn,
               ),
             ),
             Expanded(
-              flex: 14,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                child: FractionallySizedBox(
-                  widthFactor: 1,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      //TODO button
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    child: AutoSizeText(
-                      "Create an account",
-                      style: const TextStyle(fontSize: 24, color: Colors.white),
-                      minFontSize: 18,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
+              flex: 10,
+              child: AuthButton(
+                iconPath: AppAssets.googleLogo,
+                text: "Continue with Google",
+                onPressed: _handleGoogleSignIn,
+              ),
+            ),
+            Expanded(
+              flex: 10,
+              child: FlowButton(
+                paddingVertical: 10,
+                onPressed: _handleEmailSignIn,
+                child: AutoSizeText(
+                  "Continue with email",
+                  style: const TextStyle(fontSize: 22, color: Colors.white),
+                  minFontSize: 18,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
-            Expanded(
-                flex: 8,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: AutoSizeText(
-                    "I already have an account",
-                    style: const TextStyle(fontSize: 24, color: AppColors.blue),
-                    minFontSize: 18,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ))
+            Spacer()
           ],
         ),
       ),

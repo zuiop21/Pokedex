@@ -32,6 +32,7 @@ class OnboardingAuthOptionView extends StatelessWidget {
             Expanded(
               flex: 14,
               child: FlowButton(
+                buttonColor: AppColors.blue,
                 paddingVertical: 29,
                 child: AutoSizeText(
                   "Create an account",

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/constants/app_colors.dart';
 
 class FlowButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Widget child;
   final double paddingVertical;
+  final Color buttonColor;
 
   const FlowButton({
     super.key,
     required this.onPressed,
     required this.child,
     required this.paddingVertical,
+    required this.buttonColor,
   });
 
   @override
@@ -22,7 +23,7 @@ class FlowButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () => onPressed(),
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.blue,
+            backgroundColor: buttonColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32),
             ),

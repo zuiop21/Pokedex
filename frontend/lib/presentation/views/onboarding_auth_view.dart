@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/constants/app_assets.dart';
+import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/onboarding_page.dart';
 import 'package:frontend/presentation/widgets/auth_button.dart';
 import 'package:frontend/presentation/widgets/flow_button.dart';
@@ -10,23 +11,25 @@ class OnboardingAuthView extends StatelessWidget {
   final String pageTitle;
   final String pageSubTitle;
   final String imagePath;
+  final String emailPath;
   const OnboardingAuthView(
       {super.key,
       required this.title,
       required this.pageTitle,
       required this.pageSubTitle,
-      required this.imagePath});
+      required this.imagePath,
+      required this.emailPath});
 
-  void _handleAppleSignIn() {
-    // TODO: Implement Apple Sign-In logic
+  void _handleAppleLogin() {
+    // TODO: Implement Apple logic
   }
 
-  void _handleGoogleSignIn() {
-    // TODO: Implement Google Sign-In logic
+  void _handleGoogleLogin() {
+    // TODO: Implement Google logic
   }
 
-  void _handleEmailSignIn() {
-    // TODO: Implement Email Sign-In logic
+  void _handleEmailLogin(BuildContext context) {
+    Navigator.of(context).pushNamed(emailPath);
   }
 
   @override
@@ -56,7 +59,7 @@ class OnboardingAuthView extends StatelessWidget {
               child: AuthButton(
                 iconPath: AppAssets.appleLogo,
                 text: "Continue with Apple ",
-                onPressed: _handleAppleSignIn,
+                onPressed: _handleAppleLogin,
               ),
             ),
             Expanded(
@@ -64,14 +67,15 @@ class OnboardingAuthView extends StatelessWidget {
               child: AuthButton(
                 iconPath: AppAssets.googleLogo,
                 text: "Continue with Google",
-                onPressed: _handleGoogleSignIn,
+                onPressed: _handleGoogleLogin,
               ),
             ),
             Expanded(
               flex: 10,
               child: FlowButton(
+                buttonColor: AppColors.blue,
                 paddingVertical: 10,
-                onPressed: _handleEmailSignIn,
+                onPressed: () => _handleEmailLogin(context),
                 child: AutoSizeText(
                   "Continue with email",
                   style: const TextStyle(fontSize: 22, color: Colors.white),

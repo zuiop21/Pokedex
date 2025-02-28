@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/bloc/landing_page_bloc.dart';
+import 'package:frontend/business_logic/cubit/landing_page_cubit.dart';
 import 'package:frontend/constants/app_assets.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/onboarding_page.dart';
@@ -32,7 +32,7 @@ class _OnboardingViewState extends State<OnboardingView> {
 
   void _handleNavigation(BuildContext context, int page) {
     if (page == 0) {
-      context.read<LandingPageBloc>().add(LandingPageEvent(page: 1));
+      context.read<LandingPageCubit>().nextPage(1);
     } else {
       Navigator.of(context).pushNamed("/auth/onboarding/option");
     }
@@ -41,11 +41,11 @@ class _OnboardingViewState extends State<OnboardingView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LandingPageBloc(),
+      create: (context) => LandingPageCubit(),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: BlocConsumer<LandingPageBloc, LandingPageState>(
+          child: BlocConsumer<LandingPageCubit, LandingPageState>(
             listener: (context, state) {
               _pageController.animateToPage(
                 state.page,
@@ -87,7 +87,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                         count: 2,
                         effect: ExpandingDotsEffect(
                           activeDotColor: AppColors.blue,
-                          dotColor: AppColors.lightGrey.withAlpha(64),
+                          dotColor: AppColors.lightBlue.withAlpha(64),
                         ),
                       ),
                     ),
@@ -95,6 +95,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                   Expanded(
                     flex: 14,
                     child: FlowButton(
+                      buttonColor: AppColors.blue,
                       paddingVertical: 30,
                       onPressed: () => _handleNavigation(context, state.page),
                       child: AnimatedSwitcher(

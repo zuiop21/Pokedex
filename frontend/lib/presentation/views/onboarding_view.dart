@@ -56,7 +56,9 @@ class _OnboardingViewState extends State<OnboardingView> {
             builder: (context, state) {
               return Column(
                 children: [
-                  Expanded(flex: 13, child: Container()),
+                  Spacer(
+                    flex: 13,
+                  ),
                   Expanded(
                     flex: 65,
                     child: PageView(

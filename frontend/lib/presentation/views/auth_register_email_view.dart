@@ -21,7 +21,10 @@ class _AuthRegisterEmailViewState extends State<AuthRegisterEmailView> {
   }
 
   void _handleEmailRegister(BuildContext context) {
-    Navigator.of(context).pushNamed("/auth/register/password");
+    Navigator.of(context).pushNamed(
+      "/auth/register/password",
+      arguments: _emailController.text,
+    );
   }
 
   @override

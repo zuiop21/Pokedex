@@ -44,22 +44,21 @@ const register = catchAsync(async (req, res, next) => {
     role: body.role,
   });
 
-  // If the user creation fails, throw an error
   if (!newUser) {
     return next(new AppError("Failed to create the user", 400));
   }
 
-  const result = newUser.toJSON();
-
   // Generate a JWT token for the user
-  result.token = generateToken({
-    id: result.id,
-  });
+  const token = generateToken({ id: newUser.id });
 
-  // Return the response
+  // Return the response with user id, role, and token
   return res.status(201).json({
     status: "Success",
-    data: result,
+    data: {
+      id: newUser.id,
+      role: newUser.role,
+      token: token,
+    },
   });
 });
 
@@ -76,29 +75,27 @@ const register = catchAsync(async (req, res, next) => {
 const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  // Check if email and password are provided
   if (!email || !password) {
     return next(new AppError("Please provide email and password", 400));
   }
 
-  // Find the user with the given email
-  const result = await User.findOne({ where: { email: email } });
+  const user = await User.findOne({ where: { email: email } });
 
-  //Check if there is a user with the given email,
-  //and if the given password matches with the encrypted one
-  if (!result || !(await bcrypt.compare(password, result.password))) {
+  if (!user || !(await bcrypt.compare(password, user.password))) {
     return next(new AppError("Incorrect email or password", 401));
   }
 
   // Generate a JWT token for the user
-  const token = generateToken({
-    id: result.id,
-  });
+  const token = generateToken({ id: user.id });
 
-  // Return the response
+  // Return the response with user id, role, and token
   return res.json({
     status: "Success",
-    token,
+    data: {
+      id: user.id,
+      role: user.role,
+      token: token,
+    },
   });
 });
 

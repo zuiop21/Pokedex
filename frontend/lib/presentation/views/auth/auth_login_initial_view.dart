@@ -4,9 +4,9 @@ import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/auth_page.dart';
-import 'package:frontend/presentation/views/auth_failure_view.dart';
-import 'package:frontend/presentation/views/auth_loading_view.dart';
-import 'package:frontend/presentation/views/auth_login_success_view.dart';
+import 'package:frontend/presentation/views/auth/auth_failure_view.dart';
+import 'package:frontend/presentation/views/auth/auth_loading_view.dart';
+import 'package:frontend/presentation/views/auth/auth_login_success_view.dart';
 import 'package:frontend/presentation/widgets/email_textfield.dart';
 import 'package:frontend/presentation/widgets/password_textfield.dart';
 
@@ -53,7 +53,9 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         return switch (state.status) {
+          //TODO initpage kiszerverzése
           AuthStatus.initial => AuthPage(
+              leadingText: "Login",
               title: "Welcome back!",
               subTitle: "Fill in your data",
               child1: EmailTextField(

@@ -4,9 +4,9 @@ import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/auth_page.dart';
-import 'package:frontend/presentation/views/auth_failure_view.dart';
-import 'package:frontend/presentation/views/auth_loading_view.dart';
-import 'package:frontend/presentation/views/auth_register_success_view.dart';
+import 'package:frontend/presentation/views/auth/auth_failure_view.dart';
+import 'package:frontend/presentation/views/auth/auth_loading_view.dart';
+import 'package:frontend/presentation/views/auth/auth_register_success_view.dart';
 import 'package:frontend/presentation/widgets/password_textfield.dart';
 
 class AuthRegisterInitialView extends StatefulWidget {
@@ -54,6 +54,7 @@ class _AuthRegisterInitialViewState extends State<AuthRegisterInitialView> {
       builder: (context, state) {
         return switch (state.status) {
           AuthStatus.initial => AuthPage(
+              leadingText: "Create account",
               title: "Now...",
               subTitle: "Choose a password",
               child1: PasswordTextField(

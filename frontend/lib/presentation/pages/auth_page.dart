@@ -9,6 +9,7 @@ class AuthPage extends StatelessWidget {
   final Widget child1;
   final Widget child2;
   final Widget child3;
+  final String leadingText;
   final String title;
   final String subTitle;
   final VoidCallback onPressed;
@@ -21,6 +22,7 @@ class AuthPage extends StatelessWidget {
     required this.title,
     required this.subTitle,
     required this.onPressed,
+    required this.leadingText,
   });
 
   @override
@@ -32,7 +34,7 @@ class AuthPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text("Create account"),
+        title: Text(leadingText),
         centerTitle: true,
       ),
       body: GestureDetector(

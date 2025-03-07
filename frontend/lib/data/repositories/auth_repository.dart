@@ -9,6 +9,7 @@ class AuthRepository {
   Future<User> login(String email, String password) async {
     final user = await _authService.login(email, password);
 
+    //todo error catch json
     return User.fromJson(user);
   }
 

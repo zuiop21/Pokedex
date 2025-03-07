@@ -8,6 +8,10 @@ import 'package:frontend/presentation/widgets/flow_button.dart';
 class AuthLoginSuccessView extends StatelessWidget {
   const AuthLoginSuccessView({super.key});
 
+  void _handleButtonAction(BuildContext context) {
+    Navigator.of(context).pushNamed("/pokemon");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +33,7 @@ class AuthLoginSuccessView extends StatelessWidget {
               child: FlowButton(
                 buttonColor: AppColors.blue,
                 paddingVertical: 30,
-                onPressed: () => {}, //TODO buttonaction
+                onPressed: () => _handleButtonAction(context),
                 child: AutoSizeText(
                   "Continue",
                   style: const TextStyle(fontSize: 22, color: Colors.white),

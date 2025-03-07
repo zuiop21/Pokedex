@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AuthRegisterSuccessView extends StatelessWidget {
-  const AuthRegisterSuccessView({Key? key}) : super(key: key);
+class PokemonRegionView extends StatelessWidget {
+  const PokemonRegionView({super.key});
 
   @override
   Widget build(BuildContext context) {

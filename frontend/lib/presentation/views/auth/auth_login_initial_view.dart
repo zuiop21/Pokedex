@@ -4,7 +4,6 @@ import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/auth_page.dart';
-import 'package:frontend/presentation/views/auth/auth_failure_view.dart';
 import 'package:frontend/presentation/views/auth/auth_loading_view.dart';
 import 'package:frontend/presentation/views/auth/auth_login_success_view.dart';
 import 'package:frontend/presentation/widgets/email_textfield.dart';
@@ -48,13 +47,39 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
     super.dispose();
   }
 
+  void _showErrorDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Login Failed"),
+        content:
+            const Text("An error occurred while logging in. Please try again."),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state.status == AuthStatus.failure) {
+          _showErrorDialog(context);
+        }
+      },
       builder: (context, state) {
-        return switch (state.status) {
-          //TODO initpage kiszerverzése
-          AuthStatus.initial => AuthPage(
+        switch (state.status) {
+          //TODO kiszervezni külön nézetbe
+          case AuthStatus.initial:
+          case AuthStatus.failure:
+            return AuthPage(
               leadingText: "Login",
               title: "Welcome back!",
               subTitle: "Fill in your data",
@@ -67,17 +92,21 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
                 controller: _passwordController,
               ),
               child3: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Forgot your password?",
-                    style: TextStyle(color: AppColors.blue, fontSize: 18),
-                  )),
+                onPressed: () {},
+                child: Text(
+                  "Forgot your password?",
+                  style: TextStyle(color: AppColors.blue, fontSize: 18),
+                ),
+              ),
               onPressed: () => _handleLogin(context),
-            ),
-          AuthStatus.loading => const AuthLoadingView(),
-          AuthStatus.failure => const AuthFailureView(),
-          AuthStatus.success => const AuthLoginSuccessView(),
-        };
+            );
+
+          case AuthStatus.loading:
+            return const AuthLoadingView();
+
+          case AuthStatus.success:
+            return const AuthLoginSuccessView();
+        }
       },
     );
   }

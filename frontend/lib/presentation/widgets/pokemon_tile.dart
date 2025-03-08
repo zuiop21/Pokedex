@@ -77,6 +77,7 @@ class PokemonTile extends StatelessWidget {
                     ),
                     Center(
                       child: CachedNetworkImage(
+                        //TODO blur logo image
                         width: 110,
                         height: 110,
                         imageUrl:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PokemonTileTypes extends StatelessWidget {
-  const PokemonTileTypes({Key? key}) : super(key: key);
+  const PokemonTileTypes({super.key});
 
   @override
   Widget build(BuildContext context) {

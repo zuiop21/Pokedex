@@ -5,7 +5,6 @@ import 'package:frontend/presentation/widgets/pokemon_tile.dart';
 class PokemonListView extends StatelessWidget {
   const PokemonListView({super.key});
 
-  // Dropdown callback funkció
   void _dropdownCallback(String? value) {
     // TODO: Implement the callback function when an item is selected
   }

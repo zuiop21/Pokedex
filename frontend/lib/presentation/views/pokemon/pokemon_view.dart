@@ -23,6 +23,7 @@ class PokemonView extends StatelessWidget {
           backgroundColor: Colors.white,
           appBar: switch (state.page) {
             0 => AppBar(
+                //TODO a hozzátartozó view-ba rakni az appbarokat
                 bottom: PreferredSize(
                   preferredSize: Size.fromHeight(1.0),
                   child: Divider(
@@ -40,9 +41,47 @@ class PokemonView extends StatelessWidget {
                   child: PokemonSearchBar(),
                 ),
               ),
+            1 => AppBar(
+                surfaceTintColor: Colors.transparent,
+                backgroundColor: Colors.white,
+                bottom: PreferredSize(
+                  preferredSize: Size.fromHeight(1.0),
+                  child: Divider(
+                    color: AppColors.lightGrey,
+                    thickness: 1,
+                  ),
+                ),
+                automaticallyImplyLeading: false,
+                title: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Regions",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  ),
+                ),
+                toolbarHeight: 80,
+              ),
+            2 => AppBar(
+                backgroundColor: Colors.white,
+                bottom: PreferredSize(
+                  preferredSize: Size.fromHeight(1.0),
+                  child: Divider(
+                    color: AppColors.lightGrey,
+                    thickness: 1,
+                  ),
+                ),
+                automaticallyImplyLeading: false,
+                title: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Favourites",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    )),
+                toolbarHeight: 80,
+              ),
             _ => AppBar(
                 automaticallyImplyLeading: false,
-                toolbarHeight: 80,
               )
           },
           body: switch (state.page) {

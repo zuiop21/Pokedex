@@ -2,6 +2,7 @@ class AppAssets {
   static const String splashLogo = 'assets/images/splash_logo.png';
   static const String appleLogo = 'assets/images/apple_logo.png';
   static const String googleLogo = 'assets/images/google_logo.png';
+  static const String magikarp = 'assets/images/magikarp.png';
 
   static const String pokedexSelect = 'assets/images/pokedex_select.png';
   static const String pokedexUnselect = 'assets/images/pokedex_unselect.png';
@@ -19,4 +20,6 @@ class AppAssets {
   static const String trainer6 = 'assets/images/trainer6.jpeg';
   static const String trainer7 = 'assets/images/trainer7.jpeg';
   static const String trainer8 = 'assets/images/trainer8.png';
+
+  static const String region1 = 'assets/images/region1.png';
 }

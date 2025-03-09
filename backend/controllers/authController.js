@@ -42,6 +42,7 @@ const register = catchAsync(async (req, res, next) => {
     password: body.password,
     confirmPassword: body.confirmPassword,
     role: body.role,
+    region_id: body.region_id,
   });
 
   if (!newUser) {
@@ -94,6 +95,7 @@ const login = catchAsync(async (req, res, next) => {
     data: {
       id: user.id,
       role: user.role,
+      region_id: user.region_id,
       token: token,
     },
   });

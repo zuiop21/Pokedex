@@ -38,10 +38,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      region: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
       level: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -49,6 +45,20 @@ module.exports = {
       is_base_form: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
+      },
+      region_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Regions",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
+      imgUrl: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

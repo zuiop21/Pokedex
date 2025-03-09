@@ -25,6 +25,9 @@ const router = require("express").Router();
  *             type: object
  *             properties:
  *               name: { type: string, example: "Fire" }
+ *               color: { type: string, example: "0xFF000000" }
+ *               imgUrl: { type: string, example: "http://localhost:3000/assets/types/fire.png" }
+ *               imgUrlOutline: { type: string, example: "http://localhost:3000/assets/types/fireOutline.png" }
  *     responses:
  *       201: { description: Created }
  *       400: { description: Bad request }

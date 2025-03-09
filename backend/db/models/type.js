@@ -1,6 +1,7 @@
 "use strict";
 const { Model, Sequelize } = require("sequelize");
 const sequelize = require("../../config/database");
+const AppError = require("../../utils/appError");
 
 // Type Model: Represents the different Pokémon types
 // This model stores type names such as Fire, Water, Grass, etc.
@@ -22,6 +23,57 @@ const Type = sequelize.define("Types", {
       },
       notEmpty: {
         msg: "Name cannot be empty",
+      },
+    },
+  },
+  color: {
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull: {
+        msg: "Color cannot be null",
+      },
+      notEmpty: {
+        msg: "Color cannot be empty",
+      },
+      color: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        validate: {
+          notNull: {
+            msg: "Color cannot be null",
+          },
+          notEmpty: {
+            msg: "Color cannot be empty",
+          },
+          isHexadecimal(value) {
+            const hexPattern = /^0xFF[a-fA-F0-9]{6}$/;
+            if (!hexPattern.test(value)) {
+              throw new AppError(
+                "The given color must be a valid hexadecimal!",
+                400
+              );
+            }
+          },
+        },
+      },
+    },
+  },
+  imgUrl: {
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull: {
+        msg: "ImgUrl cannot be null",
+      },
+    },
+  },
+  imgUrlOutline: {
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull: {
+        msg: "ImgUrlOutline cannot be null",
       },
     },
   },

@@ -37,8 +37,9 @@ const { restricted, authentication } = require("../controllers/authController");
  *               ability: { type: string, example: "Lightning" }
  *               category: { type: string, example: "Rat" }
  *               description: { type: string, example: "Cute" }
- *               region: { type: string, example: "Pokeland" }
  *               is_base_form: { type: boolean, example: true }
+ *               imgUrl: { type: string, example: "http://localhost:3000/assets/pokemons/pokemon1.png" }
+ *               region_id: { type: integer, example: 1 }
  *               types:
  *                 type: array
  *                 items:
@@ -97,8 +98,9 @@ router.route("/pokemons").post(authentication, restricted, createPokemon);
  *               ability: { type: string, example: "Lightning" }
  *               category: { type: string, example: "Rat" }
  *               description: { type: string, example: "Cute" }
- *               region: { type: string, example: "Pokeland" }
  *               is_base_form: { type: boolean, example: true }
+ *               imgUrl: { type: string, example: "http://localhost:3000/assets/pokemons/pokemon1.png" }
+ *               region_id: { type: integer, example: 1 }
  *     responses:
  *       200: { description: Success }
  *       400: { description: Bad Request }

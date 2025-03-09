@@ -25,6 +25,7 @@ const router = require("express").Router();
  *               password: { type: string, example: "user" }
  *               confirmPassword: { type: string, example: "user" }
  *               role: { type: string, enum: [user, admin], example: user }
+ *               region_id: { type: integer, example: 1 }
  *     responses:
  *       201: { description: Created }
  *       400: { description: Bad Request }

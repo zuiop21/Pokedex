@@ -36,8 +36,9 @@ const createPokemon = catchAsync(async (req, res, next) => {
         ability: body.ability,
         category: body.category,
         description: body.description,
-        region: body.region,
         is_base_form: body.is_base_form,
+        imgUrl: body.imgUrl,
+        region_id: body.region_id,
       },
       { transaction }
     );
@@ -174,8 +175,9 @@ const updatePokemon = catchAsync(async (req, res, next) => {
     (pokemon.ability = body.ability),
     (pokemon.category = body.category),
     (pokemon.description = body.description),
-    (pokemon.region = body.region),
-    (pokemon.is_base_form = body.is_base_form);
+    (pokemon.is_base_form = body.is_base_form),
+    (pokemon.region_id = body.region_id),
+    (pokemon.imgUrl = body.imgUrl);
   await pokemon.save();
 
   // Return the response

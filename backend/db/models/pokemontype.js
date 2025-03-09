@@ -2,6 +2,7 @@
 const { Model, Sequelize } = require("sequelize");
 const sequelize = require("../../config/database");
 
+//TODO a pokemon can only have two main types
 // PokemonType Model: Defines the many-to-many relationship between Pokémons and Types
 // This model links Pokémon to their respective types and identifies weaknesses.
 // It includes foreign keys referencing both the Pokemons and Types tables.

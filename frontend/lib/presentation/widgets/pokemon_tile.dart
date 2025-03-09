@@ -81,7 +81,7 @@ class PokemonTile extends StatelessWidget {
                         width: 110,
                         height: 110,
                         imageUrl:
-                            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Pokémon_Dark_Type_Icon.svg/2048px-Pokémon_Dark_Type_Icon.svg.png",
+                            "http://localhost:3000/assets/pokemons/magikarp-1741457419608.png",
                         placeholder: (context, url) =>
                             CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Icon(Icons.error),

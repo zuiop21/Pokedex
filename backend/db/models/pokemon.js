@@ -1,6 +1,8 @@
 "use strict";
 const { Model, Sequelize } = require("sequelize");
 const sequelize = require("../../config/database");
+const Region = require("./region");
+const AppError = require("../../utils/appError");
 
 // Pokemon Model: Represents the core attributes of a Pokémon
 // This model stores fundamental data such as height, weight, abilities, and other characteristics.
@@ -96,18 +98,6 @@ const Pokemon = sequelize.define("Pokemons", {
       },
     },
   },
-  region: {
-    allowNull: false,
-    type: Sequelize.STRING,
-    validate: {
-      notNull: {
-        msg: "Region cannot be null",
-      },
-      notEmpty: {
-        msg: "Region cannot be empty",
-      },
-    },
-  },
   level: {
     allowNull: false,
     type: Sequelize.INTEGER,
@@ -131,6 +121,43 @@ const Pokemon = sequelize.define("Pokemons", {
       isIn: {
         args: [[true, false]],
         msg: "IsBaseForm must be either true or false",
+      },
+    },
+  },
+  region_id: {
+    allowNull: false,
+    type: Sequelize.INTEGER,
+    references: {
+      model: "Regions",
+      key: "id",
+    },
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    validate: {
+      notNull: {
+        msg: "Region cannot be null",
+      },
+      isNumeric: {
+        msg: "Region id must be a number",
+      },
+      // Check that the Region exists
+      parentExists(value) {
+        if (value !== null && value !== undefined) {
+          return Region.findByPk(value).then((region) => {
+            if (!region) {
+              throw new AppError(`Region with id ${value} not found`, 404);
+            }
+          });
+        }
+      },
+    },
+  },
+  imgUrl: {
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull: {
+        msg: "ImgUrl cannot be null",
       },
     },
   },

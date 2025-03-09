@@ -7,7 +7,8 @@
     "migration": "npx sequelize-cli db:migrate",
     "immigration": "npx sequelize-cli db:migrate:undo:all",
     "sow": "npx sequelize-cli db:seed:all",
-    "reap": "npx sequelize-cli db:seed:undo:all"
+    "reap": "npx sequelize-cli db:seed:undo:all",
+    "reset": "npm run reap && npm run immigration && npm run migration && npm run sow"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
     "pg": "^8.13.2",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5",

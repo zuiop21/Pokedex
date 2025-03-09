@@ -3,6 +3,7 @@ const { Model, Sequelize } = require("sequelize");
 const bcrypt = require("bcrypt");
 const sequelize = require("../../config/database");
 const AppError = require("../../utils/appError");
+const Region = require("./region");
 
 // User Model: Represents the users in the system
 // This model stores user credentials, including email and password.
@@ -70,6 +71,34 @@ const User = sequelize.define("Users", {
           400
         );
       }
+    },
+  },
+  region_id: {
+    allowNull: false,
+    type: Sequelize.INTEGER,
+    references: {
+      model: "Regions",
+      key: "id",
+    },
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    validate: {
+      notNull: {
+        msg: "Region cannot be null",
+      },
+      isNumeric: {
+        msg: "Region id must be a number",
+      },
+      // Check that the Region exists
+      parentExists(value) {
+        if (value !== null && value !== undefined) {
+          return Region.findByPk(value).then((region) => {
+            if (!region) {
+              throw new AppError(`Region with id ${value} not found`, 404);
+            }
+          });
+        }
+      },
     },
   },
   createdAt: {

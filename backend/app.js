@@ -5,10 +5,13 @@ const typeRoute = require("./routes/typeRoute");
 const pokemonRoute = require("./routes/pokemonRoute");
 const favouriteRoute = require("./routes/favouriteRoute");
 const evolutionRoute = require("./routes/evolutionRoute");
+const regionRoute = require("./routes/regionRoute");
+const assetRoute = require("./routes/assetRoute");
 const catchAsync = require("./utils/catchAsync");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
-const { authentication } = require("./controllers/authController");
+const { authentication, restricted } = require("./controllers/authController");
+const path = require("path");
 require("./db/models/associations");
 require("./utils/catchAsync");
 
@@ -49,10 +52,25 @@ app.use(express.json());
 //Port
 const PORT = process.env.APP_PORT || 4000;
 
+// Static routes
+app.use("/assets/types", express.static(path.join(__dirname, "assets/types")));
+
+app.use(
+  "/assets/regions",
+  express.static(path.join(__dirname, "assets/regions"))
+);
+
+app.use(
+  "/assets/pokemons",
+  express.static(path.join(__dirname, "assets/pokemons"))
+);
+
 //Routes
 app.use(authRoute);
 app.use(evolutionRoute);
 app.use(pokemonRoute);
+app.use(assetRoute);
+app.use(regionRoute);
 app.use(authentication, typeRoute);
 app.use(authentication, favouriteRoute);
 

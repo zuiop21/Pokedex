@@ -4,7 +4,7 @@ import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/auth_page.dart';
-import 'package:frontend/presentation/views/auth/auth_loading_view.dart';
+import 'package:frontend/presentation/views/loading_view.dart';
 import 'package:frontend/presentation/views/auth/auth_login_success_view.dart';
 import 'package:frontend/presentation/widgets/email_textfield.dart';
 import 'package:frontend/presentation/widgets/password_textfield.dart';
@@ -47,13 +47,12 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
     super.dispose();
   }
 
-  void _showErrorDialog(BuildContext context) {
+  void _showErrorDialog(BuildContext context, String? errorMessage) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Login Failed"),
-        content:
-            const Text("An error occurred while logging in. Please try again."),
+        content: Text(errorMessage ?? "Something went wrong"),
         actions: [
           TextButton(
             onPressed: () {
@@ -71,7 +70,7 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.failure) {
-          _showErrorDialog(context);
+          _showErrorDialog(context, state.error);
         }
       },
       builder: (context, state) {
@@ -102,7 +101,7 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
             );
 
           case AuthStatus.loading:
-            return const AuthLoadingView();
+            return const LoadingView();
 
           case AuthStatus.success:
             return const AuthLoginSuccessView();

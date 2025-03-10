@@ -4,7 +4,7 @@ import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/auth_page.dart';
-import 'package:frontend/presentation/views/auth/auth_loading_view.dart';
+import 'package:frontend/presentation/views/loading_view.dart';
 import 'package:frontend/presentation/views/auth/auth_register_success_view.dart';
 import 'package:frontend/presentation/widgets/password_textfield.dart';
 
@@ -71,7 +71,7 @@ class _AuthRegisterInitialViewState extends State<AuthRegisterInitialView> {
               ),
               onPressed: () => _handlePasswordRegister(context),
             ),
-          AuthStatus.loading => AuthLoadingView(),
+          AuthStatus.loading => LoadingView(),
           AuthStatus.failure => Container(),
           AuthStatus.success => AuthRegisterSuccessView(),
         };

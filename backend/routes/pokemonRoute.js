@@ -1,6 +1,7 @@
 const {
   createPokemon,
   readPokemon,
+  readAllPokemon,
   updatePokemon,
   deletePokemon,
 } = require("../controllers/pokemonController");
@@ -14,10 +15,17 @@ const { restricted, authentication } = require("../controllers/authController");
  *   - name: Pokemons
  *     description: Pokémon management
  */
-
+//TODO fix isweakness (here+controller) to enum
 /**
  * @swagger
  * /pokemons:
+ *   get:
+ *     summary: Get all Pokémons
+ *     tags: [Pokemons]
+ *     responses:
+ *       200: { description: Success }
+ *       400: { description: Bad Request }
+ *       404: { description: Not found }
  *   post:
  *     summary: Create a Pokémon
  *     tags: [Pokemons]
@@ -55,7 +63,10 @@ const { restricted, authentication } = require("../controllers/authController");
  *       404: { description: Evolution not found }
  */
 
-router.route("/pokemons").post(authentication, restricted, createPokemon);
+router
+  .route("/pokemons")
+  .get(readAllPokemon)
+  .post(authentication, restricted, createPokemon);
 
 /**
  * @swagger

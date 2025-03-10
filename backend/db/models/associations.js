@@ -65,6 +65,7 @@ Region.hasMany(Pokemon, {
 });
 
 Pokemon.belongsTo(Region, {
+  foreignKey: "region_id",
   as: "region",
 });
 

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/auth_bloc.dart';
+import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
 import 'package:frontend/business_logic/cubit/pokemon_bottom_nav_bar_cubit.dart';
 import 'package:frontend/constants/app_assets.dart';
 import 'package:frontend/data/repositories/auth_repository.dart';
+import 'package:frontend/data/repositories/pokemon_repository.dart';
 import 'package:frontend/presentation/views/auth/auth_login_initial_view.dart';
 import 'package:frontend/presentation/views/auth/auth_register_email_view.dart';
 import 'package:frontend/presentation/views/auth/auth_register_initial_view.dart';
@@ -19,12 +21,20 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final AuthRepository _authRepository = AuthRepository();
+  final PokemonRepository _pokemonRepository = PokemonRepository();
   MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(_authRepository),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthBloc(_authRepository),
+        ),
+        BlocProvider(
+          create: (context) => PokemonBloc(_pokemonRepository),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         routes: {
@@ -59,10 +69,6 @@ class MyApp extends StatelessWidget {
               child: AuthRegisterInitialView(email: email),
             );
           },
-          "/pokemon": (context) => BlocProvider(
-                create: (context) => PokemonBottomNavBarCubit(),
-                child: PokemonView(),
-              ),
         },
         debugShowCheckedModeBanner: false,
       ),

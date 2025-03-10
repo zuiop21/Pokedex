@@ -7,9 +7,14 @@ part 'user.g.dart';
 class User extends Equatable {
   final int id;
   final String role;
+  final int region_id;
   final String token; //TODO move to shared preferences
 
-  const User({required this.role, required this.id, required this.token});
+  const User(
+      {required this.region_id,
+      required this.role,
+      required this.id,
+      required this.token});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/data/models/pokemon.dart';
 import 'package:frontend/presentation/widgets/pokemon_tile_types.dart';
 
 class PokemonTile extends StatelessWidget {
-  final Color tileColor;
-  const PokemonTile({super.key, required this.tileColor});
+  final Pokemon pokemon;
+  const PokemonTile({super.key, required this.pokemon});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,8 @@ class PokemonTile extends StatelessWidget {
                       topLeft: Radius.circular(15),
                       bottomLeft: Radius.circular(15),
                     ),
-                    color: tileColor.withAlpha(77),
+                    color:
+                        Color(int.parse(pokemon.types[0].color)).withAlpha(77),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +39,7 @@ class PokemonTile extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10, top: 5),
                           child: Text(
-                            "Number",
+                            "Level ${pokemon.level}",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
@@ -47,11 +49,16 @@ class PokemonTile extends StatelessWidget {
                           flex: 30,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10),
-                            child: Text("Name",
+                            child: Text(pokemon.name,
                                 style: TextStyle(
                                     fontSize: 24, fontWeight: FontWeight.bold)),
                           )),
-                      Expanded(flex: 50, child: PokemonTileTypes())
+                      Expanded(
+                        flex: 50,
+                        child: PokemonTileTypes(
+                          pokemon: pokemon,
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -66,33 +73,38 @@ class PokemonTile extends StatelessWidget {
                           topRight: Radius.circular(15),
                           bottomRight: Radius.circular(15),
                         ),
-                        color: tileColor.withAlpha(77),
+                        color: Color(int.parse(pokemon.types[0].color))
+                            .withAlpha(77),
                       ),
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: tileColor,
-                      ),
+                          borderRadius: BorderRadius.circular(15),
+                          color: Color(int.parse(pokemon.types[0].color))),
                     ),
                     Center(
-                      child: CachedNetworkImage(
-                        //TODO blur logo image
-                        width: 110,
-                        height: 110,
-                        imageUrl:
-                            "http://localhost:3000/assets/pokemons/magikarp-1741457419608.png",
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CachedNetworkImage(
+                            //TODO blur logo image
+                            fit: BoxFit.fill,
+                            imageUrl: pokemon.types[0].imgUrlOutline,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
+                        ),
                       ),
                     ),
                     Center(
                         child: Padding(
-                      padding: const EdgeInsets.all(25.0),
+                      padding: const EdgeInsets.all(18.0),
                       child: CachedNetworkImage(
-                        imageUrl:
-                            "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png",
+                        imageUrl: pokemon.imgUrl,
                         placeholder: (context, url) =>
                             CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Icon(Icons.error),

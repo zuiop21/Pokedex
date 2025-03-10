@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:frontend/api_config.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,10 +22,13 @@ class AuthService {
       if (jsonData.containsKey("data")) {
         return jsonData["data"];
       } else {
-        throw Exception("Invalid response format: ${response.body}");
+        throw Exception("Missing data");
       }
     } else {
-      throw Exception('Failed to log in');
+      final Map<String, dynamic> errorData = jsonDecode(response.body);
+      String errorMessage = errorData['message'] ?? 'Unknown error';
+
+      throw Exception(errorMessage);
     }
   }
 
@@ -48,10 +50,13 @@ class AuthService {
       if (jsonData.containsKey("data")) {
         return jsonData["data"];
       } else {
-        throw Exception("Invalid response format: ${response.body}");
+        throw Exception("Missing data");
       }
     } else {
-      throw Exception('Failed to sign up');
+      final Map<String, dynamic> errorData = jsonDecode(response.body);
+      String errorMessage = errorData['message'] ?? 'Unknown error';
+
+      throw Exception(errorMessage);
     }
   }
 }

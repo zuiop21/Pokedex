@@ -21,7 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user = await _authRepository.login(event.email, event.password);
       emit(state.copyWith(status: AuthStatus.success, user: user));
     } catch (e) {
-      emit(state.copyWith(status: AuthStatus.failure));
+      emit(state.copyWith(status: AuthStatus.failure, error: e.toString()));
     }
   }
 
@@ -33,7 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user = await _authRepository.register(event.email, event.password);
       emit(state.copyWith(status: AuthStatus.success, user: user));
     } catch (e) {
-      emit(state.copyWith(status: AuthStatus.failure));
+      emit(state.copyWith(status: AuthStatus.failure, error: e.toString()));
     }
   }
 }

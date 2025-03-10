@@ -143,7 +143,44 @@ const readPokemon = catchAsync(async (req, res, next) => {
   });
 });
 
-//TODO update types for pokemon
+/**
+ * @function readAllPokemon
+ * @description Retrieves all the Pokémons along with their associated types.
+ * @param {Object} req - Express request object containing Pokémon name in the params.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a JSON response with the Pokémon data.
+ */
+const readAllPokemon = catchAsync(async (req, res, next) => {
+  // Find all the pokémons
+  const pokemons = await Pokemon.findAll({
+    include: [
+      {
+        model: Type,
+        as: "types",
+        attributes: ["name", "color", "imgUrl", "imgUrlOutline"],
+        through: {
+          attributes: ["is_weakness", "id"],
+        },
+      },
+    ],
+  });
+
+  // If no Pokémon found, throw an error
+  if (!pokemons) {
+    return next(new AppError(`There aren't any pokémons`, 404));
+  }
+
+  // Convert each Pokémon instance to a plain object
+  const pokemonsJSON = pokemons.map((pokemon) => pokemon.toJSON());
+
+  // Return the response
+  return res.json({
+    status: "Success",
+    data: pokemonsJSON,
+  });
+});
+
 /**
  * @function updatePokemon
  * @description Updates an existing Pokémon's details.
@@ -216,4 +253,10 @@ const deletePokemon = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { createPokemon, readPokemon, updatePokemon, deletePokemon };
+module.exports = {
+  createPokemon,
+  readPokemon,
+  readAllPokemon,
+  updatePokemon,
+  deletePokemon,
+};

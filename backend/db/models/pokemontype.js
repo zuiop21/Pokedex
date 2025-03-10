@@ -1,5 +1,5 @@
 "use strict";
-const { Model, Sequelize } = require("sequelize");
+const { Model, Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../../config/database");
 
 //TODO a pokemon can only have two main types
@@ -51,18 +51,19 @@ const PokemonType = sequelize.define("PokemonTypes", {
     },
   },
   is_weakness: {
+    type: DataTypes.ENUM("yes", "no", "both"),
     allowNull: false,
-    type: Sequelize.BOOLEAN,
     validate: {
       notNull: {
         msg: "IsWeakness cannot be null",
       },
       isIn: {
-        args: [[true, false]],
-        msg: "IsWeakness must be either true or false",
+        args: [["yes", "no", "both"]],
+        msg: "IsWeakness must be either 'yes', 'no' or 'both'",
       },
     },
   },
+
   createdAt: {
     allowNull: false,
     type: Sequelize.DATE,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/widgets/pokemon_tile.dart';
 
@@ -124,13 +126,17 @@ class PokemonListView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: ListView.separated(
-          separatorBuilder: (context, index) =>
-              const Divider(color: Colors.white),
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return PokemonTile(
-              tileColor: Colors.green,
+        child: BlocBuilder<PokemonBloc, PokemonState>(
+          builder: (context, state) {
+            return ListView.separated(
+              separatorBuilder: (context, index) =>
+                  const Divider(color: Colors.white),
+              itemCount: state.pokemons.length,
+              itemBuilder: (context, index) {
+                return PokemonTile(
+                  pokemon: state.pokemons[index],
+                );
+              },
             );
           },
         ),

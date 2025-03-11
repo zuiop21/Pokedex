@@ -1,4 +1,8 @@
-const { createType, deleteType } = require("../controllers/typeController");
+const {
+  createType,
+  readAllType,
+  deleteType,
+} = require("../controllers/typeController");
 const { authentication, restricted } = require("../controllers/authController");
 
 const router = require("express").Router();
@@ -13,6 +17,13 @@ const router = require("express").Router();
 /**
  * @swagger
  * /types:
+ *   get:
+ *     summary: Get all Types
+ *     tags: [Types]
+ *     responses:
+ *       200: { description: Success }
+ *       400: { description: Bad Request }
+ *       404: { description: Not found }
  *   post:
  *     summary: Create a new Pokémon type
  *     tags: [Types]
@@ -35,7 +46,10 @@ const router = require("express").Router();
  *       403: { description: Forbidden }
  *       404: { description: Evolution not found }
  */
-router.route("/types").post(restricted, createType);
+router
+  .route("/types")
+  .get(readAllType)
+  .post(authentication, restricted, createType);
 
 /**
  * @swagger
@@ -57,6 +71,6 @@ router.route("/types").post(restricted, createType);
  *       403: { description: Forbidden }
  *       404: { description: Not found }
  */
-router.route("/types/:id").delete(restricted, deleteType);
+router.route("/types/:id").delete(authentication, restricted, deleteType);
 
 module.exports = router;

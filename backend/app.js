@@ -71,7 +71,7 @@ app.use(evolutionRoute);
 app.use(pokemonRoute);
 app.use(assetRoute);
 app.use(regionRoute);
-app.use(authentication, typeRoute);
+app.use(typeRoute);
 app.use(authentication, favouriteRoute);
 
 //Route not found

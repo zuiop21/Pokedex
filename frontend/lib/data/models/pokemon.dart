@@ -24,8 +24,8 @@ class Pokemon extends Equatable {
   List<Type> getStrengthTypesForPokemon() {
     final strengthTypes = types
         .where((t) =>
-            t.PokemonTypes.is_weakness == WeaknessStatus.no ||
-            t.PokemonTypes.is_weakness == WeaknessStatus.both)
+            t.PokemonTypes?.is_weakness == WeaknessStatus.no ||
+            t.PokemonTypes?.is_weakness == WeaknessStatus.both)
         .toList();
 
     if (strengthTypes.length > 2) {

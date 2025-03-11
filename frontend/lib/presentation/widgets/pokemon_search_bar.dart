@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 
 class PokemonSearchBar extends StatelessWidget {
   const PokemonSearchBar({super.key});
 //TODO sugesstions
+
+  void _onSearchBarValueChanged(BuildContext context, String? value) {
+    context
+        .read<PokemonBloc>()
+        .add(SortPokemonByNameEvent(searchBarValue: value!));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,12 +51,13 @@ class PokemonSearchBar extends StatelessWidget {
             ),
           ),
           child: SearchBar(
-            hintText: "Search Pokémon...",
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: const Icon(Icons.search, color: AppColors.grey),
-            ),
-          ),
+              hintText: "Search Pokémon...",
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: const Icon(Icons.search, color: AppColors.grey),
+              ),
+              onChanged: (String value) =>
+                  _onSearchBarValueChanged(context, value)),
         ),
       ],
     );

@@ -33,13 +33,14 @@ class AuthRegisterSuccessView extends StatelessWidget {
               },
               blendMode: BlendMode.dstIn,
               child: FractionallySizedBox(
-                  heightFactor: 0.5,
-                  widthFactor: 1,
-                  child: Icon(
-                    color: AppColors.blue.withValues(alpha: 0.2),
-                    Icons.check_circle_outline_outlined,
-                    size: MediaQuery.of(context).size.width,
-                  )),
+                heightFactor: 0.5,
+                widthFactor: 1,
+                child: Icon(
+                  color: AppColors.blue.withValues(alpha: 0.2),
+                  Icons.check_circle_outline_outlined,
+                  size: MediaQuery.of(context).size.width,
+                ),
+              ),
             ),
             Column(
               children: [

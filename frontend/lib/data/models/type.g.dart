@@ -11,8 +11,9 @@ Type _$TypeFromJson(Map<String, dynamic> json) => Type(
       color: json['color'] as String,
       imgUrl: json['imgUrl'] as String,
       imgUrlOutline: json['imgUrlOutline'] as String,
-      PokemonTypes:
-          PokemonType.fromJson(json['PokemonTypes'] as Map<String, dynamic>),
+      PokemonTypes: json['PokemonTypes'] == null
+          ? null
+          : PokemonType.fromJson(json['PokemonTypes'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$TypeToJson(Type instance) => <String, dynamic>{
@@ -20,5 +21,6 @@ Map<String, dynamic> _$TypeToJson(Type instance) => <String, dynamic>{
       'color': instance.color,
       'imgUrl': instance.imgUrl,
       'imgUrlOutline': instance.imgUrlOutline,
-      'PokemonTypes': instance.PokemonTypes,
+      if (instance.PokemonTypes?.toJson() case final value?)
+        'PokemonTypes': value,
     };

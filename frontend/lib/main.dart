@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
-import 'package:frontend/business_logic/cubit/pokemon_bottom_nav_bar_cubit.dart';
 import 'package:frontend/constants/app_assets.dart';
 import 'package:frontend/data/repositories/auth_repository.dart';
 import 'package:frontend/data/repositories/pokemon_repository.dart';
@@ -13,7 +12,6 @@ import 'package:frontend/presentation/views/auth/auth_register_initial_view.dart
 import 'package:frontend/presentation/views/onboarding/onboarding_auth_option_view.dart';
 import 'package:frontend/presentation/views/onboarding/onboarding_auth_view.dart';
 import 'package:frontend/presentation/views/onboarding/onboarding_view.dart';
-import 'package:frontend/presentation/views/pokemon/pokemon_view.dart';
 
 void main() {
   runApp(MyApp());

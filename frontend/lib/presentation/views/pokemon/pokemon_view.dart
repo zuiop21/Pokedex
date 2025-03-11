@@ -23,7 +23,6 @@ class PokemonView extends StatelessWidget {
           backgroundColor: Colors.white,
           appBar: switch (state.page) {
             0 => AppBar(
-                //TODO a hozzátartozó view-ba rakni az appbarokat
                 bottom: PreferredSize(
                   preferredSize: Size.fromHeight(1.0),
                   child: Divider(

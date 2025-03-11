@@ -39,6 +39,33 @@ const createType = catchAsync(async (req, res, next) => {
 });
 
 /**
+ * @function readAllType
+ * @description Retrieves all the types
+ * @param {Object} req - Express request object containing Pokémon name in the params.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a JSON response with the Pokémon data.
+ */
+const readAllType = catchAsync(async (req, res, next) => {
+  // Find all the types
+  const types = await Type.findAll();
+
+  // If no type is found, throw an error
+  if (!types) {
+    return next(new AppError(`There aren't any types`, 404));
+  }
+
+  // Convert each Type instance to a plain object
+  const typeJSON = types.map((type) => type.toJSON());
+
+  // Return the response
+  return res.status(200).json({
+    status: "Success",
+    data: typeJSON,
+  });
+});
+
+/**
  * @function deleteType
  * @description Deletes a type by ID.
  * @param {Object} req - Express request object.
@@ -66,4 +93,4 @@ const deleteType = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { createType, deleteType };
+module.exports = { createType, readAllType, deleteType };

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/data/models/pokemon.dart';
+import 'package:frontend/presentation/widgets/pokemon_favourite_icon.dart';
 import 'package:frontend/presentation/widgets/pokemon_tile_types.dart';
 
 class PokemonTile extends StatelessWidget {
@@ -39,7 +40,7 @@ class PokemonTile extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10, top: 5),
                           child: Text(
-                            "Level ${pokemon.level}",
+                            "Number ${pokemon.id}",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
@@ -54,7 +55,7 @@ class PokemonTile extends StatelessWidget {
                                     fontSize: 24, fontWeight: FontWeight.bold)),
                           )),
                       Expanded(
-                        flex: 50,
+                        flex: 40,
                         child: PokemonTileTypes(
                           pokemon: pokemon,
                         ),
@@ -88,35 +89,50 @@ class PokemonTile extends StatelessWidget {
                         height: MediaQuery.of(context).size.height,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: CachedNetworkImage(
-                            //TODO blur logo image
-                            fit: BoxFit.fill,
-                            imageUrl: pokemon.types[0].imgUrlOutline,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                          child: ShaderMask(
+                            shaderCallback: (Rect bounds) {
+                              return LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.black,
+                                  Colors.transparent,
+                                ],
+                                stops: [0.5, 1.0],
+                              ).createShader(bounds);
+                            },
+                            blendMode: BlendMode.dstIn,
+                            child: CachedNetworkImage(
+                              fit: BoxFit.fill,
+                              imageUrl: pokemon.types[0].imgUrlOutline,
+                              placeholder: (context, url) =>
+                                  CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Center(
-                        child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: CachedNetworkImage(
-                        imageUrl: pokemon.imgUrl,
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      child: Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: CachedNetworkImage(
+                          imageUrl: pokemon.imgUrl,
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
                       ),
-                    )),
+                    ),
                     Align(
                       alignment: Alignment.topRight,
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Icon(
-                          size: 35,
-                          Icons.heart_broken_outlined,
+                        child: PokemonFavouriteIcon(
+                          favourited: false,
+                          pokemon: pokemon,
                         ),
                       ),
                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/models/pokemon.dart';
 import 'package:frontend/data/models/type.dart';
+import 'package:frontend/presentation/widgets/pokemon_circled_type.dart';
 
 class PokemonTileTypes extends StatelessWidget {
   final Pokemon pokemon;
@@ -27,7 +28,7 @@ class PokemonTileTypes extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.circle, size: 25),
+                  PokemonCircledType(strengthsType: strengthsTypes[0]),
                   SizedBox(width: 5),
                   Text(
                     strengthsTypes[0].name,
@@ -50,7 +51,7 @@ class PokemonTileTypes extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.circle, size: 25),
+                      PokemonCircledType(strengthsType: strengthsTypes[1]),
                       SizedBox(width: 5),
                       Text(
                         strengthsTypes[1].name,

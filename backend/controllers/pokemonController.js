@@ -175,7 +175,7 @@ const readAllPokemon = catchAsync(async (req, res, next) => {
   const pokemonsJSON = pokemons.map((pokemon) => pokemon.toJSON());
 
   // Return the response
-  return res.json({
+  return res.status(200).json({
     status: "Success",
     data: pokemonsJSON,
   });

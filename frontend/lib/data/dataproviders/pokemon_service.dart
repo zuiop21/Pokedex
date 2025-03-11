@@ -8,9 +8,9 @@ class PokemonService {
 
   PokemonService({http.Client? client}) : httpClient = client ?? http.Client();
 
-  Future<List<dynamic>> fetchAllPokemons() async {
+  Future<List<dynamic>> fetchData(String route) async {
     final response = await httpClient.get(
-      Uri.parse('$_baseUrl/pokemons'),
+      Uri.parse('$_baseUrl/$route'),
       headers: {'Content-Type': 'application/json'},
     );
 

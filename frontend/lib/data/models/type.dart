@@ -4,22 +4,25 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'type.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Type extends Equatable {
   final String name;
   final String color;
   final String imgUrl;
   final String imgUrlOutline;
-  final PokemonType PokemonTypes;
+
+  @JsonKey(includeIfNull: false)
+  final PokemonType? PokemonTypes;
 
   factory Type.fromJson(Map<String, dynamic> json) => _$TypeFromJson(json);
 
-  const Type(
-      {required this.name,
-      required this.color,
-      required this.imgUrl,
-      required this.imgUrlOutline,
-      required this.PokemonTypes});
+  const Type({
+    required this.name,
+    required this.color,
+    required this.imgUrl,
+    required this.imgUrlOutline,
+    this.PokemonTypes,
+  });
 
   Map<String, dynamic> toJson() => _$TypeToJson(this);
 

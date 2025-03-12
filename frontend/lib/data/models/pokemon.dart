@@ -9,7 +9,7 @@ part 'pokemon.g.dart';
 class Pokemon extends Equatable {
   final int id;
   final int level;
-  final int gender;
+  final double gender;
   final double height;
   final double weight;
   final String name;
@@ -20,6 +20,9 @@ class Pokemon extends Equatable {
   final int region_id;
   final String imgUrl;
   final List<Type> types;
+
+  @JsonKey(includeIfNull: true)
+  final int? evolves_to_id;
 
   List<Type> getStrengthTypesForPokemon() {
     final strengthTypes = types
@@ -39,23 +42,39 @@ class Pokemon extends Equatable {
     return strengthTypes;
   }
 
+  List<Type> getWeaknessTypesForPokemon() {
+    final weaknessTypes = types
+        .where((t) =>
+            t.PokemonTypes?.is_weakness == WeaknessStatus.yes ||
+            t.PokemonTypes?.is_weakness == WeaknessStatus.both)
+        .toList();
+
+    if (weaknessTypes.isEmpty) {
+      throw Exception("A Pokémon must have at least one weakness type.");
+    }
+
+    return weaknessTypes;
+  }
+
   factory Pokemon.fromJson(Map<String, dynamic> json) =>
       _$PokemonFromJson(json);
 
-  const Pokemon(
-      {required this.id,
-      required this.types,
-      required this.level,
-      required this.gender,
-      required this.height,
-      required this.weight,
-      required this.name,
-      required this.ability,
-      required this.category,
-      required this.description,
-      required this.is_base_form,
-      required this.region_id,
-      required this.imgUrl});
+  const Pokemon({
+    required this.id,
+    required this.types,
+    required this.level,
+    required this.gender,
+    required this.height,
+    required this.weight,
+    required this.name,
+    required this.ability,
+    required this.category,
+    required this.description,
+    required this.is_base_form,
+    required this.region_id,
+    required this.imgUrl,
+    this.evolves_to_id,
+  });
 
   Map<String, dynamic> toJson() => _$PokemonToJson(this);
 
@@ -73,6 +92,7 @@ class Pokemon extends Equatable {
         is_base_form,
         region_id,
         imgUrl,
-        types
+        types,
+        evolves_to_id,
       ];
 }

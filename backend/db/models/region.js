@@ -16,12 +16,12 @@ const Region = sequelize.define("Regions", {
       notEmpty: { msg: "Name cannot be empty" },
     },
   },
-  generation: {
+  difficulty: {
     allowNull: false,
     type: Sequelize.INTEGER,
     validate: {
-      notNull: { msg: "Generation cannot be null" },
-      isNumeric: { msg: "Generation must be a number" },
+      notNull: { msg: "Difficulty cannot be null" },
+      isNumeric: { msg: "Difficulty must be a number" },
     },
   },
   imgUrl: {

@@ -3,6 +3,7 @@ const catchAsync = require("../utils/catchAsync");
 const Pokemon = require("../db/models/pokemon");
 const PokemonType = require("../db/models/pokemontype");
 const Type = require("../db/models/type");
+const Evolution = require("../db/models/evolution");
 const sequelize = require("../config/database");
 
 /**
@@ -163,6 +164,11 @@ const readAllPokemon = catchAsync(async (req, res, next) => {
           attributes: ["is_weakness", "id"],
         },
       },
+      {
+        model: Evolution,
+        as: "evolution",
+        attributes: ["evolves_to_id"],
+      },
     ],
   });
 
@@ -171,8 +177,17 @@ const readAllPokemon = catchAsync(async (req, res, next) => {
     return next(new AppError(`There aren't any pokémons`, 404));
   }
 
-  // Convert each Pokémon instance to a plain object
-  const pokemonsJSON = pokemons.map((pokemon) => pokemon.toJSON());
+  // Convert each Pokémon instance to a plain object and flatten the evolution field
+  const pokemonsJSON = pokemons.map((pokemon) => {
+    const plainPokemon = pokemon.toJSON();
+
+    if (plainPokemon.evolution) {
+      plainPokemon.evolves_to_id = plainPokemon.evolution.evolves_to_id;
+      delete plainPokemon.evolution;
+    }
+
+    return plainPokemon;
+  });
 
   // Return the response
   return res.status(200).json({

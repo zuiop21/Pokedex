@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/data/models/type.dart';
 
 class PokemonCircledType extends StatelessWidget {
-  final Type strengthsType;
-  const PokemonCircledType({super.key, required this.strengthsType});
+  final Type type;
+  const PokemonCircledType({super.key, required this.type});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class PokemonCircledType extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(6.0),
             child: CachedNetworkImage(
-              imageUrl: strengthsType.imgUrl,
+              imageUrl: type.imgUrl,
               placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),

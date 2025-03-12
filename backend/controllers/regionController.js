@@ -25,7 +25,7 @@ const createRegion = catchAsync(async (req, res, next) => {
   // Create the region record
   const newRegion = await Region.create({
     name: body.name,
-    generation: body.generation,
+    difficulty: body.difficulty,
     imgUrl: body.imgUrl,
   });
 
@@ -71,6 +71,33 @@ const readRegion = catchAsync(async (req, res, next) => {
 });
 
 /**
+ * @function readAllRegions
+ * @description Retrieves all the regions
+ * @param {Object} req - Express request object containing Pokémon name in the params.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a JSON response with the Pokémon data.
+ */
+const readAllRegions = catchAsync(async (req, res, next) => {
+  // Find all the regions
+  const regions = await Region.findAll();
+
+  // If no type is found, throw an error
+  if (!regions) {
+    return next(new AppError(`There aren't any regions`, 404));
+  }
+
+  // Convert each Region instance to a plain object
+  const regionJSON = regions.map((region) => region.toJSON());
+
+  // Return the response
+  return res.status(200).json({
+    status: "Success",
+    data: regionJSON,
+  });
+});
+
+/**
  * Deletes an region by ID.
  *
  * @function
@@ -102,4 +129,4 @@ const deleteRegion = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { createRegion, readRegion, deleteRegion };
+module.exports = { createRegion, readRegion, readAllRegions, deleteRegion };

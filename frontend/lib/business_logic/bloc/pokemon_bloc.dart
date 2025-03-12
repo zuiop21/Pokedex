@@ -1,8 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/data/models/evolution.dart';
 import 'package:frontend/data/models/pokemon.dart';
+import 'package:frontend/data/models/region.dart';
 import 'package:frontend/data/repositories/pokemon_repository.dart';
 import 'package:frontend/data/models/type.dart';
+import 'package:collection/collection.dart';
 
 part 'pokemon_event.dart';
 part 'pokemon_state.dart';
@@ -21,6 +24,8 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
     try {
       final pokemons = await _pokemonRepository.getAllPokemons();
       final types = await _pokemonRepository.getAllTypes();
+      final regions = await _pokemonRepository.getAllRegions();
+      final evolutions = await _pokemonRepository.getAllEvolutions();
 
       final allTypesOption = Type(
         name: "All Types",
@@ -33,11 +38,12 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
       final updatedTypes = [allTypesOption, ...types];
 
       emit(state.copyWith(
-        status: PokemonStatus.success,
-        pokemons: pokemons,
-        filteredPokemons: pokemons,
-        types: updatedTypes,
-      ));
+          status: PokemonStatus.success,
+          pokemons: pokemons,
+          filteredPokemons: pokemons,
+          types: updatedTypes,
+          regions: regions,
+          evolutions: evolutions));
     } catch (e) {
       emit(state.copyWith(status: PokemonStatus.failure, error: e.toString()));
     }

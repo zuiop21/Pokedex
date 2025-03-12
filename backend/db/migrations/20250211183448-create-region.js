@@ -14,7 +14,7 @@ module.exports = {
         type: Sequelize.STRING,
         unique: true,
       },
-      generation: {
+      difficulty: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },

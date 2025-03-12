@@ -98,6 +98,33 @@ const readEvolution = catchAsync(async (req, res, next) => {
 });
 
 /**
+ * @function readAllEvolutions
+ * @description Retrieves all the evolutions
+ * @param {Object} req - Express request object containing Pokémon name in the params.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a JSON response with the Pokémon data.
+ */
+const readAllEvolutions = catchAsync(async (req, res, next) => {
+  // Find all the evolutions
+  const evolutions = await Evolution.findAll();
+
+  // If no evolution is found, throw an error
+  if (!evolutions) {
+    return next(new AppError(`There aren't any evolutions`, 404));
+  }
+
+  // Convert each Evolution instance to a plain object
+  const evolutionJSON = evolutions.map((evolution) => evolution.toJSON());
+
+  // Return the response
+  return res.status(200).json({
+    status: "Success",
+    data: evolutionJSON,
+  });
+});
+
+/**
  * Deletes an evolution by a pokemon's ID.
  *
  * @function
@@ -139,4 +166,9 @@ const deleteEvolution = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { createEvolution, readEvolution, deleteEvolution };
+module.exports = {
+  createEvolution,
+  readEvolution,
+  readAllEvolutions,
+  deleteEvolution,
+};

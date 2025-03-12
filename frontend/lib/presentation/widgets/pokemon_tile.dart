@@ -8,10 +8,18 @@ class PokemonTile extends StatelessWidget {
   final Pokemon pokemon;
   const PokemonTile({super.key, required this.pokemon});
 
+  void _handleNavigationToInfoView(BuildContext context) {
+    Navigator.pushNamed(
+      context,
+      "/pokemon/info",
+      arguments: pokemon,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {}, //TODO buttonaction
+      onTap: () => _handleNavigationToInfoView(context),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
@@ -58,6 +66,7 @@ class PokemonTile extends StatelessWidget {
                         flex: 40,
                         child: PokemonTileTypes(
                           pokemon: pokemon,
+                          leftPadding: 10,
                         ),
                       )
                     ],
@@ -117,12 +126,15 @@ class PokemonTile extends StatelessWidget {
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.all(18.0),
-                        child: CachedNetworkImage(
-                          imageUrl: pokemon.imgUrl,
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                        child: Hero(
+                          tag: "pokemon-${pokemon.id}",
+                          child: CachedNetworkImage(
+                            imageUrl: pokemon.imgUrl,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
                         ),
                       ),
                     ),

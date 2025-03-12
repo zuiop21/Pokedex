@@ -646,7 +646,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        name: "Lampet",
+        name: "Lampent",
         height: 0.6,
         weight: 13.0,
         ability: "Flame Body",
@@ -654,7 +654,7 @@ module.exports = {
         description:
           "This ominous Pokémon is feared. Through cities it wanders, searching for the spirits of the fallen.",
         gender: 1,
-        imgUrl: "http://localhost:3000/assets/pokemons/lampet.png",
+        imgUrl: "http://localhost:3000/assets/pokemons/lampent.png",
         level: 15,
         is_base_form: false,
         region_id: 1,

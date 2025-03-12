@@ -14,9 +14,15 @@ Evolution.belongsTo(Pokemon, {
   foreignKey: "pokemon_id",
   as: "pokemon",
 });
+
 Evolution.belongsTo(Pokemon, {
   foreignKey: "evolves_to_id",
   as: "evolves_to",
+});
+
+Pokemon.hasOne(Evolution, {
+  foreignKey: "pokemon_id",
+  as: "evolution",
 });
 
 // ┌───────────────┐          Favourite         ┌───────────────┐

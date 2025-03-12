@@ -1,6 +1,7 @@
 const {
   createEvolution,
   readEvolution,
+  readAllEvolutions,
   deleteEvolution,
 } = require("../controllers/evolutionController");
 
@@ -18,6 +19,13 @@ const router = require("express").Router();
 /**
  * @swagger
  * /evolutions:
+ *   get:
+ *     summary: Get all Evolutions
+ *     tags: [Evolutions]
+ *     responses:
+ *       200: { description: Success }
+ *       400: { description: Bad Request }
+ *       404: { description: Not found }
  *   post:
  *     summary: Create an evolution for a pokemon
  *     tags: [Evolutions]
@@ -38,7 +46,10 @@ const router = require("express").Router();
  *       401: { description: Unauthorized }
  *       403: { description: Forbidden }
  */
-router.route("/evolutions").post(authentication, restricted, createEvolution);
+router
+  .route("/evolutions")
+  .get(readAllEvolutions)
+  .post(authentication, restricted, createEvolution);
 
 /**
  * @swagger

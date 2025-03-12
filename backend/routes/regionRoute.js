@@ -1,6 +1,7 @@
 const {
   createRegion,
   readRegion,
+  readAllRegions,
   deleteRegion,
 } = require("../controllers/regionController");
 
@@ -18,6 +19,13 @@ const router = require("express").Router();
 /**
  * @swagger
  * /regions:
+ *   get:
+ *     summary: Get all Regions
+ *     tags: [Regions]
+ *     responses:
+ *       200: { description: Success }
+ *       400: { description: Bad Request }
+ *       404: { description: Not found }
  *   post:
  *     summary: Create a new region
  *     tags: [Regions]
@@ -38,7 +46,10 @@ const router = require("express").Router();
  *       401: { description: Unauthorized }
  *       403: { description: Forbidden }
  */
-router.route("/regions").post(authentication, restricted, createRegion);
+router
+  .route("/regions")
+  .get(readAllRegions)
+  .post(authentication, restricted, createRegion);
 
 /**
  * @swagger

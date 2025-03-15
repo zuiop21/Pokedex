@@ -7,7 +7,7 @@ class AuthEvent extends Equatable {
   const AuthEvent({required this.email, required this.password});
 
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [email, password];
 }
 
 final class LoginEvent extends AuthEvent {

@@ -154,23 +154,7 @@ const readPokemon = catchAsync(async (req, res, next) => {
  */
 const readAllPokemon = catchAsync(async (req, res, next) => {
   // Find all the pokémons
-  const pokemons = await Pokemon.findAll({
-    include: [
-      {
-        model: Type,
-        as: "types",
-        attributes: ["name", "color", "imgUrl", "imgUrlOutline"],
-        through: {
-          attributes: ["is_weakness", "id"],
-        },
-      },
-      {
-        model: Evolution,
-        as: "evolution",
-        attributes: ["evolves_to_id"],
-      },
-    ],
-  });
+  const pokemons = await Pokemon.findAll();
 
   // If no Pokémon found, throw an error
   if (!pokemons) {

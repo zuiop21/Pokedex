@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/data/models/pokemon.dart';
+import 'package:frontend/data/models/processed/pokemon.dart';
 
 class PokemonFavouriteIcon extends StatelessWidget {
-  final bool favourited;
   final double size;
   final Pokemon pokemon;
   const PokemonFavouriteIcon(
-      {super.key,
-      this.size = 40,
-      required this.favourited,
-      required this.pokemon});
+      {super.key, this.size = 40, required this.pokemon});
+
+  void _changeFavouriteStatus(BuildContext context) {
+    context.read<PokemonBloc>().add(FavouritePokemonEvent(pokemon: pokemon));
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {}, //TODO
+      onTap: () => _changeFavouriteStatus(context),
       child: Stack(
         children: [
           Icon(
@@ -35,10 +37,17 @@ class PokemonFavouriteIcon extends StatelessWidget {
           SizedBox(
             width: size,
             height: size,
-            child: Icon(
-              size: size - 20,
-              favourited ? Icons.favorite : Icons.favorite_border_outlined,
-              color: favourited ? AppColors.lightRed : Colors.white,
+            child: BlocBuilder<PokemonBloc, PokemonState>(
+              builder: (context, state) {
+                return Icon(
+                  size: size - 20,
+                  pokemon.isFavourited
+                      ? Icons.favorite
+                      : Icons.favorite_border_outlined,
+                  color:
+                      pokemon.isFavourited ? AppColors.lightRed : Colors.white,
+                );
+              },
             ),
           )
         ],

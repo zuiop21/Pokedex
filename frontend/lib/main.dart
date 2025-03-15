@@ -4,7 +4,7 @@ import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
 import 'package:frontend/constants/app_assets.dart';
-import 'package:frontend/data/models/pokemon.dart';
+import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/data/repositories/auth_repository.dart';
 import 'package:frontend/data/repositories/pokemon_repository.dart';
 import 'package:frontend/presentation/views/auth/auth_login_initial_view.dart';
@@ -14,6 +14,7 @@ import 'package:frontend/presentation/views/onboarding/onboarding_auth_option_vi
 import 'package:frontend/presentation/views/onboarding/onboarding_auth_view.dart';
 import 'package:frontend/presentation/views/onboarding/onboarding_view.dart';
 import 'package:frontend/presentation/views/pokemon/pokemon_info_view.dart';
+import 'package:frontend/presentation/views/pokemon/pokemon_list_region_view.dart';
 
 void main() {
   runApp(MyApp());
@@ -73,7 +74,8 @@ class MyApp extends StatelessWidget {
             final pokemon =
                 ModalRoute.of(context)!.settings.arguments as Pokemon;
             return PokemonInfoView(pokemon: pokemon);
-          }
+          },
+          "/pokemons": (context) => PokemonListRegionView(),
         },
         debugShowCheckedModeBanner: false,
       ),

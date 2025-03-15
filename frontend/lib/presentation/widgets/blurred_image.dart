@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/data/models/pokemon.dart';
+
+import 'package:frontend/data/models/processed/pokemon.dart';
 
 class BlurredImage extends StatelessWidget {
   final double beginValue;

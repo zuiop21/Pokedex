@@ -6,6 +6,7 @@ const pokemonRoute = require("./routes/pokemonRoute");
 const favouriteRoute = require("./routes/favouriteRoute");
 const evolutionRoute = require("./routes/evolutionRoute");
 const regionRoute = require("./routes/regionRoute");
+const pokemonTypeRoute = require("./routes/pokemonTypeRoute");
 const assetRoute = require("./routes/assetRoute");
 const catchAsync = require("./utils/catchAsync");
 const AppError = require("./utils/appError");
@@ -67,6 +68,7 @@ app.use(
 
 //Routes
 app.use(authRoute);
+app.use(pokemonTypeRoute);
 app.use(evolutionRoute);
 app.use(pokemonRoute);
 app.use(assetRoute);

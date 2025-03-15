@@ -11,7 +11,7 @@ class PokemonNumberSortingButton extends StatelessWidget {
   void _dropdownCallback(BuildContext context, String? value) {
     context
         .read<PokemonBloc>()
-        .add(SortPokemonByNumberEvent(dropDownValue: value!));
+        .add(OrderPokemonByNumberEvent(dropDownValue: value!));
   }
 
   @override

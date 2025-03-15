@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/data/models/pokemon.dart';
+import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/presentation/widgets/pokemon_favourite_icon.dart';
 import 'package:frontend/presentation/widgets/pokemon_tile_types.dart';
 
@@ -143,7 +143,6 @@ class PokemonTile extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: PokemonFavouriteIcon(
-                          favourited: false,
                           pokemon: pokemon,
                         ),
                       ),

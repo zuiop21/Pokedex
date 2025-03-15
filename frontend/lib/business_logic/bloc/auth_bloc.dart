@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/data/models/user.dart';
+import 'package:frontend/data/models/raw/raw_user.dart';
 import 'package:frontend/data/repositories/auth_repository.dart';
 
 part 'auth_event.dart';

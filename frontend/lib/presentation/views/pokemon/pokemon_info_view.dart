@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/data/models/pokemon.dart';
+import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/presentation/widgets/pokemon_basic_info.dart';
 import 'package:frontend/presentation/widgets/pokemon_body_info.dart';
 import 'package:frontend/presentation/widgets/pokemon_evolution_info.dart';
@@ -25,7 +25,7 @@ class PokemonInfoView extends StatelessWidget {
               SizedBox(
                 height: 230,
                 width: double.infinity,
-                child: PokemonInfoAppbar(pokemon: pokemon),
+                child: PokemonInfoAppbar(pokemonId: pokemon.id),
               ),
               Expanded(
                 child: SingleChildScrollView(

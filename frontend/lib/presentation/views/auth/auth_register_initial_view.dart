@@ -72,7 +72,10 @@ class _AuthRegisterInitialViewState extends State<AuthRegisterInitialView> {
               onPressed: () => _handlePasswordRegister(context),
             ),
           AuthStatus.loading => LoadingView(),
-          AuthStatus.failure => Container(),
+          AuthStatus.failure => Container(
+              color: Colors.red,
+              child: Text(state.error!),
+            ),
           AuthStatus.success => AuthRegisterSuccessView(),
         };
       },

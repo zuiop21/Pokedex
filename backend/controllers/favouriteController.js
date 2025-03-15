@@ -81,7 +81,6 @@ const createFavourite = catchAsync(async (req, res, next) => {
  * @returns {Promise<void>} - Returns a promise that resolves to void.
  */
 const readFavourite = catchAsync(async (req, res, next) => {
-  // Find the user by ID
   const user = await User.findByPk(req.user.id, {
     attributes: [],
     include: [
@@ -96,20 +95,13 @@ const readFavourite = catchAsync(async (req, res, next) => {
     ],
   });
 
-  // If the user has no favourite Pokémon, return an error
-  if (!user.pokemons || !user.pokemons.length) {
-    return next(
-      new AppError(
-        `No favourite Pokémon found for user with id ${req.user.id}`,
-        404
-      )
-    );
+  if (!user) {
+    return next(new AppError(`User with id ${req.user.id} not found`, 404));
   }
 
-  // Return the response
   return res.status(200).json({
     status: "Success",
-    data: user,
+    data: user.pokemons || [],
   });
 });
 

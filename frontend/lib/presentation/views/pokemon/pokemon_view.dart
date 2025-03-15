@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/cubit/pokemon_bottom_nav_bar_cubit.dart';
 import 'package:frontend/constants/app_assets.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/presentation/views/pokemon/pokemon_favourite_view.dart';
-import 'package:frontend/presentation/views/pokemon/pokemon_list_view.dart';
-import 'package:frontend/presentation/views/pokemon/pokemon_region_view.dart';
+import 'package:frontend/presentation/pages/pokemon_favourite_page.dart';
+import 'package:frontend/presentation/pages/pokemon_list_page.dart';
+import 'package:frontend/presentation/pages/pokemon_region_page.dart';
 import 'package:frontend/presentation/widgets/pokemon_search_bar.dart';
 
 class PokemonView extends StatelessWidget {
@@ -71,12 +71,12 @@ class PokemonView extends StatelessWidget {
                 ),
                 automaticallyImplyLeading: false,
                 title: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Favourites",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                    )),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Favourites",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  ),
+                ),
                 toolbarHeight: 80,
               ),
             _ => AppBar(
@@ -84,9 +84,9 @@ class PokemonView extends StatelessWidget {
               )
           },
           body: switch (state.page) {
-            0 => PokemonListView(),
-            1 => PokemonRegionView(),
-            2 => PokemonFavouriteView(),
+            0 => PokemonListPage(),
+            1 => PokemonRegionPage(),
+            2 => PokemonFavouritePage(),
             _ => Center(child: Text("Invalid page index")),
           },
           bottomNavigationBar: BottomNavigationBar(

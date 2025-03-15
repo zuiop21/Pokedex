@@ -10,16 +10,25 @@ extension PokemonStatusX on PokemonStatus {
 }
 
 final class PokemonState extends Equatable {
+  final bool changed;
   final PokemonStatus status;
   final List<Pokemon> pokemons;
-  final List<Pokemon> filteredPokemons;
   final List<Type> types;
   final List<Evolution> evolutions;
   final List<Region> regions;
   final String? error;
+
+  //Filters
   final String searchBarValue;
   final String dropDownValue1;
   final String dropDownValue2;
+  final Region? regionFilter;
+
+  final List<Pokemon> filteredPokemons;
+
+  List<Pokemon> findFavouritedPokemons() {
+    return pokemons.where((p) => p.isFavourited == true).toList();
+  }
 
   Set<Pokemon> _backwardInChain(Pokemon pokemon, {Set<int>? visited}) {
     final Set<Pokemon> evolutionChain = {};
@@ -29,9 +38,9 @@ final class PokemonState extends Equatable {
     visited.add(pokemon.id);
 
     for (var e in evolutions) {
-      if (e.evolves_to_id == pokemon.id) {
+      if (e.evolvesToId == pokemon.id) {
         final prevPokemon =
-            pokemons.firstWhereOrNull((p) => p.id == e.pokemon_id);
+            pokemons.firstWhereOrNull((p) => p.id == e.pokemonId);
         if (prevPokemon != null && evolutionChain.add(prevPokemon)) {
           evolutionChain
               .addAll(_backwardInChain(prevPokemon, visited: visited));
@@ -49,9 +58,9 @@ final class PokemonState extends Equatable {
     visited.add(pokemon.id);
 
     for (var e in evolutions) {
-      if (pokemon.evolves_to_id == e.evolves_to_id) {
+      if (pokemon.evolvesTo?.id == e.evolvesToId) {
         final nextPokemon =
-            pokemons.firstWhereOrNull((p) => p.id == pokemon.evolves_to_id);
+            pokemons.firstWhereOrNull((p) => p.id == pokemon.evolvesTo?.id);
         if (nextPokemon != null && evolutionChain.add(nextPokemon)) {
           evolutionChain.addAll(_forwardInChain(nextPokemon, visited: visited));
         }
@@ -76,6 +85,7 @@ final class PokemonState extends Equatable {
   }
 
   const PokemonState({
+    this.changed = false,
     this.dropDownValue1 = "All Types",
     this.dropDownValue2 = "Ascending",
     this.searchBarValue = "",
@@ -85,6 +95,7 @@ final class PokemonState extends Equatable {
     this.filteredPokemons = const [],
     this.types = const [],
     this.error,
+    this.regionFilter,
     this.status = PokemonStatus.initial,
   });
 
@@ -99,6 +110,8 @@ final class PokemonState extends Equatable {
     String? dropDownValue1,
     String? dropDownValue2,
     String? searchBarValue,
+    Region? regionFilter,
+    bool? changed,
   }) {
     return PokemonState(
         status: status ?? this.status,
@@ -110,7 +123,9 @@ final class PokemonState extends Equatable {
         filteredPokemons: filteredPokemons ?? this.filteredPokemons,
         searchBarValue: searchBarValue ?? this.searchBarValue,
         evolutions: evolutions ?? this.evolutions,
-        regions: regions ?? this.regions);
+        regions: regions ?? this.regions,
+        regionFilter: regionFilter,
+        changed: changed ?? this.changed);
   }
 
   @override
@@ -124,6 +139,8 @@ final class PokemonState extends Equatable {
         filteredPokemons,
         searchBarValue,
         evolutions,
-        regions
+        regions,
+        regionFilter,
+        changed
       ];
 }

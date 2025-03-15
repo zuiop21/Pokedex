@@ -1,9 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:frontend/data/models/raw/raw_region.dart';
 
-part 'region.g.dart';
-
-@JsonSerializable(explicitToJson: true)
 class Region extends Equatable {
   const Region(
       {required this.id,
@@ -16,9 +13,13 @@ class Region extends Equatable {
   final int difficulty;
   final String imgUrl;
 
-  factory Region.fromJson(Map<String, dynamic> json) => _$RegionFromJson(json);
-
-  Map<String, dynamic> toJson() => _$RegionToJson(this);
+  factory Region.fromRaw(RawRegion rawRegion) {
+    return Region(
+        id: rawRegion.id,
+        name: rawRegion.name,
+        difficulty: rawRegion.difficulty,
+        imgUrl: rawRegion.imgUrl);
+  }
 
   @override
   List<Object?> get props => [id, name, difficulty, imgUrl];

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/data/models/type.dart';
+import 'package:frontend/data/models/processed/type.dart';
 
 class PokemonCircledType extends StatelessWidget {
   final Type type;

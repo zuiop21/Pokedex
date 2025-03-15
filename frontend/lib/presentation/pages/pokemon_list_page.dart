@@ -5,8 +5,8 @@ import 'package:frontend/presentation/widgets/pokemon_number_sorting_button.dart
 import 'package:frontend/presentation/widgets/pokemon_type_sorting_button.dart';
 import 'package:frontend/presentation/widgets/pokemon_tile.dart';
 
-class PokemonListView extends StatelessWidget {
-  const PokemonListView({super.key});
+class PokemonListPage extends StatelessWidget {
+  const PokemonListPage({super.key});
 
   @override
   Widget build(BuildContext context) {

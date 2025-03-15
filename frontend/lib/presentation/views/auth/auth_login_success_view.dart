@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/business_logic/cubit/pokemon_bottom_nav_bar_cubit.dart';
 import 'package:frontend/constants/app_assets.dart';
@@ -14,7 +15,8 @@ class AuthLoginSuccessView extends StatelessWidget {
   const AuthLoginSuccessView({super.key});
 
   void _handleButtonAction(BuildContext context) {
-    context.read<PokemonBloc>().add(GetPokemonEvent());
+    final token = context.read<AuthBloc>().state.user!.token;
+    context.read<PokemonBloc>().add(GetPokemonEvent(token: token));
   }
 
   void _showErrorDialog(BuildContext context, String? errorMessage) {

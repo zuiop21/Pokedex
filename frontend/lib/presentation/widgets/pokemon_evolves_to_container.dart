@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/data/models/pokemon.dart';
-import 'package:frontend/data/models/type.dart';
+import 'package:frontend/data/models/processed/pokemon.dart';
+import 'package:frontend/data/models/processed/type.dart';
 import 'package:frontend/presentation/widgets/blurred_image.dart';
 import 'package:frontend/presentation/widgets/pokemon_evolution_types.dart';
 
@@ -20,7 +20,7 @@ class PokemonEvolvesToContainer extends StatelessWidget {
         .read<PokemonBloc>()
         .state
         .evolutions
-        .where((e) => e.pokemon_id == pokemon.id)
+        .where((e) => e.pokemonId == pokemon.id)
         .first;
     return Padding(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 10),

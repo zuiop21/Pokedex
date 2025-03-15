@@ -24,6 +24,8 @@ dependencies:
   auto_size_text: ^3.0.0
   cached_network_image: ^3.4.1
   dropdown_button2: ^2.3.9
+  darq: ^2.0.0
+  collection: ^1.19.0
 
 dev_dependencies:
   flutter_test:

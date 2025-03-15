@@ -1,3 +1,4 @@
+const PokemonType = require("../db/models/pokemontype");
 const Type = require("../db/models/type");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");

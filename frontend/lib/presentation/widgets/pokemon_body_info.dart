@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/data/models/pokemon.dart';
+import 'package:frontend/data/models/processed/pokemon.dart';
+
 import 'package:frontend/presentation/widgets/pokemon_gender_container.dart';
 import 'package:frontend/presentation/widgets/pokemon_info_container.dart';
 

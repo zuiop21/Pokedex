@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/constants/app_colors.dart';
 
+//Custom dropdown menu item for the pokemon dropdown
 class PokemonDropdownMenuItem extends DropdownMenuItem<String> {
   PokemonDropdownMenuItem({super.key, required String value})
       : super(

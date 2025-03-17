@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/constants/app_colors.dart';
 
+//A widget that displays the information of a pokemon
 class PokemonInfoContainer extends StatelessWidget {
   final IconData icon;
   final String data;

@@ -15,6 +15,7 @@ class PokemonRegionPage extends StatelessWidget {
         child: BlocBuilder<PokemonBloc, PokemonState>(
           builder: (context, state) {
             final regions = state.regions;
+
             return ListView.separated(
               separatorBuilder: (context, index) =>
                   const Divider(color: Colors.white),

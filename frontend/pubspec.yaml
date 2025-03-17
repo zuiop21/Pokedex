@@ -26,6 +26,7 @@ dependencies:
   dropdown_button2: ^2.3.9
   darq: ^2.0.0
   collection: ^1.19.0
+  flutter_slidable: ^4.0.0
 
 dev_dependencies:
   flutter_test:

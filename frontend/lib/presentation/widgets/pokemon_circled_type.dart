@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/data/models/processed/type.dart';
 
+//A widget that displays a type in a circle
 class PokemonCircledType extends StatelessWidget {
   final Type type;
   const PokemonCircledType({super.key, required this.type});

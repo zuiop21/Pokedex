@@ -5,17 +5,20 @@ import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/widgets/pokemon_dropdown_menu_item.dart';
 
-class PokemonNumberSortingButton extends StatelessWidget {
-  const PokemonNumberSortingButton({super.key});
+//A widget that displays a dropdown button for sorting the pokemon by id
+class PokemonIdSortingButton extends StatelessWidget {
+  const PokemonIdSortingButton({super.key});
 
+  //Callback function for the dropdown
   void _dropdownCallback(BuildContext context, String? value) {
     context
         .read<PokemonBloc>()
-        .add(OrderPokemonByNumberEvent(dropDownValue: value!));
+        .add(OrderPokemonByIdEvent(dropDownValue: value!));
   }
 
   @override
   Widget build(BuildContext context) {
+    //! BlocBuilder is used to rebuild the widget when the state changes
     return BlocBuilder<PokemonBloc, PokemonState>(
       builder: (context, state) {
         return DropdownButton2(

@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/data/models/processed/pokemon.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/data/models/processed/type.dart';
 import 'package:frontend/presentation/widgets/pokemon_circled_type.dart';
 
+//A widget that displays the types of a pokemon
 class PokemonTileTypes extends StatelessWidget {
-  final Pokemon pokemon;
+  final int pokemonId;
 
   final double leftPadding;
   const PokemonTileTypes({
     super.key,
-    required this.pokemon,
+    required this.pokemonId,
     required this.leftPadding,
   });
 
   @override
   Widget build(BuildContext context) {
-    final List<Type> strengthTypes = pokemon.getStrengthTypesForPokemon();
+    //Find the pokemon by it's id
+    final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
+    //Find the strength types of the pokemon
+    final List<Type> strengthTypes = pokemon!.getStrengthTypesForPokemon();
     return Padding(
       padding: EdgeInsets.only(bottom: 5, left: leftPadding, right: 5),
       child: Row(

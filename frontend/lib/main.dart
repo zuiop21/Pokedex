@@ -4,7 +4,6 @@ import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
 import 'package:frontend/constants/app_assets.dart';
-import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/data/repositories/auth_repository.dart';
 import 'package:frontend/data/repositories/pokemon_repository.dart';
 import 'package:frontend/presentation/views/auth/auth_login_initial_view.dart';
@@ -16,10 +15,14 @@ import 'package:frontend/presentation/views/onboarding/onboarding_view.dart';
 import 'package:frontend/presentation/views/pokemon/pokemon_info_view.dart';
 import 'package:frontend/presentation/views/pokemon/pokemon_list_region_view.dart';
 
+//Main method to run the app
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  PaintingBinding.instance.imageCache.maximumSizeBytes = 300 << 20;
   runApp(MyApp());
 }
 
+//Main widget of the app
 class MyApp extends StatelessWidget {
   final AuthRepository _authRepository = AuthRepository();
   final PokemonRepository _pokemonRepository = PokemonRepository();
@@ -38,6 +41,8 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
+
+        //Routes of the app
         routes: {
           "/": (context) => OnboardingView(),
           "/auth/onboarding/option": (context) => OnboardingAuthOptionView(),
@@ -71,11 +76,14 @@ class MyApp extends StatelessWidget {
             );
           },
           "/pokemon/info": (context) {
-            final pokemon =
-                ModalRoute.of(context)!.settings.arguments as Pokemon;
-            return PokemonInfoView(pokemon: pokemon);
+            final pokemon = ModalRoute.of(context)!.settings.arguments as int;
+            return PokemonInfoView(pokemonId: pokemon);
           },
-          "/pokemons": (context) => PokemonListRegionView(),
+          "/pokemons": (context) {
+            final regionName =
+                ModalRoute.of(context)!.settings.arguments as String;
+            return PokemonListRegionView(regionName: regionName);
+          },
         },
         debugShowCheckedModeBanner: false,
       ),

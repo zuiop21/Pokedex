@@ -4,6 +4,7 @@ part 'raw_pokemon_type.g.dart';
 
 enum WeaknessStatus { yes, no, both }
 
+//Class to represent the raw data of a pokemon type
 @JsonSerializable()
 class RawPokemonType {
   final int id;

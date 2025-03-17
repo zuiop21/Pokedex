@@ -4,20 +4,23 @@ import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/data/models/processed/pokemon.dart';
 
+//A widget that displays a favourite icon for a pokemon
 class PokemonFavouriteIcon extends StatelessWidget {
   final double size;
-  final Pokemon pokemon;
+  final int pokemonId;
   const PokemonFavouriteIcon(
-      {super.key, this.size = 40, required this.pokemon});
+      {super.key, this.size = 40, required this.pokemonId});
 
-  void _changeFavouriteStatus(BuildContext context) {
-    context.read<PokemonBloc>().add(FavouritePokemonEvent(pokemon: pokemon));
+  void _changeFavouriteStatus(BuildContext context, Pokemon? pokemon) {
+    context.read<PokemonBloc>().add(FavouritePokemonEvent(pokemon: pokemon!));
   }
 
   @override
   Widget build(BuildContext context) {
+    //Find the pokemon by it's id
+    final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
     return GestureDetector(
-      onTap: () => _changeFavouriteStatus(context),
+      onTap: () => _changeFavouriteStatus(context, pokemon),
       child: Stack(
         children: [
           Icon(
@@ -37,11 +40,12 @@ class PokemonFavouriteIcon extends StatelessWidget {
           SizedBox(
             width: size,
             height: size,
+            //! BlocBuilder is used to rebuild the widget when the state changes
             child: BlocBuilder<PokemonBloc, PokemonState>(
               builder: (context, state) {
                 return Icon(
                   size: size - 20,
-                  pokemon.isFavourited
+                  pokemon!.isFavourited
                       ? Icons.favorite
                       : Icons.favorite_border_outlined,
                   color:

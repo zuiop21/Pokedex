@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/models/processed/pokemon.dart';
-import 'package:frontend/presentation/widgets/pokemon_tile.dart';
+import 'package:frontend/presentation/widgets/pokemon_favourite_tile.dart';
 
 class PokemonFavouriteListPage extends StatelessWidget {
   final List<Pokemon> favourites;
@@ -13,8 +13,8 @@ class PokemonFavouriteListPage extends StatelessWidget {
       separatorBuilder: (context, index) => const Divider(color: Colors.white),
       itemCount: favourites.length,
       itemBuilder: (context, index) {
-        return PokemonTile(
-          pokemon: favourites[index],
+        return PokemonFavouriteTile(
+          pokemonId: favourites[index].id,
         );
       },
     );

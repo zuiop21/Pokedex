@@ -8,6 +8,7 @@ import 'package:frontend/presentation/views/loading_view.dart';
 import 'package:frontend/presentation/views/auth/auth_register_success_view.dart';
 import 'package:frontend/presentation/widgets/password_textfield.dart';
 
+//The initial view of the register page
 class AuthRegisterInitialView extends StatefulWidget {
   final String email;
   const AuthRegisterInitialView({super.key, required this.email});
@@ -21,16 +22,19 @@ class _AuthRegisterInitialViewState extends State<AuthRegisterInitialView> {
   late TextEditingController _passwordController;
   late TextEditingController _confirmPasswordController;
 
+//Method to listen to the changes in the textfields
   void _textFieldValueChangedListener() {
     context.read<AuthTextfieldCubit>().validateForm(
         _passwordController.text, _confirmPasswordController.text);
   }
 
+//Method to handle the password registration
   void _handlePasswordRegister(BuildContext context) {
     context.read<AuthBloc>().add(
         RegisterEvent(email: widget.email, password: _passwordController.text));
   }
 
+//Initstate method to initialize the text controllers and add listeners
   @override
   void initState() {
     super.initState();
@@ -40,6 +44,7 @@ class _AuthRegisterInitialViewState extends State<AuthRegisterInitialView> {
     _confirmPasswordController.addListener(_textFieldValueChangedListener);
   }
 
+//Dispose method to dispose the text controllers
   @override
   void dispose() {
     _passwordController.dispose();

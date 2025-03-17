@@ -5,9 +5,11 @@ import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/onboarding_page.dart';
 import 'package:frontend/presentation/widgets/flow_button.dart';
 
+//The view that is shown when the registration is successful
 class AuthRegisterSuccessView extends StatelessWidget {
   const AuthRegisterSuccessView({super.key});
 
+//Method to handle the button action
   void _handleButtonAction(BuildContext context) {
     Navigator.of(context).pushNamed("/pokemon");
   }

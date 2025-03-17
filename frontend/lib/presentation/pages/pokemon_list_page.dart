@@ -31,7 +31,7 @@ class PokemonListPage extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.41,
                 height: MediaQuery.of(context).size.width * 0.12,
-                child: PokemonNumberSortingButton(),
+                child: PokemonIdSortingButton(),
               ),
             ],
           ),
@@ -47,7 +47,7 @@ class PokemonListPage extends StatelessWidget {
               itemCount: state.filteredPokemons.length,
               itemBuilder: (context, index) {
                 return PokemonTile(
-                  pokemon: state.filteredPokemons[index],
+                  pokemonId: state.filteredPokemons[index].id,
                 );
               },
             );

@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'raw_evolution.g.dart';
 
+//Class to represent the raw data of an evolution
 @JsonSerializable()
 class RawEvolution {
   const RawEvolution(

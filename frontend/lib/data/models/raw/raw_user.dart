@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'raw_user.g.dart';
 
+//Class to represent the raw data of a user
 @JsonSerializable()
 class RawUser {
   final int id;

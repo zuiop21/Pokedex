@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/data/models/processed/pokemon.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 
 import 'package:frontend/presentation/widgets/pokemon_gender_container.dart';
 import 'package:frontend/presentation/widgets/pokemon_info_container.dart';
 
+//A widget that displays some basic information of a pokemon
+//Such as the weight, height, category and ability
 class PokemonBodyInfo extends StatelessWidget {
-  final Pokemon pokemon;
-  const PokemonBodyInfo({super.key, required this.pokemon});
+  final int pokemonId;
+  const PokemonBodyInfo({super.key, required this.pokemonId});
 
   @override
   Widget build(BuildContext context) {
+    final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
     return Column(
       children: [
         Expanded(
@@ -19,7 +23,7 @@ class PokemonBodyInfo extends StatelessWidget {
               PokemonInfoContainer(
                   padding: EdgeInsets.only(right: 5),
                   icon: Icons.line_weight,
-                  data: "${pokemon.weight} kg",
+                  data: "${pokemon!.weight} kg",
                   dataName: "Weight"),
               PokemonInfoContainer(
                   padding: EdgeInsets.only(left: 5),

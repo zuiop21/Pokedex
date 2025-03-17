@@ -17,11 +17,12 @@ class PokemonInfoAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO no need for blocbuilder?
     return BlocBuilder<PokemonBloc, PokemonState>(
       builder: (context, state) {
-        final pokemon = state.pokemons.firstWhere((p) => p.id == pokemonId);
+        final pokemon = state.getPokemonById(pokemonId);
 
-        List<Type> strengthTypes = pokemon.getStrengthTypesForPokemon();
+        List<Type> strengthTypes = pokemon!.getStrengthTypesForPokemon();
 
         return Stack(
           clipBehavior: Clip.none,
@@ -30,6 +31,7 @@ class PokemonInfoAppbar extends StatelessWidget {
               top: -MediaQuery.of(context).size.width * 0.6,
               left: -MediaQuery.of(context).size.width * 0.055,
               child: ShaderMask(
+                //TODO blurred img
                 shaderCallback: (Rect bounds) {
                   return LinearGradient(
                     begin: Alignment.topLeft,
@@ -55,6 +57,7 @@ class PokemonInfoAppbar extends StatelessWidget {
               child: IconButton(
                 icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
                 onPressed: () {
+                  //TODO func
                   Navigator.pop(context);
                 },
               ),

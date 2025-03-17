@@ -1,7 +1,9 @@
 part of 'pokemon_bloc.dart';
 
+//Enum to represent the status of the Pokemon view
 enum PokemonStatus { initial, loading, success, failure }
 
+//Extension to add helper methods to the PokemonStatus enum
 extension PokemonStatusX on PokemonStatus {
   bool get isInitial => this == PokemonStatus.initial;
   bool get isLoading => this == PokemonStatus.loading;
@@ -12,24 +14,34 @@ extension PokemonStatusX on PokemonStatus {
 final class PokemonState extends Equatable {
   final bool changed;
   final PokemonStatus status;
-  final List<Pokemon> pokemons;
+  final Map<int, Pokemon> pokemons;
   final List<Type> types;
   final List<Evolution> evolutions;
   final List<Region> regions;
   final String? error;
 
-  //Filters
   final String searchBarValue;
   final String dropDownValue1;
   final String dropDownValue2;
   final Region? regionFilter;
-
   final List<Pokemon> filteredPokemons;
 
-  List<Pokemon> findFavouritedPokemons() {
-    return pokemons.where((p) => p.isFavourited == true).toList();
+  //Method to find a pokemon by its id
+  Pokemon? getPokemonById(int id) => pokemons[id];
+
+  //Method to find pokemons with base forms by region
+  List<Pokemon> findBaseFormsByRegion(Region region) {
+    return pokemons.values
+        .where((p) => p.regionId == region.id && p.isBaseForm)
+        .toList();
   }
 
+//Method to find pokemons that are favourited
+  List<Pokemon> findFavouritedPokemons() {
+    return pokemons.values.where((p) => p.isFavourited).toList();
+  }
+
+//Helper method to find the evolution chain of a pokemon backward in the list
   Set<Pokemon> _backwardInChain(Pokemon pokemon, {Set<int>? visited}) {
     final Set<Pokemon> evolutionChain = {};
     visited ??= {};
@@ -39,8 +51,7 @@ final class PokemonState extends Equatable {
 
     for (var e in evolutions) {
       if (e.evolvesToId == pokemon.id) {
-        final prevPokemon =
-            pokemons.firstWhereOrNull((p) => p.id == e.pokemonId);
+        final prevPokemon = pokemons[e.pokemonId];
         if (prevPokemon != null && evolutionChain.add(prevPokemon)) {
           evolutionChain
               .addAll(_backwardInChain(prevPokemon, visited: visited));
@@ -50,6 +61,7 @@ final class PokemonState extends Equatable {
     return evolutionChain;
   }
 
+//Helper method to find the evolution chain of a pokemon forward in the list
   Set<Pokemon> _forwardInChain(Pokemon pokemon, {Set<int>? visited}) {
     final Set<Pokemon> evolutionChain = {};
     visited ??= {};
@@ -59,8 +71,7 @@ final class PokemonState extends Equatable {
 
     for (var e in evolutions) {
       if (pokemon.evolvesTo?.id == e.evolvesToId) {
-        final nextPokemon =
-            pokemons.firstWhereOrNull((p) => p.id == pokemon.evolvesTo?.id);
+        final nextPokemon = pokemons[pokemon.evolvesTo?.id];
         if (nextPokemon != null && evolutionChain.add(nextPokemon)) {
           evolutionChain.addAll(_forwardInChain(nextPokemon, visited: visited));
         }
@@ -69,27 +80,25 @@ final class PokemonState extends Equatable {
     return evolutionChain;
   }
 
+//Method to find the evolution chain of a pokemon
+//We use two recursive helper methods to iterare through the list
   List<Pokemon> findEvolutionChain(Pokemon pokemon) {
-    final Set<Pokemon> evolutionChain = {};
+    final Set<Pokemon> evolutionChain = {
+      ..._backwardInChain(pokemon),
+      ..._forwardInChain(pokemon),
+      pokemon
+    };
 
-    evolutionChain.addAll(_backwardInChain(pokemon));
-
-    evolutionChain.addAll(_forwardInChain(pokemon));
-
-    evolutionChain.add(pokemon);
-
-    List<Pokemon> chainList = evolutionChain.toList()
-      ..sort((a, b) => a.id.compareTo(b.id));
-
-    return chainList;
+    return evolutionChain.toList()..sort((a, b) => a.id.compareTo(b.id));
   }
 
+//Constructor for the PokemonState
   const PokemonState({
     this.changed = false,
     this.dropDownValue1 = "All Types",
     this.dropDownValue2 = "Ascending",
     this.searchBarValue = "",
-    this.pokemons = const [],
+    this.pokemons = const {},
     this.evolutions = const [],
     this.regions = const [],
     this.filteredPokemons = const [],
@@ -99,9 +108,10 @@ final class PokemonState extends Equatable {
     this.status = PokemonStatus.initial,
   });
 
+//Method to copy the PokemonState with new values
   PokemonState copyWith({
     PokemonStatus? status,
-    List<Pokemon>? pokemons,
+    Map<int, Pokemon>? pokemons,
     List<Pokemon>? filteredPokemons,
     List<Type>? types,
     List<Evolution>? evolutions,
@@ -114,20 +124,22 @@ final class PokemonState extends Equatable {
     bool? changed,
   }) {
     return PokemonState(
-        status: status ?? this.status,
-        error: error ?? this.error,
-        pokemons: pokemons ?? this.pokemons,
-        types: types ?? this.types,
-        dropDownValue1: dropDownValue1 ?? this.dropDownValue1,
-        dropDownValue2: dropDownValue2 ?? this.dropDownValue2,
-        filteredPokemons: filteredPokemons ?? this.filteredPokemons,
-        searchBarValue: searchBarValue ?? this.searchBarValue,
-        evolutions: evolutions ?? this.evolutions,
-        regions: regions ?? this.regions,
-        regionFilter: regionFilter,
-        changed: changed ?? this.changed);
+      status: status ?? this.status,
+      error: error,
+      pokemons: pokemons ?? this.pokemons,
+      types: types ?? this.types,
+      dropDownValue1: dropDownValue1 ?? this.dropDownValue1,
+      dropDownValue2: dropDownValue2 ?? this.dropDownValue2,
+      filteredPokemons: filteredPokemons ?? this.filteredPokemons,
+      searchBarValue: searchBarValue ?? this.searchBarValue,
+      evolutions: evolutions ?? this.evolutions,
+      regions: regions ?? this.regions,
+      regionFilter: regionFilter,
+      changed: changed ?? this.changed,
+    );
   }
 
+//Method to compare the PokemonState with another object
   @override
   List<Object?> get props => [
         status,

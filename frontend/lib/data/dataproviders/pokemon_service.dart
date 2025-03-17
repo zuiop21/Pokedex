@@ -8,11 +8,14 @@ import 'package:frontend/data/models/raw/raw_pokemon_type.dart';
 import 'package:frontend/data/models/raw/raw_region.dart';
 import 'package:frontend/data/models/raw/raw_type.dart';
 
+//Service class to fetch data from the API
 class PokemonService {
   final http.Client httpClient;
 
   PokemonService({http.Client? client}) : httpClient = client ?? http.Client();
 
+  //Generic method to fetch data from the API
+  //Optional parameter authToken is used to pass the token for authentication
   Future<List<T>> _fetchData<T>(
       String endpoint, T Function(Map<String, dynamic>) fromJson,
       {String? authToken}) async {
@@ -47,6 +50,7 @@ class PokemonService {
     }
   }
 
+  //Methods to fetch raw versions of the data
   Future<List<RawEvolution>> fetchRawEvolutions() =>
       _fetchData('evolutions', RawEvolution.fromJson);
 

@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'raw_favourite.g.dart';
 
+//Class to represent the raw data of a favourite
 @JsonSerializable()
 class RawFavourite {
   final int id;

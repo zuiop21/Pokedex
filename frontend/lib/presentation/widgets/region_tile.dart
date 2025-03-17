@@ -5,17 +5,23 @@ import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/data/models/processed/region.dart';
 
+//A widget that displays a region
 class RegionTile extends StatelessWidget {
   final Region region;
   const RegionTile({super.key, required this.region});
 
+//Navigate to the pokemons view of the region
   void _showPokemonsByRegion(BuildContext context) {
     context.read<PokemonBloc>().add(SortPokemonByRegionEvent(region: region));
-    Navigator.of(context).pushNamed("/pokemons");
+    Navigator.of(context).pushNamed("/pokemons", arguments: region.name);
   }
 
   @override
   Widget build(BuildContext context) {
+    //Find the pokemons of the region, that can be found
+    final pokemons =
+        context.read<PokemonBloc>().state.findBaseFormsByRegion(region);
+
     return GestureDetector(
       onTap: () => _showPokemonsByRegion(context),
       child: Card(
@@ -36,7 +42,7 @@ class RegionTile extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
-                    stops: [0.2, 1.0],
+                    stops: [0.25, 1.0],
                     colors: [
                       Colors.black.withAlpha(130),
                       AppColors.lightGrey.withAlpha(80),
@@ -45,7 +51,7 @@ class RegionTile extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(25.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Row(
                   children: [
                     Column(
@@ -66,27 +72,55 @@ class RegionTile extends StatelessWidget {
                         )
                       ],
                     ),
-                    Spacer(
-                      flex: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Icon(
-                        Icons.circle,
-                        size: 50,
+                    Spacer(),
+                    if (pokemons.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CachedNetworkImage(
+                            fit: BoxFit.fill,
+                            imageUrl: pokemons[0].imgUrl,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
+                        ),
                       ),
-                    ),
-                    Icon(
-                      Icons.circle,
-                      size: 50,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Icon(
-                        Icons.circle,
-                        size: 50,
+                    if (pokemons.length > 1)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CachedNetworkImage(
+                            fit: BoxFit.fill,
+                            imageUrl: pokemons[1].imgUrl,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
+                        ),
                       ),
-                    ),
+                    if (pokemons.length > 2)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CachedNetworkImage(
+                            fit: BoxFit.fill,
+                            imageUrl: pokemons[2].imgUrl,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
+                        ),
+                      ),
                     Spacer(),
                   ],
                 ),

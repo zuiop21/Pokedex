@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/data/models/processed/type.dart';
 import 'package:frontend/presentation/widgets/blurred_image.dart';
 import 'package:frontend/presentation/widgets/pokemon_evolution_types.dart';
 
+//A widget that displays the evolutions of a pokemon
 class PokemonEvolvesToContainer extends StatelessWidget {
-  final Pokemon pokemon;
+  final int pokemonId;
 
-  const PokemonEvolvesToContainer({super.key, required this.pokemon});
+  const PokemonEvolvesToContainer({super.key, required this.pokemonId});
 
   @override
   Widget build(BuildContext context) {
-    List<Type> strengthTypes = pokemon.getStrengthTypesForPokemon();
+    //Find the pokemon by it's id
+    final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
+    //Find the strength types of the pokemon
+    List<Type> strengthTypes = pokemon!.getStrengthTypesForPokemon();
+    //Find the evolution of the pokemon
     final evolution = context
         .read<PokemonBloc>()
         .state
@@ -106,7 +110,7 @@ class PokemonEvolvesToContainer extends StatelessWidget {
                             "Number ${pokemon.id}",
                             style: TextStyle(fontSize: 16),
                           ),
-                          PokemonEvolutionTypes(pokemon: pokemon),
+                          PokemonEvolutionTypes(pokemonId: pokemon.id),
                         ],
                       ),
                     ),

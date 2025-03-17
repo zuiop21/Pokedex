@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'raw_region.g.dart';
 
+//Class to represent the raw data of a region
 @JsonSerializable()
 class RawRegion {
   const RawRegion(

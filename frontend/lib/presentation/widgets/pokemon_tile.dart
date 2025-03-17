@@ -1,23 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/data/models/processed/pokemon.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/presentation/widgets/pokemon_favourite_icon.dart';
 import 'package:frontend/presentation/widgets/pokemon_tile_types.dart';
 
+//A widget that displays a pokemon
 class PokemonTile extends StatelessWidget {
-  final Pokemon pokemon;
-  const PokemonTile({super.key, required this.pokemon});
+  final int pokemonId;
+  const PokemonTile({super.key, required this.pokemonId});
 
+//Navigate to the info view of the pokemon
   void _handleNavigationToInfoView(BuildContext context) {
     Navigator.pushNamed(
       context,
       "/pokemon/info",
-      arguments: pokemon,
+      arguments: pokemonId,
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
     return GestureDetector(
       onTap: () => _handleNavigationToInfoView(context),
       child: Card(
@@ -38,7 +42,7 @@ class PokemonTile extends StatelessWidget {
                       bottomLeft: Radius.circular(15),
                     ),
                     color:
-                        Color(int.parse(pokemon.types[0].color)).withAlpha(77),
+                        Color(int.parse(pokemon!.types[0].color)).withAlpha(77),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +69,7 @@ class PokemonTile extends StatelessWidget {
                       Expanded(
                         flex: 40,
                         child: PokemonTileTypes(
-                          pokemon: pokemon,
+                          pokemonId: pokemon.id,
                           leftPadding: 10,
                         ),
                       )
@@ -143,7 +147,7 @@ class PokemonTile extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: PokemonFavouriteIcon(
-                          pokemon: pokemon,
+                          pokemonId: pokemon.id,
                         ),
                       ),
                     ),

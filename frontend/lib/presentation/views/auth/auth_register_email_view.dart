@@ -6,6 +6,7 @@ import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/widgets/email_textfield.dart';
 import 'package:frontend/presentation/widgets/flow_button.dart';
 
+//The view to register with email
 class AuthRegisterEmailView extends StatefulWidget {
   const AuthRegisterEmailView({super.key});
 
@@ -16,10 +17,12 @@ class AuthRegisterEmailView extends StatefulWidget {
 class _AuthRegisterEmailViewState extends State<AuthRegisterEmailView> {
   late TextEditingController _emailController;
 
+//Method to listen to the changes in the textfields
   void _textFieldValueChangedListener() {
     context.read<AuthTextfieldCubit>().validateForm(_emailController.text);
   }
 
+//Method to handle the email registration
   void _handleEmailRegister(BuildContext context) {
     Navigator.of(context).pushNamed(
       "/auth/register/password",
@@ -27,6 +30,7 @@ class _AuthRegisterEmailViewState extends State<AuthRegisterEmailView> {
     );
   }
 
+//Initstate method to initialize the text controllers and add listeners
   @override
   void initState() {
     super.initState();
@@ -34,6 +38,7 @@ class _AuthRegisterEmailViewState extends State<AuthRegisterEmailView> {
     _emailController.addListener(_textFieldValueChangedListener);
   }
 
+//Dispose method to dispose the text controllers
   @override
   void dispose() {
     _emailController.dispose();

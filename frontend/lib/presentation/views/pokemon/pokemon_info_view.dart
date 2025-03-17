@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/presentation/widgets/pokemon_basic_info.dart';
 import 'package:frontend/presentation/widgets/pokemon_body_info.dart';
 import 'package:frontend/presentation/widgets/pokemon_evolution_info.dart';
@@ -10,12 +9,13 @@ import 'package:frontend/presentation/widgets/pokemon_info_appbar.dart';
 import 'package:frontend/presentation/widgets/pokemon_weaknesses_grid.dart';
 
 class PokemonInfoView extends StatelessWidget {
-  final Pokemon pokemon;
-  const PokemonInfoView({super.key, required this.pokemon});
+  final int pokemonId;
+  const PokemonInfoView({super.key, required this.pokemonId});
 
   @override
   @override
   Widget build(BuildContext context) {
+    final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
     return BlocBuilder<PokemonBloc, PokemonState>(
       builder: (context, state) {
         return Scaffold(
@@ -25,7 +25,7 @@ class PokemonInfoView extends StatelessWidget {
               SizedBox(
                 height: 230,
                 width: double.infinity,
-                child: PokemonInfoAppbar(pokemonId: pokemon.id),
+                child: PokemonInfoAppbar(pokemonId: pokemon!.id),
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -36,7 +36,7 @@ class PokemonInfoView extends StatelessWidget {
                         child: SizedBox(
                             height: 250,
                             width: double.infinity,
-                            child: PokemonBasicInfo(pokemon: pokemon)),
+                            child: PokemonBasicInfo(pokemonId: pokemon.id)),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -51,7 +51,7 @@ class PokemonInfoView extends StatelessWidget {
                         child: SizedBox(
                             height: 270,
                             width: double.infinity,
-                            child: PokemonBodyInfo(pokemon: pokemon)),
+                            child: PokemonBodyInfo(pokemonId: pokemon.id)),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -59,7 +59,7 @@ class PokemonInfoView extends StatelessWidget {
                         child: SizedBox(
                           width: double.infinity,
                           child: PokemonWeaknessesGrid(
-                            pokemon: pokemon,
+                            pokemonId: pokemon.id,
                           ),
                         ),
                       ),
@@ -67,7 +67,7 @@ class PokemonInfoView extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: SizedBox(
                           width: double.infinity,
-                          child: PokemonEvolutionInfo(pokemon: pokemon),
+                          child: PokemonEvolutionInfo(pokemonId: pokemon.id),
                         ),
                       ),
                     ],

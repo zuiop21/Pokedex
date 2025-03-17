@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:frontend/data/models/raw/raw_pokemon_type.dart';
 import 'package:frontend/data/models/raw/raw_type.dart';
 
+//Class to represent a type
 class Type extends Equatable {
   const Type(
       {required this.isWeakness,
@@ -20,6 +21,7 @@ class Type extends Equatable {
   final String imgUrl;
   final String imgUrlOutline;
 
+//Method to create a Type object from a RawType and RawPokemonType object
   factory Type.fromRaw(RawType rawType, RawPokemonType rawPokemonType) {
     return Type(
         isWeakness: rawPokemonType.is_weakness,

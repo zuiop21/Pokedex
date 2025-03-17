@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:frontend/data/models/processed/pokemon.dart';
 
+//An image with a gradient that blurs the image
 class BlurredImage extends StatelessWidget {
   final double beginValue;
   final double endValue;

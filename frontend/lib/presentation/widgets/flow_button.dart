@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Blue button used to traverse the onboarding screens
 class FlowButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Widget child;

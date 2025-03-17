@@ -61,6 +61,7 @@ class PokemonView extends StatelessWidget {
                 toolbarHeight: 80,
               ),
             2 => AppBar(
+                surfaceTintColor: Colors.transparent,
                 backgroundColor: Colors.white,
                 bottom: PreferredSize(
                   preferredSize: Size.fromHeight(1.0),

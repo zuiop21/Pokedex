@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/data/models/processed/pokemon.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/presentation/widgets/pokemon_circled_type.dart';
 
+//A widget that displays the weaknesses of a pokemon
 class PokemonWeaknessesGrid extends StatelessWidget {
-  final Pokemon pokemon;
+  final int pokemonId;
 
-  const PokemonWeaknessesGrid({super.key, required this.pokemon});
+  const PokemonWeaknessesGrid({super.key, required this.pokemonId});
 
   @override
   Widget build(BuildContext context) {
-    final weaknesses = pokemon.getWeaknessTypesForPokemon();
+    //Find the pokemon by it's id
+    final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
+    //Find the weaknesses of the pokemon
+    final weaknesses = pokemon!.getWeaknessTypesForPokemon();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

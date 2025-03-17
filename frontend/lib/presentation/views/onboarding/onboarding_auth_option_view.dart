@@ -5,6 +5,7 @@ import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/onboarding_page.dart';
 import 'package:frontend/presentation/widgets/flow_button.dart';
 
+//The view that is shown when the user is choosing between creating an account or logging in
 class OnboardingAuthOptionView extends StatelessWidget {
   const OnboardingAuthOptionView({super.key});
 

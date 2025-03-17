@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/data/models/processed/type.dart';
 
+//A widget that displays a dropdown button to sort the pokemon by type
 class PokemonTypeSortingButton extends StatelessWidget {
   const PokemonTypeSortingButton({super.key});
 
+//Method that returns the text color based on the type's background color
   Color getTextColorBasedOnBackground(Color backgroundColor) {
     double red = backgroundColor.r * 255;
     double green = backgroundColor.g * 255;
@@ -17,6 +19,7 @@ class PokemonTypeSortingButton extends StatelessWidget {
     return brightness > 128 ? Colors.black : Colors.white;
   }
 
+//Method that is called when the dropdown value changes
   void _dropdownCallback(BuildContext context, String? value) {
     context
         .read<PokemonBloc>()
@@ -25,6 +28,7 @@ class PokemonTypeSortingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //! BlocBuilder is used to rebuild the widget when the state changes
     return BlocBuilder<PokemonBloc, PokemonState>(
       builder: (context, state) {
         return DropdownButton2(
@@ -32,7 +36,7 @@ class PokemonTypeSortingButton extends StatelessWidget {
               offset: Offset.fromDirection(0, -2),
               direction: DropdownDirection.right,
               width: MediaQuery.of(context).size.width * 0.89,
-              maxHeight: MediaQuery.of(context).size.height * 0.62),
+              maxHeight: MediaQuery.of(context).size.height * 0.625),
           value: state.dropDownValue1,
           buttonStyleData: ButtonStyleData(
             decoration: BoxDecoration(

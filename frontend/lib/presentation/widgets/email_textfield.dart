@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/constants/app_colors.dart';
 
+//Textfield used for email input
 class EmailTextField extends StatelessWidget {
   final String label;
   final TextEditingController controller;

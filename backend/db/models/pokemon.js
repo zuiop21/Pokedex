@@ -88,7 +88,7 @@ const Pokemon = sequelize.define("Pokemons", {
   },
   gender: {
     allowNull: false,
-    type: Sequelize.INTEGER,
+    type: Sequelize.DOUBLE,
     validate: {
       notNull: {
         msg: "Gender cannot be null",

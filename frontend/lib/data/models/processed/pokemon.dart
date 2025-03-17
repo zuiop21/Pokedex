@@ -5,6 +5,7 @@ import 'package:frontend/data/models/raw/raw_pokemon.dart';
 import 'package:frontend/data/models/processed/type.dart';
 import 'package:frontend/data/models/raw/raw_pokemon_type.dart';
 
+//Class to represent a pokemon
 class Pokemon extends Equatable {
   final int id;
   final int level;
@@ -22,6 +23,7 @@ class Pokemon extends Equatable {
   final List<Type> types;
   final Pokemon? evolvesTo;
 
+//Getter method to get the strength types for a pokemon
   List<Type> getStrengthTypesForPokemon() {
     return types
         .where((t) =>
@@ -30,6 +32,7 @@ class Pokemon extends Equatable {
         .toList();
   }
 
+//Getter method to get the weakness types for a pokemon
   List<Type> getWeaknessTypesForPokemon() {
     return types
         .where((t) =>
@@ -55,6 +58,7 @@ class Pokemon extends Equatable {
       required this.types,
       this.evolvesTo});
 
+//Method to create a Pokemon object from a RawPokemon object
   factory Pokemon.fromRaw(RawPokemon rawPokemon) {
     return Pokemon(
         id: rawPokemon.id,

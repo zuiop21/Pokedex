@@ -11,14 +11,17 @@ import 'package:frontend/presentation/views/loading_view.dart';
 import 'package:frontend/presentation/views/pokemon/pokemon_view.dart';
 import 'package:frontend/presentation/widgets/flow_button.dart';
 
+//The view that is shown when the login is successful
 class AuthLoginSuccessView extends StatelessWidget {
   const AuthLoginSuccessView({super.key});
 
+//Method to handle the button action
   void _handleButtonAction(BuildContext context) {
     final token = context.read<AuthBloc>().state.user!.token;
     context.read<PokemonBloc>().add(GetPokemonEvent(token: token));
   }
 
+//Method to show an error dialog
   void _showErrorDialog(BuildContext context, String? errorMessage) {
     showDialog(
       context: context,
@@ -39,6 +42,8 @@ class AuthLoginSuccessView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //! BlocConsumer is used to listen to the state changes of the PokemonBloc,
+    //! and rebuild the UI accordingly
     return BlocConsumer<PokemonBloc, PokemonState>(
       listener: (context, state) {
         if (state.status == PokemonStatus.failure) {

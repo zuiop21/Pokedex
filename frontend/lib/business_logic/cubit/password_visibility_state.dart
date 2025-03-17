@@ -1,5 +1,6 @@
 part of 'password_visibility_cubit.dart';
 
+//The state of the PasswordVisibilityCubit
 class PasswordVisibilityState extends Equatable {
   final bool isVisible;
 

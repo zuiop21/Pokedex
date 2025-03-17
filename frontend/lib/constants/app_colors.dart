@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Class to store the colors used in the app
 class AppColors {
   static const Color darkBlue = Color(0xFF000029);
   static const Color blue = Color(0xFF173EA5);

@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/presentation/widgets/pokemon_evolves_to_container.dart';
 
+//A widget that displays the evolutions of a pokemon
 class PokemonEvolutionInfo extends StatelessWidget {
-  final Pokemon pokemon;
-  const PokemonEvolutionInfo({super.key, required this.pokemon});
+  final int pokemonId;
+  const PokemonEvolutionInfo({super.key, required this.pokemonId});
 
   @override
   Widget build(BuildContext context) {
+    //Find the pokemon by it's id
+    final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
+    //Find the evolution chain of the pokemon
     final evolutionChain =
-        context.read<PokemonBloc>().state.findEvolutionChain(pokemon);
+        context.read<PokemonBloc>().state.findEvolutionChain(pokemon!);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -38,7 +41,7 @@ class PokemonEvolutionInfo extends StatelessWidget {
             itemCount: evolutionChain.length,
             itemBuilder: (context, index) {
               return PokemonEvolvesToContainer(
-                pokemon: evolutionChain[index],
+                pokemonId: evolutionChain[index].id,
               );
             },
           ),

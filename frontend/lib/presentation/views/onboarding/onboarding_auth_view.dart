@@ -6,6 +6,7 @@ import 'package:frontend/presentation/pages/onboarding_page.dart';
 import 'package:frontend/presentation/widgets/auth_button.dart';
 import 'package:frontend/presentation/widgets/flow_button.dart';
 
+//The view that is shown when the user is choosing between different authentication methods
 class OnboardingAuthView extends StatelessWidget {
   final String title;
   final String pageTitle;
@@ -20,14 +21,17 @@ class OnboardingAuthView extends StatelessWidget {
       required this.imagePath,
       required this.emailPath});
 
+  //Method to handle the Apple login
   void _handleAppleLogin() {
     // TODO: Implement Apple logic
   }
 
+//Method to handle the Google login
   void _handleGoogleLogin() {
     // TODO: Implement Google logic
   }
 
+//Method to handle the email login
   void _handleEmailLogin(BuildContext context) {
     Navigator.of(context).pushNamed(emailPath);
   }

@@ -1,7 +1,9 @@
 part of 'pokemon_bloc.dart';
 
+//Main class for the Pokemon events
 sealed class PokemonEvent extends Equatable {}
 
+//Event to get all the data from the repository
 final class GetPokemonEvent extends PokemonEvent {
   GetPokemonEvent({required this.token});
   final String token;
@@ -9,6 +11,7 @@ final class GetPokemonEvent extends PokemonEvent {
   List<Object?> get props => [token];
 }
 
+//Event to sort the pokemons by type
 final class SortPokemonByTypeEvent extends PokemonEvent {
   SortPokemonByTypeEvent({required this.dropDownValue});
   final String dropDownValue;
@@ -16,13 +19,15 @@ final class SortPokemonByTypeEvent extends PokemonEvent {
   List<Object?> get props => [dropDownValue];
 }
 
-final class OrderPokemonByNumberEvent extends PokemonEvent {
-  OrderPokemonByNumberEvent({required this.dropDownValue});
+//Event to order the pokemons by id
+final class OrderPokemonByIdEvent extends PokemonEvent {
+  OrderPokemonByIdEvent({required this.dropDownValue});
   final String dropDownValue;
   @override
   List<Object?> get props => [dropDownValue];
 }
 
+//Event to sort the pokemons by name
 final class SortPokemonByNameEvent extends PokemonEvent {
   SortPokemonByNameEvent({required this.searchBarValue});
   final String searchBarValue;
@@ -30,6 +35,7 @@ final class SortPokemonByNameEvent extends PokemonEvent {
   List<Object?> get props => [searchBarValue];
 }
 
+//Event to sort the pokemons by region
 final class SortPokemonByRegionEvent extends PokemonEvent {
   SortPokemonByRegionEvent({required this.region});
   final Region? region;
@@ -37,6 +43,7 @@ final class SortPokemonByRegionEvent extends PokemonEvent {
   List<Object?> get props => [region];
 }
 
+//Event to favourite a pokemon
 final class FavouritePokemonEvent extends PokemonEvent {
   final Pokemon pokemon;
 

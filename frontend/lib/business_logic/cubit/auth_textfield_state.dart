@@ -1,5 +1,6 @@
 part of 'auth_textfield_cubit.dart';
 
+//The state of the AuthTextfieldCubit
 final class AuthTextfieldState extends Equatable {
   final bool textFieldCondition;
 

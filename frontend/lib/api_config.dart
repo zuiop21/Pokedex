@@ -1,5 +1,6 @@
 import 'dart:io';
 
+//Config class to store the base url of the API, based on the platform
 class ApiConfig {
   static final String _baseUrl = _getBaseUrl();
 

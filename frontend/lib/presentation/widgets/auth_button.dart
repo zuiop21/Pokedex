@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/constants/app_colors.dart';
 
+//Button used in the authentication screens
+//Email, Google, Apple
 class AuthButton extends StatelessWidget {
   final String iconPath;
   final String text;

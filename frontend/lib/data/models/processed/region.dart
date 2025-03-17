@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:frontend/data/models/raw/raw_region.dart';
 
+//Class to represent a region
 class Region extends Equatable {
   const Region(
       {required this.id,
@@ -13,6 +14,7 @@ class Region extends Equatable {
   final int difficulty;
   final String imgUrl;
 
+//Method to create a Region object from a RawRegion object
   factory Region.fromRaw(RawRegion rawRegion) {
     return Region(
         id: rawRegion.id,

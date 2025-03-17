@@ -36,7 +36,7 @@ module.exports = {
       },
       gender: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.DOUBLE,
       },
       level: {
         allowNull: false,

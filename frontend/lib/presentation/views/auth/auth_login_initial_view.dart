@@ -9,6 +9,7 @@ import 'package:frontend/presentation/views/auth/auth_login_success_view.dart';
 import 'package:frontend/presentation/widgets/email_textfield.dart';
 import 'package:frontend/presentation/widgets/password_textfield.dart';
 
+//The initial view of the login page
 class AuthLoginInitialView extends StatefulWidget {
   const AuthLoginInitialView({super.key});
 
@@ -20,17 +21,20 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
+//Method to listen to the changes in the textfields
   void _textFieldValueChangedListener() {
     context
         .read<AuthTextfieldCubit>()
         .validateForm(_emailController.text, _passwordController.text);
   }
 
+//Method to handle the login
   void _handleLogin(BuildContext context) {
     context.read<AuthBloc>().add(LoginEvent(
         email: _emailController.text, password: _passwordController.text));
   }
 
+//Initstate method to initialize the text controllers and add listeners
   @override
   void initState() {
     super.initState();
@@ -40,6 +44,7 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
     _passwordController.addListener(_textFieldValueChangedListener);
   }
 
+//Dispose method to dispose the text controllers
   @override
   void dispose() {
     _emailController.dispose();
@@ -47,6 +52,7 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
     super.dispose();
   }
 
+//Method to show an error dialog
   void _showErrorDialog(BuildContext context, String? errorMessage) {
     showDialog(
       context: context,
@@ -75,7 +81,6 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
       },
       builder: (context, state) {
         switch (state.status) {
-          //TODO kiszervezni külön nézetbe
           case AuthStatus.initial:
           case AuthStatus.failure:
             return AuthPage(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/cubit/password_visibility_cubit.dart';
 import 'package:frontend/constants/app_colors.dart';
 
+//Textfield for password input
 class PasswordTextField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
@@ -13,14 +14,18 @@ class PasswordTextField extends StatelessWidget {
     required this.controller,
   });
 
+//Method to handle the visibility of the password textfield
   void _handlePasswordVisibility(BuildContext context) {
     context.read<PasswordVisibilityCubit>().toggleVisibility();
   }
 
   @override
   Widget build(BuildContext context) {
+    //! Textfield with it's own provider
     return BlocProvider(
       create: (context) => PasswordVisibilityCubit(),
+
+      //! BlocBuilder to rebuild the widget when the state changes
       child: BlocBuilder<PasswordVisibilityCubit, PasswordVisibilityState>(
         builder: (context, state) {
           return Column(

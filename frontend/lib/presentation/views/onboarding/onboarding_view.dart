@@ -8,6 +8,7 @@ import 'package:frontend/presentation/pages/onboarding_page.dart';
 import 'package:frontend/presentation/widgets/flow_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+//The view that is shown when the user is onboarding
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
 
@@ -18,18 +19,21 @@ class OnboardingView extends StatefulWidget {
 class _OnboardingViewState extends State<OnboardingView> {
   late PageController _pageController;
 
+//Initstate method to initialize the page controller
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
   }
 
+//Dispose method to dispose the page controller
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
   }
 
+//Method to handle the navigation
   void _handleNavigation(BuildContext context, int page) {
     if (page == 0) {
       context.read<LandingPageCubit>().nextPage(1);
@@ -40,6 +44,7 @@ class _OnboardingViewState extends State<OnboardingView> {
 
   @override
   Widget build(BuildContext context) {
+    //! BlocProvider is used to provide the LandingPageCubit to the widget tree
     return BlocProvider(
       create: (context) => LandingPageCubit(),
       child: Scaffold(

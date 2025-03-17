@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'raw_type.g.dart';
 
+//Class to represent the raw data of a type
 @JsonSerializable()
 class RawType {
   final int id;

@@ -12,6 +12,7 @@ RawType _$RawTypeFromJson(Map<String, dynamic> json) => RawType(
       color: json['color'] as String,
       imgUrl: json['imgUrl'] as String,
       imgUrlOutline: json['imgUrlOutline'] as String,
+      is_weakness: $enumDecode(_$WeaknessStatusEnumMap, json['is_weakness']),
     );
 
 Map<String, dynamic> _$RawTypeToJson(RawType instance) => <String, dynamic>{
@@ -20,4 +21,11 @@ Map<String, dynamic> _$RawTypeToJson(RawType instance) => <String, dynamic>{
       'color': instance.color,
       'imgUrl': instance.imgUrl,
       'imgUrlOutline': instance.imgUrlOutline,
+      'is_weakness': _$WeaknessStatusEnumMap[instance.is_weakness]!,
     };
+
+const _$WeaknessStatusEnumMap = {
+  WeaknessStatus.yes: 'yes',
+  WeaknessStatus.no: 'no',
+  WeaknessStatus.both: 'both',
+};

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
-import 'package:frontend/presentation/widgets/pokemon_circled_type.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_circled_type.dart';
 
 //A widget that displays the weaknesses of a pokemon
 class PokemonWeaknessesGrid extends StatelessWidget {

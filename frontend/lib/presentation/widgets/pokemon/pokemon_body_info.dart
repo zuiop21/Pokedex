@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 
-import 'package:frontend/presentation/widgets/pokemon_gender_container.dart';
-import 'package:frontend/presentation/widgets/pokemon_info_container.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_gender_container.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_info_container.dart';
 
 //A widget that displays some basic information of a pokemon
 //Such as the weight, height, category and ability

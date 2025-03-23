@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/presentation/widgets/pokemon_basic_info.dart';
-import 'package:frontend/presentation/widgets/pokemon_body_info.dart';
-import 'package:frontend/presentation/widgets/pokemon_evolution_info.dart';
-import 'package:frontend/presentation/widgets/pokemon_info_appbar.dart';
-import 'package:frontend/presentation/widgets/pokemon_weaknesses_grid.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_basic_info.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_body_info.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_evolution_info.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_info_appbar.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_weaknesses_grid.dart';
 
 class PokemonInfoView extends StatelessWidget {
   final int pokemonId;

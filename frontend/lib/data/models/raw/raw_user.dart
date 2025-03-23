@@ -9,12 +9,17 @@ class RawUser {
   final String role;
   final int region_id;
   final String token;
+  final String name;
+  final String email;
 
-  const RawUser(
-      {required this.region_id,
-      required this.role,
-      required this.id,
-      required this.token});
+  RawUser({
+    required this.id,
+    required this.role,
+    required this.region_id,
+    required this.token,
+    required this.name,
+    required this.email,
+  });
 
   factory RawUser.fromJson(Map<String, dynamic> json) =>
       _$RawUserFromJson(json);

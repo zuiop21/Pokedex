@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/pokemon_list_page.dart';
-import 'package:frontend/presentation/widgets/pokemon_search_bar.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_search_bar.dart';
 
 class PokemonListRegionView extends StatelessWidget {
   final String regionName;
@@ -16,6 +16,7 @@ class PokemonListRegionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<PokemonBloc>().state.searchBarValue;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(

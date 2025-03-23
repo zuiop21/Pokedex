@@ -4,7 +4,7 @@ import 'package:frontend/api_config.dart';
 import 'package:frontend/data/models/raw/raw_evolution.dart';
 import 'package:frontend/data/models/raw/raw_favourite.dart';
 import 'package:frontend/data/models/raw/raw_pokemon.dart';
-import 'package:frontend/data/models/raw/raw_pokemon_type.dart';
+
 import 'package:frontend/data/models/raw/raw_region.dart';
 import 'package:frontend/data/models/raw/raw_type.dart';
 
@@ -59,9 +59,6 @@ class PokemonService {
 
   Future<List<RawPokemon>> fetchRawPokemons() =>
       _fetchData('pokemons', RawPokemon.fromJson);
-
-  Future<List<RawPokemonType>> fetchRawPokemonTypes() =>
-      _fetchData('pokemontypes', RawPokemonType.fromJson);
 
   Future<List<RawRegion>> fetchRawRegions() =>
       _fetchData('regions', RawRegion.fromJson);

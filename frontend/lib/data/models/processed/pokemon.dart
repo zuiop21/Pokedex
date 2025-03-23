@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import 'package:frontend/data/models/raw/raw_pokemon.dart';
 import 'package:frontend/data/models/processed/type.dart';
-import 'package:frontend/data/models/raw/raw_pokemon_type.dart';
+
+enum WeaknessStatus { yes, no, both }
 
 //Class to represent a pokemon
 class Pokemon extends Equatable {
@@ -73,7 +74,7 @@ class Pokemon extends Equatable {
         isBaseForm: rawPokemon.is_base_form,
         imgUrl: rawPokemon.imgUrl,
         regionId: rawPokemon.region_id,
-        types: const [],
+        types: rawPokemon.types.map((t) => Type.fromRaw(t)).toList(),
         isFavourited: false);
   }
 

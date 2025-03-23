@@ -1,5 +1,5 @@
 "use strict";
-const { Model, Sequelize } = require("sequelize");
+const { Model, Sequelize, DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 const sequelize = require("../../config/database");
 const AppError = require("../../utils/appError");
@@ -17,8 +17,8 @@ const User = sequelize.define("Users", {
     type: Sequelize.INTEGER,
   },
   role: {
+    type: DataTypes.ENUM("super", "admin", "user"),
     allowNull: false,
-    type: Sequelize.STRING,
     validate: {
       notNull: {
         msg: "Role cannot be null",
@@ -27,8 +27,8 @@ const User = sequelize.define("Users", {
         msg: "Role cannot be empty",
       },
       isIn: {
-        args: [["admin", "user"]],
-        msg: "Role must be either 'admin' or 'user'",
+        args: [["super", "admin", "user"]],
+        msg: "Role must be either 'super', 'admin' or 'user'",
       },
     },
   },
@@ -71,6 +71,18 @@ const User = sequelize.define("Users", {
           400
         );
       }
+    },
+  },
+  name: {
+    allowNull: false,
+    type: Sequelize.STRING,
+    validate: {
+      notNull: {
+        msg: "Name cannot be null",
+      },
+      notEmpty: {
+        msg: "Name cannot be empty",
+      },
     },
   },
   region_id: {

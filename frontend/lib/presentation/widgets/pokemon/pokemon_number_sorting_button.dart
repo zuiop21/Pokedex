@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/presentation/widgets/pokemon_dropdown_menu_item.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_dropdown_menu_item.dart';
 
 //A widget that displays a dropdown button for sorting the pokemon by id
 class PokemonIdSortingButton extends StatelessWidget {

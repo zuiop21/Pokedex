@@ -7,10 +7,12 @@ part of 'raw_user.dart';
 // **************************************************************************
 
 RawUser _$RawUserFromJson(Map<String, dynamic> json) => RawUser(
-      region_id: (json['region_id'] as num).toInt(),
-      role: json['role'] as String,
       id: (json['id'] as num).toInt(),
+      role: json['role'] as String,
+      region_id: (json['region_id'] as num).toInt(),
       token: json['token'] as String,
+      name: json['name'] as String,
+      email: json['email'] as String,
     );
 
 Map<String, dynamic> _$RawUserToJson(RawUser instance) => <String, dynamic>{
@@ -18,4 +20,6 @@ Map<String, dynamic> _$RawUserToJson(RawUser instance) => <String, dynamic>{
       'role': instance.role,
       'region_id': instance.region_id,
       'token': instance.token,
+      'name': instance.name,
+      'email': instance.email,
     };

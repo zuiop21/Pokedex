@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/data/models/processed/evolution.dart';
 import 'package:frontend/data/models/processed/pokemon.dart';
@@ -20,6 +21,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
     on<SortPokemonByNameEvent>(_sortByName);
     on<SortPokemonByRegionEvent>(_sortByRegion);
     on<FavouritePokemonEvent>(_favouritePokemonEvent);
+    on<ResetSearchBarEvent>(_resetSearchBar);
   }
 
   //Method to get all the data from the repository
@@ -118,7 +120,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
 //Method that gets called when we want to sort the pokemons by region
   void _sortByRegion(
       SortPokemonByRegionEvent event, Emitter<PokemonState> emit) {
-    emit(state.copyWith(regionFilter: event.region));
+    emit(state.copyWith(regionFilter: () => event.region, searchBarValue: ""));
     _applyFilterAndOrdering(emit);
   }
 
@@ -134,5 +136,10 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
     }
 
     emit(state.copyWith(pokemons: updatedPokemons));
+  }
+
+  void _resetSearchBar(ResetSearchBarEvent event, Emitter<PokemonState> emit) {
+    emit(state.copyWith(searchBarValue: ""));
+    _applyFilterAndOrdering(emit);
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
-import 'package:frontend/presentation/widgets/pokemon_tile_types.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_tile_types.dart';
 
 //A widget that displays a favourite pokemon
 class PokemonFavouriteTile extends StatelessWidget {

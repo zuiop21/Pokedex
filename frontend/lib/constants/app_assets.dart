@@ -14,6 +14,10 @@ class AppAssets {
       'assets/images/favourites_unselect.png';
   static const String regionsSelect = 'assets/images/regions_select.png';
   static const String regionsUnselect = 'assets/images/regions_unselect.png';
+  static const String userSelect = 'assets/images/user_select.png';
+  static const String userUnselect = 'assets/images/user_unselect.png';
+  static const String adminSelect = 'assets/images/admin_select.png';
+  static const String adminUnselect = 'assets/images/admin_unselect.png';
 
 //Images
   static const String trainer1 = 'assets/images/trainer1.jpeg';

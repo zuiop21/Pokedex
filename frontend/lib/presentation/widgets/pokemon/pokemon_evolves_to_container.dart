@@ -5,7 +5,7 @@ import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/data/models/processed/type.dart';
 import 'package:frontend/presentation/widgets/blurred_image.dart';
-import 'package:frontend/presentation/widgets/pokemon_evolution_types.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_evolution_types.dart';
 
 //A widget that displays the evolutions of a pokemon
 class PokemonEvolvesToContainer extends StatelessWidget {

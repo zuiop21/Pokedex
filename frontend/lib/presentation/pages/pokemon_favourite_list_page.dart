@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/data/models/processed/pokemon.dart';
-import 'package:frontend/presentation/widgets/pokemon_favourite_tile.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_favourite_tile.dart';
 
 class PokemonFavouriteListPage extends StatelessWidget {
   final List<Pokemon> favourites;

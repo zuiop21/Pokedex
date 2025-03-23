@@ -32,6 +32,7 @@ class PokemonInfoAppbar extends StatelessWidget {
               left: -MediaQuery.of(context).size.width * 0.055,
               child: ShaderMask(
                 //TODO blurred img
+                //TODO kör alapján levágás
                 shaderCallback: (Rect bounds) {
                   return LinearGradient(
                     begin: Alignment.topLeft,

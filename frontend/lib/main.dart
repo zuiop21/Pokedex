@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/business_logic/bloc/admin_bloc.dart';
 import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
 import 'package:frontend/constants/app_assets.dart';
 import 'package:frontend/data/repositories/auth_repository.dart';
 import 'package:frontend/data/repositories/pokemon_repository.dart';
+import 'package:frontend/presentation/views/admin/admin_pokemon_view.dart';
+import 'package:frontend/presentation/views/admin/admin_region_view.dart';
+import 'package:frontend/presentation/views/admin/admin_type_view.dart';
+import 'package:frontend/presentation/views/admin/admin_user_view.dart';
 import 'package:frontend/presentation/views/auth/auth_login_initial_view.dart';
 import 'package:frontend/presentation/views/auth/auth_register_email_view.dart';
 import 'package:frontend/presentation/views/auth/auth_register_initial_view.dart';
@@ -37,6 +42,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => PokemonBloc(_pokemonRepository),
+        ),
+        BlocProvider(
+          create: (context) => AdminBloc(),
         ),
       ],
       child: MaterialApp(
@@ -84,6 +92,10 @@ class MyApp extends StatelessWidget {
                 ModalRoute.of(context)!.settings.arguments as String;
             return PokemonListRegionView(regionName: regionName);
           },
+          "/admin/users": (context) => AdminUserView(),
+          "/admin/pokemons": (context) => AdminPokemonView(),
+          "/admin/regions": (context) => AdminRegionView(),
+          "/admin/types": (context) => AdminTypeView(),
         },
         debugShowCheckedModeBanner: false,
       ),

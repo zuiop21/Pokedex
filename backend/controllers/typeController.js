@@ -57,7 +57,10 @@ const readAllType = catchAsync(async (req, res, next) => {
   }
 
   // Convert each Type instance to a plain object
-  const typeJSON = types.map((type) => type.toJSON());
+  const typeJSON = types.map((type) => ({
+    ...type.toJSON(),
+    is_weakness: "no",
+  }));
 
   // Return the response
   return res.status(200).json({

@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/business_logic/cubit/pokemon_bottom_nav_bar_cubit.dart';
 import 'package:frontend/constants/app_assets.dart';
@@ -10,14 +9,19 @@ import 'package:frontend/presentation/pages/onboarding_page.dart';
 import 'package:frontend/presentation/views/loading_view.dart';
 import 'package:frontend/presentation/views/pokemon/pokemon_view.dart';
 import 'package:frontend/presentation/widgets/flow_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //The view that is shown when the login is successful
 class AuthLoginSuccessView extends StatelessWidget {
   const AuthLoginSuccessView({super.key});
 
 //Method to handle the button action
-  void _handleButtonAction(BuildContext context) {
-    final token = context.read<AuthBloc>().state.user!.token;
+  void _handleButtonAction(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token") ?? "";
+
+    if (!context.mounted) return;
+
     context.read<PokemonBloc>().add(GetPokemonEvent(token: token));
   }
 

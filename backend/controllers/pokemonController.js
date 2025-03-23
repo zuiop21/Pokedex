@@ -151,24 +151,32 @@ const readPokemon = catchAsync(async (req, res, next) => {
  * @param {Object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  * @returns {Promise<void>} - Returns a JSON response with the Pokémon data.
- */
-const readAllPokemon = catchAsync(async (req, res, next) => {
+ */ const readAllPokemon = catchAsync(async (req, res, next) => {
   // Find all the pokémons
-  const pokemons = await Pokemon.findAll();
+  const pokemons = await Pokemon.findAll({
+    include: [
+      {
+        model: Type,
+        as: "types",
+        attributes: ["name", "id", "color", "imgUrl", "imgUrlOutline"],
+        through: { attributes: ["is_weakness"] },
+      },
+    ],
+  });
 
-  // If no Pokémon found, throw an error
-  if (!pokemons) {
-    return next(new AppError(`There aren't any pokémons`, 404));
-  }
-
-  // Convert each Pokémon instance to a plain object and flatten the evolution field
+  // Convert each Pokémon instance to a plain object and restructure the types array
   const pokemonsJSON = pokemons.map((pokemon) => {
     const plainPokemon = pokemon.toJSON();
 
-    if (plainPokemon.evolution) {
-      plainPokemon.evolves_to_id = plainPokemon.evolution.evolves_to_id;
-      delete plainPokemon.evolution;
-    }
+    // Transform the `types` array to include `is_weakness` directly
+    plainPokemon.types = plainPokemon.types.map((type) => ({
+      name: type.name,
+      id: type.id,
+      color: type.color,
+      imgUrl: type.imgUrl,
+      imgUrlOutline: type.imgUrlOutline,
+      is_weakness: type.PokemonTypes.is_weakness,
+    }));
 
     return plainPokemon;
   });

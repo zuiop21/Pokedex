@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
-import 'package:frontend/presentation/widgets/pokemon_favourite_icon.dart';
-import 'package:frontend/presentation/widgets/pokemon_tile_types.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_favourite_icon.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_tile_types.dart';
 
 //A widget that displays a pokemon
 class PokemonTile extends StatelessWidget {

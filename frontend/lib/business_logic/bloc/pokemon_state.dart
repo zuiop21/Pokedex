@@ -120,12 +120,12 @@ final class PokemonState extends Equatable {
     String? dropDownValue1,
     String? dropDownValue2,
     String? searchBarValue,
-    Region? regionFilter,
+    ValueGetter<Region?>? regionFilter,
     bool? changed,
   }) {
     return PokemonState(
       status: status ?? this.status,
-      error: error,
+      error: error ?? this.error,
       pokemons: pokemons ?? this.pokemons,
       types: types ?? this.types,
       dropDownValue1: dropDownValue1 ?? this.dropDownValue1,
@@ -134,7 +134,7 @@ final class PokemonState extends Equatable {
       searchBarValue: searchBarValue ?? this.searchBarValue,
       evolutions: evolutions ?? this.evolutions,
       regions: regions ?? this.regions,
-      regionFilter: regionFilter,
+      regionFilter: regionFilter != null ? regionFilter() : this.regionFilter,
       changed: changed ?? this.changed,
     );
   }

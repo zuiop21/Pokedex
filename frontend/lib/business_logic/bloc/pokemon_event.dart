@@ -51,3 +51,8 @@ final class FavouritePokemonEvent extends PokemonEvent {
   @override
   List<Object?> get props => [pokemon];
 }
+
+final class ResetSearchBarEvent extends PokemonEvent {
+  @override
+  List<Object?> get props => [];
+}

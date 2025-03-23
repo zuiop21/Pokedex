@@ -1,3 +1,4 @@
+import 'package:frontend/data/models/raw/raw_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'raw_pokemon.g.dart';
@@ -17,6 +18,7 @@ class RawPokemon {
   final bool is_base_form;
   final int region_id;
   final String imgUrl;
+  final List<RawType> types;
 
   RawPokemon(
       {required this.id,
@@ -30,6 +32,7 @@ class RawPokemon {
       required this.description,
       required this.is_base_form,
       required this.region_id,
+      required this.types,
       required this.imgUrl});
 
   factory RawPokemon.fromJson(Map<String, dynamic> json) =>

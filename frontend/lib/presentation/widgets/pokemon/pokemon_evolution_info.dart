@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/presentation/widgets/pokemon_evolves_to_container.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_evolves_to_container.dart';
 
 //A widget that displays the evolutions of a pokemon
 class PokemonEvolutionInfo extends StatelessWidget {

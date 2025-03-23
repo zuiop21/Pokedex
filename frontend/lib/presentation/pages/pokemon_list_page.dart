@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
-import 'package:frontend/presentation/widgets/pokemon_number_sorting_button.dart';
-import 'package:frontend/presentation/widgets/pokemon_type_sorting_button.dart';
-import 'package:frontend/presentation/widgets/pokemon_tile.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_number_sorting_button.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_type_sorting_button.dart';
+import 'package:frontend/presentation/widgets/pokemon/pokemon_tile.dart';
 
 class PokemonListPage extends StatelessWidget {
   const PokemonListPage({super.key});

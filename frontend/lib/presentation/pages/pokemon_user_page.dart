@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/auth_bloc.dart';
+import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/presentation/widgets/info_text.dart';
 
 import 'package:frontend/presentation/widgets/info_button.dart';
@@ -36,6 +37,15 @@ class PokemonUserPage extends StatelessWidget {
                   title: "Password",
                   subTitle: "**********",
                   function: () {}), //TODO func
+              InfoText(
+                  title: "From",
+                  subTitle: context
+                      .read<PokemonBloc>()
+                      .state
+                      .regions
+                      .where((r) => r.id == user.regionId)
+                      .first
+                      .name),
               InfoText(title: "Role", subTitle: user.role),
 
               Padding(

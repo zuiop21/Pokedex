@@ -113,6 +113,30 @@ const User = sequelize.define("Users", {
       },
     },
   },
+  imgUrl: {
+    allowNull: true,
+    type: Sequelize.STRING,
+    defaultValue: null,
+    validate: {
+      notEmpty: {
+        msg: "ImgUrl cannot be empty",
+      },
+    },
+  },
+  is_locked: {
+    allowNull: false,
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    validate: {
+      notNull: {
+        msg: "IsLocked cannot be null",
+      },
+      isIn: {
+        args: [[true, false]],
+        msg: "IsLocked must be either true or false",
+      },
+    },
+  },
   createdAt: {
     allowNull: false,
     type: Sequelize.DATE,

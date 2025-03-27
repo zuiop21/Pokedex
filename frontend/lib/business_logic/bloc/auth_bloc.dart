@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/data/models/processed/user.dart';
@@ -11,6 +13,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this._authRepository) : super(AuthState()) {
     on<LoginEvent>(_login);
     on<RegisterEvent>(_register);
+    on<UploadProfilePictureEvent>(_uploadImage);
+  }
+
+  Future<void> _uploadImage(
+      UploadProfilePictureEvent event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(status: AuthStatus.loading));
+    try {
+      final user = await _authRepository.uploadImage(event.token, event.image);
+      emit(state.copyWith(status: AuthStatus.success, user: user));
+    } catch (e) {
+      emit(state.copyWith(status: AuthStatus.failure, error: e.toString()));
+    }
   }
 
   Future<void> _login(LoginEvent event, Emitter<AuthState> emit) async {

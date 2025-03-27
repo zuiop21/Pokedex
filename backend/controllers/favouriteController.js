@@ -2,7 +2,6 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Favourite = require("../db/models/favourite");
 const Pokemon = require("../db/models/pokemon");
-const User = require("../db/models/user");
 
 /**
  * @file favouriteController.js
@@ -81,27 +80,26 @@ const createFavourite = catchAsync(async (req, res, next) => {
  * @returns {Promise<void>} - Returns a promise that resolves to void.
  */
 const readFavourite = catchAsync(async (req, res, next) => {
-  const user = await User.findByPk(req.user.id, {
-    attributes: [],
-    include: [
-      {
-        model: Pokemon,
-        as: "pokemons",
-        attributes: ["id", "name"],
-        through: {
-          attributes: [],
-        },
-      },
-    ],
+  const favourites = await Favourite.findAll({
+    where: {
+      user_id: req.user.id,
+    },
   });
 
-  if (!user) {
-    return next(new AppError(`User with id ${req.user.id} not found`, 404));
+  if (!favourites) {
+    return next(
+      new AppError(
+        `User with id ${req.user.id} doesn't have any favourites`,
+        404
+      )
+    );
   }
+
+  const favouriteJSON = favourites.map((favourite) => favourite.toJSON());
 
   return res.status(200).json({
     status: "Success",
-    data: user.pokemons || [],
+    data: favouriteJSON,
   });
 });
 

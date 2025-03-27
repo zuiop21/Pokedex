@@ -14,6 +14,33 @@ class PokemonService {
 
   PokemonService({http.Client? client}) : httpClient = client ?? http.Client();
 
+  Future<T> _postRequest<T>(
+    String endpoint,
+    T Function(Map<String, dynamic>) fromJson, {
+    String? authToken,
+  }) async {
+    final response = await httpClient.post(
+      Uri.parse('${ApiConfig.baseUrl}/$endpoint'),
+      headers: {
+        'Content-Type': 'application/json',
+        if (authToken != null) 'Authorization': 'Bearer $authToken',
+      },
+    );
+
+    final Map<String, dynamic> jsonData = jsonDecode(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (jsonData.containsKey("data")) {
+        return fromJson(jsonData["data"]);
+      } else {
+        throw Exception("Missing data");
+      }
+    } else {
+      String errorMessage = jsonData['message'] ?? 'Unknown error';
+      throw Exception(errorMessage);
+    }
+  }
+
   //Generic method to fetch data from the API
   //Optional parameter authToken is used to pass the token for authentication
   Future<List<T>> _fetchData<T>(
@@ -48,6 +75,39 @@ class PokemonService {
     } else {
       throw Exception('Invalid data format');
     }
+  }
+
+  Future<void> _deleteRequest(
+    String endpoint, {
+    String? authToken,
+  }) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      if (authToken != null) 'Authorization': 'Bearer $authToken',
+    };
+
+    final response = await httpClient.delete(
+      Uri.parse('${ApiConfig.baseUrl}/$endpoint'),
+      headers: headers,
+    );
+
+    if (response.statusCode != 204) {
+      final Map<String, dynamic> errorData = jsonDecode(response.body);
+      String errorMessage = errorData['message'] ?? 'Unknown error';
+      throw Exception('Error: $errorMessage');
+    }
+  }
+
+  Future<RawFavourite> createFavourite(String token, int pokemonId) async {
+    return _postRequest(
+      'favourites/$pokemonId',
+      RawFavourite.fromJson,
+      authToken: token,
+    );
+  }
+
+  Future<void> deleteFavourite(String token, int pokemonId) async {
+    return _deleteRequest('favourites/$pokemonId', authToken: token);
   }
 
   //Methods to fetch raw versions of the data

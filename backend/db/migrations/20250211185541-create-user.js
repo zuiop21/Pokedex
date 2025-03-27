@@ -40,6 +40,14 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
+      is_locked: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+      },
+      imgUrl: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

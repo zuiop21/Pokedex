@@ -22,6 +22,7 @@ class PokemonTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
+    final strengthTypes = pokemon!.getStrengthTypesForPokemon();
     return GestureDetector(
       onTap: () => _handleNavigationToInfoView(context),
       child: Card(
@@ -42,7 +43,7 @@ class PokemonTile extends StatelessWidget {
                       bottomLeft: Radius.circular(15),
                     ),
                     color:
-                        Color(int.parse(pokemon!.types[0].color)).withAlpha(77),
+                        Color(int.parse(strengthTypes[0].color)).withAlpha(77),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,14 +88,14 @@ class PokemonTile extends StatelessWidget {
                           topRight: Radius.circular(15),
                           bottomRight: Radius.circular(15),
                         ),
-                        color: Color(int.parse(pokemon.types[0].color))
+                        color: Color(int.parse(strengthTypes[0].color))
                             .withAlpha(77),
                       ),
                     ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: Color(int.parse(pokemon.types[0].color))),
+                          color: Color(int.parse(strengthTypes[0].color))),
                     ),
                     Center(
                       child: SizedBox(
@@ -117,7 +118,7 @@ class PokemonTile extends StatelessWidget {
                             blendMode: BlendMode.dstIn,
                             child: CachedNetworkImage(
                               fit: BoxFit.fill,
-                              imageUrl: pokemon.types[0].imgUrlOutline,
+                              imageUrl: strengthTypes[0].imgUrlOutline,
                               placeholder: (context, url) =>
                                   CircularProgressIndicator(),
                               errorWidget: (context, url, error) =>

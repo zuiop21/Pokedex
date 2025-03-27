@@ -28,6 +28,7 @@ dependencies:
   collection: ^1.19.0
   flutter_slidable: ^4.0.0
   shared_preferences: ^2.5.2
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:

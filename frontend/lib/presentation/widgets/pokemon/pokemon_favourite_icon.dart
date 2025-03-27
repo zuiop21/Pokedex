@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/data/models/processed/pokemon.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //A widget that displays a favourite icon for a pokemon
 class PokemonFavouriteIcon extends StatelessWidget {
@@ -11,8 +12,14 @@ class PokemonFavouriteIcon extends StatelessWidget {
   const PokemonFavouriteIcon(
       {super.key, this.size = 40, required this.pokemonId});
 
-  void _changeFavouriteStatus(BuildContext context, Pokemon? pokemon) {
-    context.read<PokemonBloc>().add(FavouritePokemonEvent(pokemon: pokemon!));
+  void _changeFavouriteStatus(BuildContext context, Pokemon? pokemon) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token") ?? "";
+
+    if (!context.mounted) return;
+    context
+        .read<PokemonBloc>()
+        .add(FavouriteEvent(pokemon: pokemon!, token: token));
   }
 
   @override

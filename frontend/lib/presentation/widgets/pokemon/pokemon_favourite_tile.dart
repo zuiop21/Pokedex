@@ -3,17 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
+import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/presentation/widgets/pokemon/pokemon_tile_types.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //A widget that displays a favourite pokemon
 class PokemonFavouriteTile extends StatelessWidget {
   final int pokemonId;
   const PokemonFavouriteTile({super.key, required this.pokemonId});
+  void _changeFavouriteStatus(BuildContext context, Pokemon pokemon) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token") ?? "";
+
+    if (!context.mounted) return;
+    context
+        .read<PokemonBloc>()
+        .add(FavouriteEvent(pokemon: pokemon, token: token));
+  }
 
   @override
   Widget build(BuildContext context) {
     //Find the pokemon by it's id
     final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
+    final strengths = pokemon!.getStrengthTypesForPokemon();
     return Slidable(
       endActionPane: ActionPane(
           extentRatio: 0.30,
@@ -24,9 +36,7 @@ class PokemonFavouriteTile extends StatelessWidget {
                   topLeft: Radius.circular(15),
                   bottomLeft: Radius.circular(15)),
               autoClose: true,
-              onPressed: (context) => context
-                  .read<PokemonBloc>()
-                  .add(FavouritePokemonEvent(pokemon: pokemon!)),
+              onPressed: (context) => _changeFavouriteStatus(context, pokemon),
               backgroundColor: Colors.red,
               child: Icon(
                 Icons.delete,
@@ -53,8 +63,7 @@ class PokemonFavouriteTile extends StatelessWidget {
                         topLeft: Radius.circular(15),
                         bottomLeft: Radius.circular(15),
                       ),
-                      color: Color(int.parse(pokemon!.types[0].color))
-                          .withAlpha(77),
+                      color: Color(int.parse(strengths[0].color)).withAlpha(77),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,14 +109,14 @@ class PokemonFavouriteTile extends StatelessWidget {
                             topRight: Radius.circular(15),
                             bottomRight: Radius.circular(15),
                           ),
-                          color: Color(int.parse(pokemon.types[0].color))
+                          color: Color(int.parse(strengths[0].color))
                               .withAlpha(77),
                         ),
                       ),
                       Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: Color(int.parse(pokemon.types[0].color))),
+                            color: Color(int.parse(strengths[0].color))),
                       ),
                       Center(
                         child: SizedBox(
@@ -131,7 +140,7 @@ class PokemonFavouriteTile extends StatelessWidget {
                               blendMode: BlendMode.dstIn,
                               child: CachedNetworkImage(
                                 fit: BoxFit.fill,
-                                imageUrl: pokemon.types[0].imgUrlOutline,
+                                imageUrl: strengths[0].imgUrlOutline,
                                 placeholder: (context, url) =>
                                     CircularProgressIndicator(),
                                 errorWidget: (context, url, error) =>

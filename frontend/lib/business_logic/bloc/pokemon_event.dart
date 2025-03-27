@@ -43,16 +43,41 @@ final class SortPokemonByRegionEvent extends PokemonEvent {
   List<Object?> get props => [region];
 }
 
-//Event to favourite a pokemon
-final class FavouritePokemonEvent extends PokemonEvent {
-  final Pokemon pokemon;
-
-  FavouritePokemonEvent({required this.pokemon});
-  @override
-  List<Object?> get props => [pokemon];
-}
-
 final class ResetSearchBarEvent extends PokemonEvent {
   @override
   List<Object?> get props => [];
+}
+
+final class UpdateTypeEvent extends PokemonEvent {
+  UpdateTypeEvent({required this.type});
+  final Type type;
+  @override
+  List<Object?> get props => [
+        type,
+      ];
+}
+
+final class DeleteTypeEvent extends PokemonEvent {
+  DeleteTypeEvent({required this.type});
+  final Type type;
+  @override
+  List<Object?> get props => [type];
+}
+
+final class CreateNewTypeEvent extends PokemonEvent {
+  CreateNewTypeEvent({required this.newType});
+  final Type newType;
+  @override
+  List<Object?> get props => [
+        newType,
+      ];
+}
+
+final class FavouriteEvent extends PokemonEvent {
+  FavouriteEvent({required this.pokemon, required this.token});
+
+  final Pokemon pokemon;
+  final String token;
+  @override
+  List<Object?> get props => [pokemon, token];
 }

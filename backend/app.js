@@ -8,6 +8,7 @@ const evolutionRoute = require("./routes/evolutionRoute");
 const regionRoute = require("./routes/regionRoute");
 const pokemonTypeRoute = require("./routes/pokemonTypeRoute");
 const assetRoute = require("./routes/assetRoute");
+const userRoute = require("./routes/userRoute");
 const catchAsync = require("./utils/catchAsync");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
@@ -66,6 +67,11 @@ app.use(
   express.static(path.join(__dirname, "assets/pokemons"))
 );
 
+app.use(
+  "/assets/profiles",
+  express.static(path.join(__dirname, "assets/profiles"))
+);
+
 //Routes
 app.use(authRoute);
 app.use(pokemonTypeRoute);
@@ -74,6 +80,7 @@ app.use(pokemonRoute);
 app.use(assetRoute);
 app.use(regionRoute);
 app.use(typeRoute);
+app.use(userRoute);
 app.use(authentication, favouriteRoute);
 
 //Route not found

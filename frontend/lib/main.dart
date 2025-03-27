@@ -5,6 +5,7 @@ import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
 import 'package:frontend/constants/app_assets.dart';
+import 'package:frontend/data/repositories/admin_repository.dart';
 import 'package:frontend/data/repositories/auth_repository.dart';
 import 'package:frontend/data/repositories/pokemon_repository.dart';
 import 'package:frontend/presentation/views/admin/admin_pokemon_view.dart';
@@ -31,6 +32,7 @@ void main() {
 class MyApp extends StatelessWidget {
   final AuthRepository _authRepository = AuthRepository();
   final PokemonRepository _pokemonRepository = PokemonRepository();
+  final AdminRepository _adminRepository = AdminRepository();
   MyApp({super.key});
 
   @override
@@ -44,7 +46,7 @@ class MyApp extends StatelessWidget {
           create: (context) => PokemonBloc(_pokemonRepository),
         ),
         BlocProvider(
-          create: (context) => AdminBloc(),
+          create: (context) => AdminBloc(_adminRepository),
         ),
       ],
       child: MaterialApp(

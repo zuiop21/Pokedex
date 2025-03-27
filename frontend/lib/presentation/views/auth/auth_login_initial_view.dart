@@ -79,6 +79,11 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
           _showErrorDialog(context, state.error);
         }
       },
+      //We need this buildwhen method to avoid rebuilding the whole tree, when uploading a new image
+      buildWhen: (previous, current) {
+        return previous.user?.copyWith(imgUrl: () => current.user?.imgUrl) !=
+            current.user;
+      },
       builder: (context, state) {
         switch (state.status) {
           case AuthStatus.initial:

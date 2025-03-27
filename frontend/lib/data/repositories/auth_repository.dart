@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:frontend/data/dataproviders/auth_service.dart';
 import 'package:frontend/data/models/processed/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +16,7 @@ class AuthRepository {
 
       try {
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('token', userJson.token);
+        await prefs.setString('token', userJson.token ?? "");
       } catch (e) {
         throw Exception("SharedPreferences error: $e");
       }
@@ -32,7 +34,17 @@ class AuthRepository {
 
       //Save token to shared preferences
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', userJson.token);
+      await prefs.setString('token', userJson.token ?? "");
+      return user;
+    } catch (e) {
+      throw Exception("Incorrect JSON format recieved");
+    }
+  }
+
+  Future<User> uploadImage(String token, File img) async {
+    try {
+      final userJson = await _authService.uploadImage(token, img);
+      final user = User.fromRaw(userJson);
       return user;
     } catch (e) {
       throw Exception("Incorrect JSON format recieved");

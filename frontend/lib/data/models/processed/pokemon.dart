@@ -26,20 +26,68 @@ class Pokemon extends Equatable {
 
 //Getter method to get the strength types for a pokemon
   List<Type> getStrengthTypesForPokemon() {
-    return types
+    final strengthTypes = types
         .where((t) =>
             t.isWeakness == WeaknessStatus.both ||
             t.isWeakness == WeaknessStatus.no)
         .toList();
+
+    if (strengthTypes.isEmpty) {
+      return [
+        Type(
+          id: 0,
+          name: "None",
+          color: "0xFF999999",
+          imgUrlOutline: "",
+          isWeakness: WeaknessStatus.both,
+          imgUrl: "",
+        )
+      ];
+    } else {
+      return types;
+    }
   }
 
 //Getter method to get the weakness types for a pokemon
   List<Type> getWeaknessTypesForPokemon() {
-    return types
+    final weaknessTypes = types
         .where((t) =>
             t.isWeakness == WeaknessStatus.both ||
             t.isWeakness == WeaknessStatus.yes)
         .toList();
+
+    if (weaknessTypes.isEmpty) {
+      return [
+        Type(
+          id: 0,
+          name: "None",
+          color: "0xFF999999",
+          imgUrlOutline: "",
+          isWeakness: WeaknessStatus.both,
+          imgUrl: "",
+        )
+      ];
+    } else {
+      return types;
+    }
+  }
+
+  Pokemon updateTypes(Type type) {
+    final List<Type> updatedTypes = types.map((t) {
+      if (t.id == type.id) {
+        return t.copyWith(color: type.color, name: type.name);
+      }
+      return t;
+    }).toList();
+
+    return copyWith(types: updatedTypes);
+  }
+
+  Pokemon deleteType(Type type) {
+    final List<Type> updatedTypes =
+        types.where((t) => t.id != type.id).toList();
+
+    return copyWith(types: updatedTypes);
   }
 
   const Pokemon(

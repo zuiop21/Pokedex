@@ -20,8 +20,79 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
     on<OrderPokemonByIdEvent>(_orderById);
     on<SortPokemonByNameEvent>(_sortByName);
     on<SortPokemonByRegionEvent>(_sortByRegion);
-    on<FavouritePokemonEvent>(_favouritePokemonEvent);
     on<ResetSearchBarEvent>(_resetSearchBar);
+    on<UpdateTypeEvent>(_updateType);
+    on<DeleteTypeEvent>(_deleteType);
+    on<CreateNewTypeEvent>(_createType);
+    on<FavouriteEvent>(_changeFavouriteStatus);
+  }
+
+  Future<void> _changeFavouriteStatus(
+      FavouriteEvent event, Emitter<PokemonState> emit) async {
+    final originalList = state.pokemons;
+    //Update list optimistically
+    final updatedPokemons = Map.fromEntries(
+      state.pokemons.entries.map((entry) => entry.value.id == event.pokemon.id
+          ? MapEntry(entry.key,
+              entry.value.copyWith(isFavourited: !entry.value.isFavourited))
+          : MapEntry(entry.key, entry.value)),
+    );
+
+    emit(state.copyWith(
+        status: PokemonStatus.success, pokemons: updatedPokemons));
+
+    //Sync with server
+    try {
+      if (event.pokemon.isFavourited) {
+        await _pokemonRepository.removeFavouritePokemon(
+            event.token, event.pokemon.id);
+      } else {
+        await _pokemonRepository.addFavouritePokemon(
+            event.token, event.pokemon.id);
+      }
+    }
+    //If request fails, revert the changes
+    catch (e) {
+      emit(state.copyWith(
+          status: PokemonStatus.failure,
+          error: e.toString(),
+          pokemons: originalList));
+    }
+  }
+
+  void _createType(CreateNewTypeEvent event, Emitter<PokemonState> emit) {
+    final List<Type> updatedTypes = [...state.types, event.newType];
+
+    emit(state.copyWith(types: updatedTypes));
+  }
+
+  void _deleteType(DeleteTypeEvent event, Emitter<PokemonState> emit) {
+    final List<Type> updatedTypes =
+        state.types.where((t) => t.id != event.type.id).toList();
+    final updatedPokemons = Map.fromEntries(
+      state.pokemons.entries.map(
+        (entry) => MapEntry(entry.key, entry.value.deleteType(event.type)),
+      ),
+    );
+
+    emit(state.copyWith(types: updatedTypes, pokemons: updatedPokemons));
+  }
+
+  void _updateType(UpdateTypeEvent event, Emitter<PokemonState> emit) {
+    final List<Type> updatedTypes = state.types.map((type) {
+      if (type.id == event.type.id) {
+        return event.type;
+      }
+      return type;
+    }).toList();
+
+    final updatedPokemons = Map.fromEntries(
+      state.pokemons.entries.map(
+        (entry) => MapEntry(entry.key, entry.value.updateTypes(event.type)),
+      ),
+    );
+
+    emit(state.copyWith(types: updatedTypes, pokemons: updatedPokemons));
   }
 
   //Method to get all the data from the repository
@@ -122,20 +193,6 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
       SortPokemonByRegionEvent event, Emitter<PokemonState> emit) {
     emit(state.copyWith(regionFilter: () => event.region, searchBarValue: ""));
     _applyFilterAndOrdering(emit);
-  }
-
-//Method that gets called when we want to favourite a pokemon
-  void _favouritePokemonEvent(
-      FavouritePokemonEvent event, Emitter<PokemonState> emit) {
-    final Map<int, Pokemon> updatedPokemons = Map.from(state.pokemons);
-
-    if (updatedPokemons.containsKey(event.pokemon.id)) {
-      final updatedPokemon =
-          event.pokemon.copyWith(isFavourited: !event.pokemon.isFavourited);
-      updatedPokemons[event.pokemon.id] = updatedPokemon;
-    }
-
-    emit(state.copyWith(pokemons: updatedPokemons));
   }
 
   void _resetSearchBar(ResetSearchBarEvent event, Emitter<PokemonState> emit) {

@@ -32,10 +32,15 @@ const createType = catchAsync(async (req, res, next) => {
     return next(new AppError("Failed to create the type", 400));
   }
 
+  const responseData = {
+    ...newType.toJSON(),
+    is_weakness: "no",
+  };
+
   // Return the response
   return res.status(201).json({
     status: "Success",
-    data: newType.toJSON(),
+    data: responseData,
   });
 });
 
@@ -70,6 +75,44 @@ const readAllType = catchAsync(async (req, res, next) => {
 });
 
 /**
+ * @function updateType
+ * @description Updates an existing Type's details.
+ * @param {Object} req - Express request object containing Pokémon name in the params and updated data in the body.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a JSON response with the updated Pokémon data.
+ */
+const updateType = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+
+  const { color, name } = req.body;
+
+  // Find the Type by its name
+  const type = await Type.findByPk(id);
+
+  // If the Type is not found, throw an error
+  if (!type) {
+    return next(new AppError(`Type with id ${id} not found`, 404));
+  }
+
+  // Update the Type's details
+  if (color !== undefined) type.color = color;
+  if (name !== undefined) type.name = name;
+  await type.save();
+
+  const responseData = {
+    ...type.toJSON(),
+    is_weakness: "no",
+  };
+
+  // Return the response
+  return res.status(200).json({
+    status: "Success",
+    data: responseData,
+  });
+});
+
+/**
  * @function deleteType
  * @description Deletes a type by ID.
  * @param {Object} req - Express request object.
@@ -97,4 +140,4 @@ const deleteType = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { createType, readAllType, deleteType };
+module.exports = { createType, readAllType, updateType, deleteType };

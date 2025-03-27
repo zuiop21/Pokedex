@@ -1,6 +1,7 @@
 const {
   createType,
   readAllType,
+  updateType,
   deleteType,
 } = require("../controllers/typeController");
 const { authentication, restricted } = require("../controllers/authController");
@@ -70,7 +71,39 @@ router
  *       401: { description: Unauthorized }
  *       403: { description: Forbidden }
  *       404: { description: Not found }
+ *   patch:
+ *     summary: Update a Pokémon type by ID
+ *     tags: [Types]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the Pokémon type to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               color:
+ *                 type: string
+ *                 example: "0xFFFFFFFF"
+ *                 description: New color of the Pokémon type (Hex code)
+ *     responses:
+ *       200: { description: Success }
+ *       400: { description: Bad request }
+ *       401: { description: Unauthorized }
+ *       403: { description: Forbidden }
+ *       404: { description: Not found }
  */
-router.route("/types/:id").delete(authentication, restricted, deleteType);
+router
+  .route("/types/:id")
+  .delete(authentication, restricted, deleteType)
+  .patch(authentication, restricted, updateType);
 
 module.exports = router;

@@ -26,25 +26,28 @@ class PokemonTileTypes extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          IntrinsicWidth(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              decoration: BoxDecoration(
-                color: Color(int.parse(strengthTypes[0].color)),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Row(
-                children: [
-                  PokemonCircledType(type: strengthTypes[0]),
-                  SizedBox(width: 5),
-                  Text(
-                    strengthTypes[0].name,
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                ],
+          if (strengthTypes.isNotEmpty)
+            IntrinsicWidth(
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Color(int.parse(strengthTypes[0].color)),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  children: [
+                    PokemonCircledType(type: strengthTypes[0]),
+                    SizedBox(width: 5),
+                    Text(
+                      strengthTypes[0].name,
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
           if (strengthTypes.length == 2)
             Padding(
               padding: const EdgeInsets.only(left: 5),

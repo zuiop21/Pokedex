@@ -9,26 +9,25 @@ class PokemonCircledType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Icon(
-          Icons.circle,
-          size: 25,
-          color: Colors.white,
-        ),
-        SizedBox(
-          width: 25,
-          height: 25,
-          child: Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: CachedNetworkImage(
-              imageUrl: type.imgUrl,
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            ),
+    return Container(
+      width: 25,
+      height: 25,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(3),
+        child: CachedNetworkImage(
+          imageUrl: type.imgUrl,
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(
+            Icons.error,
+            size: 20,
+            color: Colors.red,
           ),
         ),
-      ],
+      ),
     );
   }
 }

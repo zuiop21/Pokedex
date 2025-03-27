@@ -36,29 +36,18 @@ const Type = sequelize.define("Types", {
       notEmpty: {
         msg: "Color cannot be empty",
       },
-      color: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        validate: {
-          notNull: {
-            msg: "Color cannot be null",
-          },
-          notEmpty: {
-            msg: "Color cannot be empty",
-          },
-          isHexadecimal(value) {
-            const hexPattern = /^0xFF[a-fA-F0-9]{6}$/;
-            if (!hexPattern.test(value)) {
-              throw new AppError(
-                "The given color must be a valid hexadecimal!",
-                400
-              );
-            }
-          },
-        },
+      isHexadecimal(value) {
+        const hexPattern = /^0xFF[a-fA-F0-9]{6}$/;
+        if (!hexPattern.test(value)) {
+          throw new AppError(
+            "The given color must be a valid hexadecimal!",
+            400
+          );
+        }
       },
     },
   },
+
   imgUrl: {
     allowNull: false,
     type: Sequelize.STRING,

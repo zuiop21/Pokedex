@@ -5,14 +5,25 @@ import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/data/models/processed/type.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PokemonInfoAppbar extends StatelessWidget {
   final int pokemonId;
 
   const PokemonInfoAppbar({super.key, required this.pokemonId});
 
-  void _changeFavouriteStatus(BuildContext context, Pokemon pokemon) {
-    context.read<PokemonBloc>().add(FavouritePokemonEvent(pokemon: pokemon));
+  void _changeFavouriteStatus(BuildContext context, Pokemon pokemon) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token") ?? "";
+
+    if (!context.mounted) return;
+    context
+        .read<PokemonBloc>()
+        .add(FavouriteEvent(pokemon: pokemon, token: token));
+  }
+
+  void _navigateBack(BuildContext context) {
+    Navigator.pop(context);
   }
 
   @override
@@ -57,10 +68,7 @@ class PokemonInfoAppbar extends StatelessWidget {
               left: 20,
               child: IconButton(
                 icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
-                onPressed: () {
-                  //TODO func
-                  Navigator.pop(context);
-                },
+                onPressed: () => _navigateBack(context),
               ),
             ),
             Positioned(

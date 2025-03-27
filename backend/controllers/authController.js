@@ -86,6 +86,15 @@ const login = catchAsync(async (req, res, next) => {
 
   const user = await User.findOne({ where: { email: email } });
 
+  if (user.is_locked) {
+    return next(
+      new AppError(
+        "Your account has been locked. Contact the administration for more info!",
+        403
+      )
+    );
+  }
+
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return next(new AppError("Incorrect email or password", 401));
   }
@@ -102,6 +111,8 @@ const login = catchAsync(async (req, res, next) => {
       region_id: user.region_id,
       email: user.email,
       name: user.name,
+      is_locked: user.is_locked,
+      imgUrl: user.imgUrl,
       token: token,
     },
   });
@@ -151,7 +162,7 @@ const authentication = catchAsync(async (req, res, next) => {
  * @returns {Promise<void>}
  */
 const restricted = (req, res, next) => {
-  if (req.user.role != "admin") {
+  if (req.user.role != "admin" && req.user.role != "super") {
     return next(
       new AppError("You do not have permission to perform this action", 403)
     );

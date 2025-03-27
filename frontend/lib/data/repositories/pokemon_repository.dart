@@ -4,6 +4,7 @@ import 'package:frontend/data/models/processed/evolution.dart';
 import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/data/models/processed/region.dart';
 import 'package:frontend/data/models/processed/type.dart';
+import 'package:frontend/data/models/raw/raw_favourite.dart';
 
 class PokemonRepository {
   PokemonRepository({PokemonService? pokemonService})
@@ -26,6 +27,25 @@ class PokemonRepository {
       ];
 
       return regionList;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<RawFavourite> addFavouritePokemon(String token, int pokemonId) async {
+    try {
+      final rawFavourite =
+          await _pokemonService.createFavourite(token, pokemonId);
+
+      return rawFavourite;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> removeFavouritePokemon(String token, int pokemonId) async {
+    try {
+      await _pokemonService.deleteFavourite(token, pokemonId);
     } catch (e) {
       rethrow;
     }

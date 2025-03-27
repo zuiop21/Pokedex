@@ -1,50 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/admin_bloc.dart';
-import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/presentation/widgets/user_tile.dart';
+import 'package:frontend/presentation/pages/admin_init_page.dart';
+import 'package:frontend/presentation/pages/admin_user_page.dart';
+import 'package:frontend/presentation/views/loading_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class AdminUserView extends StatelessWidget {
+class AdminUserView extends StatefulWidget {
   const AdminUserView({super.key});
 
   @override
+  State<AdminUserView> createState() => _AdminUserViewState();
+}
+
+class _AdminUserViewState extends State<AdminUserView> {
+  @override
+  void initState() {
+    super.initState();
+    _refreshData(context);
+  }
+
+  Future<void> _refreshData(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token") ?? "";
+
+    if (!context.mounted) return;
+    context.read<AdminBloc>().add(GetAllUsersEvent(token: token));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.white,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.0),
-          child: Divider(
-            color: AppColors.lightGrey,
-            thickness: 1,
-          ),
-        ),
-        toolbarHeight: 80,
-        title: const Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: EdgeInsets.only(left: 5),
-            child: Text(
-              "Users",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            ),
-          ),
-        ),
-      ),
-      body: BlocBuilder<AdminBloc, AdminState>(
-        builder: (context, state) {
-          return ListView.separated(
-            separatorBuilder: (context, index) =>
-                const Divider(color: Colors.white),
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return UserTile();
-            },
-          );
-        },
-      ),
+    return BlocBuilder<AdminBloc, AdminState>(
+      builder: (context, state) {
+        switch (state.status) {
+          case AdminStatus.failure:
+            return Scaffold(
+                body: AdminInitPage(
+                    error: state.error, func: () => _refreshData(context)));
+
+          case AdminStatus.initial:
+          case AdminStatus.creating:
+          case AdminStatus.created:
+          case AdminStatus.updating:
+          case AdminStatus.updated:
+          case AdminStatus.deleted:
+            return Scaffold(
+                body: AdminInitPage(func: () => _refreshData(context)));
+
+          case AdminStatus.loading:
+            return const LoadingView();
+
+          case AdminStatus.success:
+            return AdminUserPage();
+        }
+      },
     );
   }
 }

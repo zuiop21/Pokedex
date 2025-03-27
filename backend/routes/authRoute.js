@@ -46,7 +46,7 @@ router.route("/register").post(register);
  *           schema:
  *             type: object
  *             properties:
- *               email: { type: string, example: user@example.com }
+ *               email: { type: string, example: user@ex.com }
  *               password: { type: string, example: "user" }
  *     responses:
  *       200: { description: Success }

@@ -10,9 +10,11 @@ RawUser _$RawUserFromJson(Map<String, dynamic> json) => RawUser(
       id: (json['id'] as num).toInt(),
       role: json['role'] as String,
       region_id: (json['region_id'] as num).toInt(),
-      token: json['token'] as String,
+      token: json['token'] as String?,
       name: json['name'] as String,
       email: json['email'] as String,
+      is_locked: json['is_locked'] as bool,
+      imgUrl: json['imgUrl'] as String?,
     );
 
 Map<String, dynamic> _$RawUserToJson(RawUser instance) => <String, dynamic>{
@@ -22,4 +24,6 @@ Map<String, dynamic> _$RawUserToJson(RawUser instance) => <String, dynamic>{
       'token': instance.token,
       'name': instance.name,
       'email': instance.email,
+      'imgUrl': instance.imgUrl,
+      'is_locked': instance.is_locked,
     };

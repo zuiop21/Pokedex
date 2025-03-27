@@ -15,7 +15,7 @@ const { restricted, authentication } = require("../controllers/authController");
  *   - name: Pokemons
  *     description: Pokémon management
  */
-//TODO fix isweakness (here+controller) to enum
+
 /**
  * @swagger
  * /pokemons:

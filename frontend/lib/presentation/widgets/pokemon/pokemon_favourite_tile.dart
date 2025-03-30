@@ -3,23 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
-import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/presentation/widgets/pokemon/pokemon_tile_types.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 //A widget that displays a favourite pokemon
 class PokemonFavouriteTile extends StatelessWidget {
   final int pokemonId;
-  const PokemonFavouriteTile({super.key, required this.pokemonId});
-  void _changeFavouriteStatus(BuildContext context, Pokemon pokemon) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString("token") ?? "";
+  const PokemonFavouriteTile(
+      {super.key, required this.pokemonId, required this.actions});
 
-    if (!context.mounted) return;
-    context
-        .read<PokemonBloc>()
-        .add(FavouriteEvent(pokemon: pokemon, token: token));
-  }
+  final List<CustomSlidableAction> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -28,22 +20,7 @@ class PokemonFavouriteTile extends StatelessWidget {
     final strengths = pokemon!.getStrengthTypesForPokemon();
     return Slidable(
       endActionPane: ActionPane(
-          extentRatio: 0.30,
-          motion: const StretchMotion(),
-          children: [
-            CustomSlidableAction(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  bottomLeft: Radius.circular(15)),
-              autoClose: true,
-              onPressed: (context) => _changeFavouriteStatus(context, pokemon),
-              backgroundColor: Colors.red,
-              child: Icon(
-                Icons.delete,
-                size: 45,
-              ),
-            ),
-          ]),
+          extentRatio: 0.30, motion: const StretchMotion(), children: actions),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Card(
@@ -138,14 +115,16 @@ class PokemonFavouriteTile extends StatelessWidget {
                                 ).createShader(bounds);
                               },
                               blendMode: BlendMode.dstIn,
-                              child: CachedNetworkImage(
-                                fit: BoxFit.fill,
-                                imageUrl: strengths[0].imgUrlOutline,
-                                placeholder: (context, url) =>
-                                    CircularProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
-                              ),
+                              child: strengths[0].imgUrlOutline.isNotEmpty
+                                  ? CachedNetworkImage(
+                                      fit: BoxFit.fill,
+                                      imageUrl: strengths[0].imgUrlOutline,
+                                      placeholder: (context, url) =>
+                                          CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    )
+                                  : Icon(Icons.error),
                             ),
                           ),
                         ),
@@ -155,13 +134,15 @@ class PokemonFavouriteTile extends StatelessWidget {
                           padding: const EdgeInsets.all(18.0),
                           child: Hero(
                             tag: "pokemon-${pokemon.id}",
-                            child: CachedNetworkImage(
-                              imageUrl: pokemon.imgUrl,
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            ),
+                            child: pokemon.imgUrl.isNotEmpty
+                                ? CachedNetworkImage(
+                                    imageUrl: pokemon.imgUrl,
+                                    placeholder: (context, url) =>
+                                        CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
+                                  )
+                                : Icon(Icons.error),
                           ),
                         ),
                       ),

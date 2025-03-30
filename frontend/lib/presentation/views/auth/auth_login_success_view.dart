@@ -8,7 +8,7 @@ import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/onboarding_page.dart';
 import 'package:frontend/presentation/views/loading_view.dart';
 import 'package:frontend/presentation/views/pokemon/pokemon_view.dart';
-import 'package:frontend/presentation/widgets/flow_button.dart';
+import 'package:frontend/presentation/widgets/other/flow_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //The view that is shown when the login is successful
@@ -53,6 +53,9 @@ class AuthLoginSuccessView extends StatelessWidget {
         if (state.status == PokemonStatus.failure) {
           _showErrorDialog(context, state.error);
         }
+      },
+      buildWhen: (previous, current) {
+        return current.status != PokemonStatus.failure;
       },
       builder: (context, state) {
         switch (state.status) {

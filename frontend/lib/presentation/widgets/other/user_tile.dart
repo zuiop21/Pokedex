@@ -4,7 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:frontend/business_logic/bloc/admin_bloc.dart';
 import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/presentation/widgets/user_card.dart';
+import 'package:frontend/presentation/widgets/other/user_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserTile extends StatelessWidget {

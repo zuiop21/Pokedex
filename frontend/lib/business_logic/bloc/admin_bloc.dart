@@ -15,12 +15,196 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     on<GetAllUsersEvent>(_getAllUsers);
     on<UpdateUserByIdEvent>(_updateUserById);
     on<StartUpdatingTypeEvent>(_startUpdatingType);
-    on<CancelEvent>(_cancel);
+    on<CancelTypeEvent>(_cancelType);
     on<CreateTypeEvent>(_createType);
     on<UpdateTypeVisuallyEvent>(_updateTypeVisually);
     on<UpdateTypeByIdEvent>(_updateType);
     on<DeleteTypeByIdEvent>(_deleteType);
     on<StartCreatingTypeEvent>(_startCreatingType);
+    on<StartPokemonCreationEvent>(_startPokemonCreation);
+    on<EditPokemonNameEvent>(_editPokemonName);
+    on<EditPokemonAbilityEvent>(_editPokemonAbility);
+    on<EditPokemonCategoryEvent>(_editPokemonCategory);
+    on<EditPokemonDescriptionEvent>(_editPokemonDescription);
+    on<EditPokemonHeightEvent>(_editPokemonHeight);
+    on<EditPokemonWeightEvent>(_editPokemonWeight);
+    on<EditPokemonGenderEvent>(_editPokemonGender);
+    on<StartAddingPokemonStrengthTypeEvent>(_startAddingPokemonStrengthType);
+    on<AddPokemonStrengthTypeEvent>(_addPokemonStrengthType);
+    on<StopAddingPokemonTypeEvent>(_stopAddingPokemonType);
+    on<StartAddingPokemonWeaknessTypeEvent>(_startAddingPokemonWeaknessType);
+    on<AddPokemonWeaknessTypeEvent>(_addPokemonWeaknessType);
+    on<CancelActionEvent>(_cancelAction);
+    on<PopPokemonEvent>(_popPokemon);
+  }
+
+  void _popPokemon(PopPokemonEvent event, Emitter<AdminState> emit) {
+    emit(state.copyWith(
+      status: AdminStatus.deleted,
+      newPokemons: state.newPokemons.sublist(0, state.newPokemons.length - 1),
+    ));
+  }
+
+  void _cancelAction(CancelActionEvent event, Emitter<AdminState> emit) {
+    emit(state.copyWith(currentIndex: 0));
+  }
+
+  void _startAddingPokemonWeaknessType(
+      StartAddingPokemonWeaknessTypeEvent event, Emitter<AdminState> emit) {
+    emit(state.copyWith(
+      status: AdminStatus.creating,
+    ));
+  }
+
+  void _addPokemonWeaknessType(
+      AddPokemonWeaknessTypeEvent event, Emitter<AdminState> emit) {
+    final List<Pokemon> updatedPokemons = List.from(state.newPokemons);
+    final newType = event.type.copyWith(isWeakness: WeaknessStatus.yes);
+
+    final List<Type> updatedTypes =
+        List.from(updatedPokemons[event.index].types);
+    updatedTypes.add(newType);
+
+    updatedPokemons[event.index] = updatedPokemons[event.index].copyWith(
+      types: updatedTypes,
+    );
+
+    emit(state.copyWith(
+        status: AdminStatus.created, newPokemons: updatedPokemons));
+  }
+
+  void _stopAddingPokemonType(
+      StopAddingPokemonTypeEvent event, Emitter<AdminState> emit) {
+    emit(state.copyWith(
+      status: AdminStatus.success,
+    ));
+  }
+
+  void _startAddingPokemonStrengthType(
+      StartAddingPokemonStrengthTypeEvent event, Emitter<AdminState> emit) {
+    emit(state.copyWith(
+      status: AdminStatus.updating,
+    ));
+  }
+
+  void _addPokemonStrengthType(
+      AddPokemonStrengthTypeEvent event, Emitter<AdminState> emit) {
+    final List<Pokemon> updatedPokemons = List.from(state.newPokemons);
+    final newType = event.type.copyWith(isWeakness: WeaknessStatus.no);
+
+    final List<Type> updatedTypes =
+        List.from(updatedPokemons[event.index].types);
+    updatedTypes.add(newType);
+
+    updatedPokemons[event.index] = updatedPokemons[event.index].copyWith(
+      types: updatedTypes,
+    );
+
+    emit(state.copyWith(
+        status: AdminStatus.updated, newPokemons: updatedPokemons));
+  }
+
+  void _editPokemonGender(
+      EditPokemonGenderEvent event, Emitter<AdminState> emit) {
+    final List<Pokemon> updatedPokemons = List.from(state.newPokemons);
+
+    updatedPokemons[event.index] = updatedPokemons[event.index].copyWith(
+      gender: event.gender,
+    );
+
+    emit(state.copyWith(newPokemons: updatedPokemons));
+  }
+
+  void _editPokemonWeight(
+      EditPokemonWeightEvent event, Emitter<AdminState> emit) {
+    final List<Pokemon> updatedPokemons = List.from(state.newPokemons);
+
+    updatedPokemons[event.index] = updatedPokemons[event.index].copyWith(
+      weight: event.weight,
+    );
+
+    emit(state.copyWith(newPokemons: updatedPokemons));
+  }
+
+  void _editPokemonHeight(
+      EditPokemonHeightEvent event, Emitter<AdminState> emit) {
+    final List<Pokemon> updatedPokemons = List.from(state.newPokemons);
+
+    updatedPokemons[event.index] = updatedPokemons[event.index].copyWith(
+      height: event.height,
+    );
+
+    emit(state.copyWith(newPokemons: updatedPokemons));
+  }
+
+  void _editPokemonDescription(
+      EditPokemonDescriptionEvent event, Emitter<AdminState> emit) {
+    final List<Pokemon> updatedPokemons = List.from(state.newPokemons);
+
+    updatedPokemons[event.index] = updatedPokemons[event.index].copyWith(
+      description: event.description,
+    );
+
+    emit(state.copyWith(newPokemons: updatedPokemons));
+  }
+
+  void _editPokemonCategory(
+      EditPokemonCategoryEvent event, Emitter<AdminState> emit) {
+    final List<Pokemon> updatedPokemons = List.from(state.newPokemons);
+
+    updatedPokemons[event.index] = updatedPokemons[event.index].copyWith(
+      category: event.category,
+    );
+
+    emit(state.copyWith(newPokemons: updatedPokemons));
+  }
+
+  void _editPokemonAbility(
+      EditPokemonAbilityEvent event, Emitter<AdminState> emit) {
+    final List<Pokemon> updatedPokemons = List.from(state.newPokemons);
+
+    updatedPokemons[event.index] = updatedPokemons[event.index].copyWith(
+      ability: event.ability,
+    );
+
+    emit(state.copyWith(newPokemons: updatedPokemons));
+  }
+
+  void _editPokemonName(EditPokemonNameEvent event, Emitter<AdminState> emit) {
+    final List<Pokemon> updatedPokemons = List.from(state.newPokemons);
+
+    updatedPokemons[event.index] = updatedPokemons[event.index].copyWith(
+      name: event.name,
+    );
+
+    emit(state.copyWith(newPokemons: updatedPokemons));
+  }
+
+  void _startPokemonCreation(
+      StartPokemonCreationEvent event, Emitter<AdminState> emit) {
+    final Pokemon newPokemon = Pokemon(
+        id: 0,
+        level: 0,
+        gender: 0,
+        height: 0,
+        weight: 0,
+        name: "",
+        ability: "",
+        category: "",
+        description: "",
+        isBaseForm: true,
+        imgUrl: "",
+        isFavourited: false,
+        regionId: 0,
+        types: const []);
+
+    final updatedPokemons =
+        event.index == 0 ? [newPokemon] : [...state.newPokemons, newPokemon];
+
+    emit(state.copyWith(
+        status: AdminStatus.initial,
+        newPokemons: updatedPokemons,
+        currentIndex: event.index));
   }
 
   void _startCreatingType(
@@ -114,7 +298,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     ));
   }
 
-  void _cancel(CancelEvent event, Emitter<AdminState> emit) {
+  void _cancelType(CancelTypeEvent event, Emitter<AdminState> emit) {
     emit(state.copyWith(status: AdminStatus.success));
   }
 

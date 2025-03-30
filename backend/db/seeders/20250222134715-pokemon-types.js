@@ -636,7 +636,7 @@ module.exports = {
       }, // Diglett - Ground
       {
         pokemon_id: 22,
-        type_id: 11,
+        type_id: 3,
         is_weakness: "yes",
         createdAt: new Date(),
         updatedAt: new Date(),

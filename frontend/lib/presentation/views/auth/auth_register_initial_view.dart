@@ -6,7 +6,7 @@ import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/auth_page.dart';
 import 'package:frontend/presentation/views/loading_view.dart';
 import 'package:frontend/presentation/views/auth/auth_register_success_view.dart';
-import 'package:frontend/presentation/widgets/password_textfield.dart';
+import 'package:frontend/presentation/widgets/other/password_textfield.dart';
 
 //The initial view of the register page
 class AuthRegisterInitialView extends StatefulWidget {

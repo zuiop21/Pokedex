@@ -31,7 +31,6 @@ class Pokemon extends Equatable {
             t.isWeakness == WeaknessStatus.both ||
             t.isWeakness == WeaknessStatus.no)
         .toList();
-
     if (strengthTypes.isEmpty) {
       return [
         Type(
@@ -44,7 +43,7 @@ class Pokemon extends Equatable {
         )
       ];
     } else {
-      return types;
+      return strengthTypes;
     }
   }
 
@@ -68,7 +67,7 @@ class Pokemon extends Equatable {
         )
       ];
     } else {
-      return types;
+      return weaknessTypes;
     }
   }
 

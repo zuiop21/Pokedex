@@ -82,14 +82,16 @@ class PokemonAppBar extends StatelessWidget implements PreferredSizeWidget {
                           ? GestureDetector(
                               onTap: () => _pickImageFromGallery(context),
                               child: ClipOval(
-                                child: CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  imageUrl: currentUser?.imgUrl ?? "",
-                                  placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
-                                ),
+                                child: currentUser?.imgUrl != null
+                                    ? CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        imageUrl: currentUser?.imgUrl ?? "",
+                                        placeholder: (context, url) =>
+                                            CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
+                                      )
+                                    : Icon(Icons.error),
                               ),
                             )
                           : IconButton(

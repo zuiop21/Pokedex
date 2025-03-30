@@ -8,6 +8,7 @@ import 'package:frontend/constants/app_assets.dart';
 import 'package:frontend/data/repositories/admin_repository.dart';
 import 'package:frontend/data/repositories/auth_repository.dart';
 import 'package:frontend/data/repositories/pokemon_repository.dart';
+import 'package:frontend/presentation/views/admin/admin_new_pokemon_view.dart';
 import 'package:frontend/presentation/views/admin/admin_pokemon_view.dart';
 import 'package:frontend/presentation/views/admin/admin_region_view.dart';
 import 'package:frontend/presentation/views/admin/admin_type_view.dart';
@@ -98,6 +99,10 @@ class MyApp extends StatelessWidget {
           "/admin/pokemons": (context) => AdminPokemonView(),
           "/admin/regions": (context) => AdminRegionView(),
           "/admin/types": (context) => AdminTypeView(),
+          "/admin/pokemons/new": (context) {
+            final index = ModalRoute.of(context)!.settings.arguments as int;
+            return AdminNewPokemonView(index: index);
+          },
         },
         debugShowCheckedModeBanner: false,
       ),

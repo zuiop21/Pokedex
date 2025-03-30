@@ -18,15 +18,21 @@ class PokemonCircledType extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(3),
-        child: CachedNetworkImage(
-          imageUrl: type.imgUrl,
-          placeholder: (context, url) => CircularProgressIndicator(),
-          errorWidget: (context, url, error) => Icon(
-            Icons.error,
-            size: 20,
-            color: Colors.red,
-          ),
-        ),
+        child: type.imgUrl.isNotEmpty
+            ? CachedNetworkImage(
+                imageUrl: type.imgUrl,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(
+                  Icons.error,
+                  size: 20,
+                  color: Colors.red,
+                ),
+              )
+            : Icon(
+                Icons.error,
+                size: 20,
+                color: Colors.red,
+              ),
       ),
     );
   }

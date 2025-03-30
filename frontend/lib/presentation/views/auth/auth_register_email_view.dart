@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/presentation/widgets/email_textfield.dart';
-import 'package:frontend/presentation/widgets/flow_button.dart';
+import 'package:frontend/presentation/widgets/other/email_textfield.dart';
+import 'package:frontend/presentation/widgets/other/flow_button.dart';
 
 //The view to register with email
 class AuthRegisterEmailView extends StatefulWidget {

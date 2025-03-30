@@ -116,14 +116,16 @@ class PokemonTile extends StatelessWidget {
                               ).createShader(bounds);
                             },
                             blendMode: BlendMode.dstIn,
-                            child: CachedNetworkImage(
-                              fit: BoxFit.fill,
-                              imageUrl: strengthTypes[0].imgUrlOutline,
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            ),
+                            child: strengthTypes[0].imgUrlOutline.isNotEmpty
+                                ? CachedNetworkImage(
+                                    fit: BoxFit.fill,
+                                    imageUrl: strengthTypes[0].imgUrlOutline,
+                                    placeholder: (context, url) =>
+                                        CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
+                                  )
+                                : Icon(Icons.error),
                           ),
                         ),
                       ),
@@ -133,13 +135,15 @@ class PokemonTile extends StatelessWidget {
                         padding: const EdgeInsets.all(18.0),
                         child: Hero(
                           tag: "pokemon-${pokemon.id}",
-                          child: CachedNetworkImage(
-                            imageUrl: pokemon.imgUrl,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          ),
+                          child: pokemon.imgUrl.isNotEmpty
+                              ? CachedNetworkImage(
+                                  imageUrl: pokemon.imgUrl,
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                )
+                              : Icon(Icons.error),
                         ),
                       ),
                     ),

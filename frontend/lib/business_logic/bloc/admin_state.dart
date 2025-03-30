@@ -30,30 +30,45 @@ final class AdminState extends Equatable {
       this.users = const [],
       this.placeholderType,
       this.error,
-      this.deletedType});
+      this.deletedType,
+      this.currentIndex = 0,
+      this.newPokemons = const []});
 
   final Type? placeholderType;
   final AdminStatus status;
   final String? error;
   final List<User> users;
   final Type? deletedType;
+  final List<Pokemon> newPokemons;
+  final int currentIndex;
 
   AdminState copyWith(
       {ValueGetter<Type?>? placeholderType,
       AdminStatus? status,
       ValueGetter<String?>? error,
       List<User>? users,
-      ValueGetter<Type?>? deletedType}) {
+      ValueGetter<Type?>? deletedType,
+      List<Pokemon>? newPokemons,
+      int? currentIndex}) {
     return AdminState(
         placeholderType:
             placeholderType != null ? placeholderType() : this.placeholderType,
         status: status ?? this.status,
         error: error != null ? error() : this.error,
         users: users ?? this.users,
-        deletedType: deletedType != null ? deletedType() : this.deletedType);
+        deletedType: deletedType != null ? deletedType() : this.deletedType,
+        newPokemons: newPokemons ?? this.newPokemons,
+        currentIndex: currentIndex ?? this.currentIndex);
   }
 
   @override
-  List<Object?> get props =>
-      [status, users, error, placeholderType, deletedType];
+  List<Object?> get props => [
+        status,
+        users,
+        error,
+        placeholderType,
+        deletedType,
+        newPokemons,
+        currentIndex
+      ];
 }

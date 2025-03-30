@@ -1,31 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
+import 'package:frontend/business_logic/bloc/admin_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/data/models/processed/type.dart';
+import 'package:frontend/presentation/widgets/admin/admin_pokemon_evolution_types.dart';
 import 'package:frontend/presentation/widgets/other/blurred_image.dart';
-import 'package:frontend/presentation/widgets/pokemon/pokemon_evolution_types.dart';
 
 //A widget that displays the evolutions of a pokemon
-class PokemonEvolvesToContainer extends StatelessWidget {
-  final int pokemonId;
+class AdminPokemonEvolvesToContainer extends StatelessWidget {
+  final int index;
 
-  const PokemonEvolvesToContainer({super.key, required this.pokemonId});
+  const AdminPokemonEvolvesToContainer({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
     //Find the pokemon by it's id
-    final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
-    //Find the strength types of the pokemon
-    List<Type> strengthTypes = pokemon!.getStrengthTypesForPokemon();
-    //Find the evolution of the pokemon
-    final evolution = context
-        .read<PokemonBloc>()
-        .state
-        .evolutions
-        .where((e) => e.pokemonId == pokemon.id)
-        .first;
+    final pokemon = context.read<AdminBloc>().state.newPokemons[index];
+    final strengthTypes = pokemon.getStrengthTypesForPokemon();
     return Padding(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
       child: Column(
@@ -114,10 +105,10 @@ class PokemonEvolvesToContainer extends StatelessWidget {
                             style: TextStyle(fontSize: 20),
                           ),
                           Text(
-                            "Number ${pokemon.id}",
+                            "Number $index",
                             style: TextStyle(fontSize: 16),
                           ),
-                          PokemonEvolutionTypes(pokemonId: pokemon.id),
+                          AdminPokemonEvolutionTypes(index: index),
                         ],
                       ),
                     ),
@@ -129,15 +120,16 @@ class PokemonEvolvesToContainer extends StatelessWidget {
           Expanded(
             flex: 35,
             child:
-                evolution.condition != null && evolution.condition!.isNotEmpty
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.arrow_downward),
-                          Text(evolution.condition!),
-                        ],
-                      )
-                    : SizedBox.shrink(),
+                // evolution.condition != null && evolution.condition!.isNotEmpty
+                //     ? Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           Icon(Icons.arrow_downward),
+                //           Text(evolution.condition!),
+                //         ],
+                //       )
+                //     :
+                SizedBox.shrink(),
           ),
         ],
       ),

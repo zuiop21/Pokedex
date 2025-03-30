@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/auth_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
-import 'package:frontend/presentation/widgets/info_text.dart';
+import 'package:frontend/presentation/widgets/other/info_text.dart';
 
-import 'package:frontend/presentation/widgets/info_button.dart';
-import 'package:frontend/presentation/widgets/info_switch.dart';
+import 'package:frontend/presentation/widgets/other/info_button.dart';
+import 'package:frontend/presentation/widgets/other/info_switch.dart';
 
 class PokemonUserPage extends StatelessWidget {
   const PokemonUserPage({super.key});

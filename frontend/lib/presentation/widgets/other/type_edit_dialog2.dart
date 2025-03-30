@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/admin_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/presentation/widgets/admin_type_slider.dart';
+import 'package:frontend/presentation/widgets/admin/admin_type_slider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:frontend/data/models/processed/type.dart';
 
-class TypeEditDialog extends StatefulWidget {
-  const TypeEditDialog({super.key});
+//TODO Merge with type edit dialog
+class TypeEditDialog2 extends StatefulWidget {
+  const TypeEditDialog2({super.key});
 
   @override
-  State<TypeEditDialog> createState() => _TypeEditDialogState();
+  State<TypeEditDialog2> createState() => _TypeEditDialogState();
 }
 
-class _TypeEditDialogState extends State<TypeEditDialog> {
+class _TypeEditDialogState extends State<TypeEditDialog2> {
   Color getTextColorBasedOnBackground(Color backgroundColor) {
     double red = backgroundColor.r * 255;
     double green = backgroundColor.g * 255;
@@ -36,17 +36,18 @@ class _TypeEditDialogState extends State<TypeEditDialog> {
     context.read<AdminBloc>().add(UpdateTypeVisuallyEvent(newB: newValue));
   }
 
-  void _stopUpdatingType(BuildContext context) {
-    context.read<AdminBloc>().add(CancelEvent());
+  void _stopCreatingType(BuildContext context) {
+    context.read<AdminBloc>().add(CancelTypeEvent());
   }
 
-  void _updateType(BuildContext context, Type type) async {
+  void _createType(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token") ?? "";
 
     if (!context.mounted) return;
-    context.read<AdminBloc>().add(
-        UpdateTypeByIdEvent(token: token, name: _controller.text.toString()));
+    context
+        .read<AdminBloc>()
+        .add(CreateTypeEvent(token: token, name: _controller.text.toString()));
   }
 
   @override
@@ -123,7 +124,7 @@ class _TypeEditDialogState extends State<TypeEditDialog> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        _stopUpdatingType(context);
+                        _stopCreatingType(context);
                         Navigator.of(context).pop();
                       },
                       child: const Text(
@@ -145,8 +146,9 @@ class _TypeEditDialogState extends State<TypeEditDialog> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        _updateType(context,
-                            context.read<AdminBloc>().state.placeholderType!);
+                        _createType(
+                          context,
+                        );
                         Navigator.of(context).pop();
                       },
                       child: const Text(

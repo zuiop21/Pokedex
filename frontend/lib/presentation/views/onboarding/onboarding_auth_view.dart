@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/constants/app_assets.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/onboarding_page.dart';
-import 'package:frontend/presentation/widgets/auth_button.dart';
-import 'package:frontend/presentation/widgets/flow_button.dart';
+import 'package:frontend/presentation/widgets/other/auth_button.dart';
+import 'package:frontend/presentation/widgets/other/flow_button.dart';
 
 //The view that is shown when the user is choosing between different authentication methods
 class OnboardingAuthView extends StatelessWidget {

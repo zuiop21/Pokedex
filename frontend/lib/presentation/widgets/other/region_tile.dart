@@ -31,12 +31,15 @@ class RegionTile extends StatelessWidget {
             height: 110,
             width: MediaQuery.of(context).size.width,
             child: Stack(children: [
-              CachedNetworkImage(
-                fit: BoxFit.cover,
-                imageUrl: region.imgUrl,
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              ),
+              region.imgUrl.isNotEmpty
+                  ? CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl: region.imgUrl,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    )
+                  : Icon(Icons.error),
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -79,14 +82,16 @@ class RegionTile extends StatelessWidget {
                         child: SizedBox(
                           width: 50,
                           height: 50,
-                          child: CachedNetworkImage(
-                            fit: BoxFit.fill,
-                            imageUrl: pokemons[0].imgUrl,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          ),
+                          child: pokemons[0].imgUrl.isNotEmpty
+                              ? CachedNetworkImage(
+                                  fit: BoxFit.fill,
+                                  imageUrl: pokemons[0].imgUrl,
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                )
+                              : Icon(Icons.error),
                         ),
                       ),
                     if (pokemons.length > 1)
@@ -95,14 +100,16 @@ class RegionTile extends StatelessWidget {
                         child: SizedBox(
                           width: 50,
                           height: 50,
-                          child: CachedNetworkImage(
-                            fit: BoxFit.fill,
-                            imageUrl: pokemons[1].imgUrl,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          ),
+                          child: pokemons[1].imgUrl.isNotEmpty
+                              ? CachedNetworkImage(
+                                  fit: BoxFit.fill,
+                                  imageUrl: pokemons[1].imgUrl,
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                )
+                              : Icon(Icons.error),
                         ),
                       ),
                     if (pokemons.length > 2)
@@ -111,14 +118,16 @@ class RegionTile extends StatelessWidget {
                         child: SizedBox(
                           width: 50,
                           height: 50,
-                          child: CachedNetworkImage(
-                            fit: BoxFit.fill,
-                            imageUrl: pokemons[2].imgUrl,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          ),
+                          child: pokemons[2].imgUrl.isNotEmpty
+                              ? CachedNetworkImage(
+                                  fit: BoxFit.fill,
+                                  imageUrl: pokemons[2].imgUrl,
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                )
+                              : Icon(Icons.error),
                         ),
                       ),
                     Spacer(),

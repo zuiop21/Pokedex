@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/presentation/widgets/info_button.dart';
+import 'package:frontend/presentation/widgets/other/info_button.dart';
 
 class PokemonAdminPage extends StatelessWidget {
   const PokemonAdminPage({super.key});

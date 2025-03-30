@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/admin_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/data/models/processed/user.dart';
-import 'package:frontend/presentation/widgets/user_tile.dart';
+import 'package:frontend/presentation/widgets/other/user_tile.dart';
 
 class AdminUserPage extends StatelessWidget {
   const AdminUserPage({

@@ -6,8 +6,8 @@ import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/auth_page.dart';
 import 'package:frontend/presentation/views/loading_view.dart';
 import 'package:frontend/presentation/views/auth/auth_login_success_view.dart';
-import 'package:frontend/presentation/widgets/email_textfield.dart';
-import 'package:frontend/presentation/widgets/password_textfield.dart';
+import 'package:frontend/presentation/widgets/other/email_textfield.dart';
+import 'package:frontend/presentation/widgets/other/password_textfield.dart';
 
 //The initial view of the login page
 class AuthLoginInitialView extends StatefulWidget {
@@ -75,7 +75,7 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state.status == AuthStatus.failure) {
+        if (state.status.isFailure) {
           _showErrorDialog(context, state.error);
         }
       },

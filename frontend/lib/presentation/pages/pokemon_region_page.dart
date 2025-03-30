@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
-import 'package:frontend/presentation/widgets/region_tile.dart';
+import 'package:frontend/presentation/widgets/other/region_tile.dart';
 
 class PokemonRegionPage extends StatelessWidget {
   const PokemonRegionPage({super.key});

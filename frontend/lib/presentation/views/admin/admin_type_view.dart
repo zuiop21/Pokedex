@@ -5,8 +5,8 @@ import 'package:frontend/business_logic/bloc/admin_bloc.dart';
 import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/data/models/processed/type.dart';
-import 'package:frontend/presentation/widgets/type_edit_dialog.dart';
-import 'package:frontend/presentation/widgets/type_edit_dialog2.dart';
+import 'package:frontend/presentation/widgets/other/type_edit_dialog.dart';
+import 'package:frontend/presentation/widgets/other/type_edit_dialog2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminTypeView extends StatelessWidget {
@@ -28,7 +28,7 @@ class AdminTypeView extends StatelessWidget {
   }
 
   void _stopUpdatingType(BuildContext context) {
-    context.read<AdminBloc>().add(CancelEvent());
+    context.read<AdminBloc>().add(CancelTypeEvent());
   }
 
   void _updatePokemonTypes(BuildContext context, Type type) {
@@ -69,6 +69,7 @@ class AdminTypeView extends StatelessWidget {
     );
   }
 
+  //TODO rename
   void _showColorEdito(BuildContext context) {
     showDialog(
       context: context,
@@ -154,7 +155,7 @@ class AdminTypeView extends StatelessWidget {
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: GestureDetector(
                 onTap: () => _startCreatingType(context),
                 child: Container(

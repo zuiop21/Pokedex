@@ -5,7 +5,7 @@ import 'package:frontend/business_logic/cubit/landing_page_cubit.dart';
 import 'package:frontend/constants/app_assets.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/pages/onboarding_page.dart';
-import 'package:frontend/presentation/widgets/flow_button.dart';
+import 'package:frontend/presentation/widgets/other/flow_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 //The view that is shown when the user is onboarding

@@ -1,39 +1,32 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
+import 'package:frontend/business_logic/bloc/admin_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/data/models/processed/pokemon.dart';
-import 'package:frontend/data/models/processed/type.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class PokemonInfoAppbar extends StatelessWidget {
-  final int pokemonId;
-
-  const PokemonInfoAppbar({super.key, required this.pokemonId});
-
-  void _changeFavouriteStatus(BuildContext context, Pokemon pokemon) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString("token") ?? "";
-
-    if (!context.mounted) return;
-    context
-        .read<PokemonBloc>()
-        .add(FavouriteEvent(pokemon: pokemon, token: token));
-  }
+class AdminPokemonAppbar extends StatelessWidget {
+  final int index;
+  const AdminPokemonAppbar({super.key, required this.index});
 
   void _navigateBack(BuildContext context) {
+    context.read<AdminBloc>().add(CancelActionEvent());
+    if (index != 0) {
+      context.read<AdminBloc>().add(PopPokemonEvent());
+    }
+
     Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    //TODO no need for blocbuilder?
-    return BlocBuilder<PokemonBloc, PokemonState>(
+    return BlocBuilder<AdminBloc, AdminState>(
+      buildWhen: (previous, current) => !current.status.isDeleted,
       builder: (context, state) {
-        final pokemon = state.getPokemonById(pokemonId);
-
-        List<Type> strengthTypes = pokemon!.getStrengthTypesForPokemon();
+        final strengthTypes = context
+            .read<AdminBloc>()
+            .state
+            .newPokemons[state.currentIndex]
+            .getStrengthTypesForPokemon();
 
         return Stack(
           clipBehavior: Clip.none,
@@ -71,20 +64,6 @@ class PokemonInfoAppbar extends StatelessWidget {
                 onPressed: () => _navigateBack(context),
               ),
             ),
-            Positioned(
-              top: 50,
-              right: 20,
-              child: IconButton(
-                icon: Icon(
-                  pokemon.isFavourited
-                      ? Icons.favorite
-                      : Icons.favorite_border_outlined,
-                  color:
-                      pokemon.isFavourited ? AppColors.lightRed : Colors.white,
-                ),
-                onPressed: () => _changeFavouriteStatus(context, pokemon),
-              ),
-            ),
             Align(
               alignment: Alignment.center,
               child: Padding(
@@ -118,18 +97,20 @@ class PokemonInfoAppbar extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: Hero(
-                tag: "pokemon-${pokemon.id}",
-                child: pokemon.imgUrl.isNotEmpty
-                    ? CachedNetworkImage(
-                        width: 125,
-                        height: 125,
-                        imageUrl: pokemon.imgUrl,
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-                      )
-                    : Icon(Icons.error),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Container(
+                  width: 110,
+                  height: 110,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: AppColors.grey, width: 1),
+                    color: Colors.white,
+                  ),
+                  child: IconButton(
+                      onPressed: () {}, //TODO
+                      icon: Icon(Icons.add, size: 50, color: AppColors.grey)),
+                ),
               ),
             ),
           ],

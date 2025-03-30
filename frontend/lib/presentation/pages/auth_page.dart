@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/cubit/auth_textfield_cubit.dart';
 import 'package:frontend/constants/app_colors.dart';
-import 'package:frontend/presentation/widgets/flow_button.dart';
+import 'package:frontend/presentation/widgets/other/flow_button.dart';
 
 class AuthPage extends StatelessWidget {
   final Widget child1;

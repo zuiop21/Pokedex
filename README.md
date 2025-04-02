@@ -1,4 +1,4 @@
-# Pokédex App - My University Thesis
+# Pokédex App - University Thesis
 WORK IN PROGRESS
 
 The Pokédex App is a comprehensive application that allows users to explore and manage a collection of Pokémon. It provides detailed information about each Pokémon, including their types, abilities, and stats.

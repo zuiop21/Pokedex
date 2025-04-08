@@ -58,6 +58,7 @@ final class PokemonState extends Equatable {
         }
       }
     }
+
     return evolutionChain;
   }
 
@@ -77,6 +78,7 @@ final class PokemonState extends Equatable {
         }
       }
     }
+
     return evolutionChain;
   }
 
@@ -91,6 +93,11 @@ final class PokemonState extends Equatable {
 
     return evolutionChain.toList()..sort((a, b) => a.id.compareTo(b.id));
   }
+  // flutter: (Evolution(49, 49, null, null), Evolution(50, 50, 51, DASD), Evolution(51, 51, null, null),
+  // ..., Evolution(56, 54, 55, DASD), Evolution(57, 55, null, null))
+
+  //flutter: (Evolution(49, 49, null, null), Evolution(50, 50, 51, DASD), Evolution(51, 51, null, null),
+  //..., Evolution(56, 54, 55, DASD), Evolution(57, 55, null, null))
 
 //Constructor for the PokemonState
   const PokemonState({

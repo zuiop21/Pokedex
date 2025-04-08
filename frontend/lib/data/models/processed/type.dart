@@ -1,8 +1,12 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/data/models/raw/raw_type.dart';
 
 //Class to represent a type
+part 'type.g.dart';
+
+@JsonSerializable()
 class Type extends Equatable {
   const Type(
       {required this.isWeakness,
@@ -12,7 +16,9 @@ class Type extends Equatable {
       required this.imgUrl,
       required this.imgUrlOutline});
 
+  @JsonKey(name: 'is_weakness')
   final WeaknessStatus isWeakness;
+
   final int id;
   final String name;
   final String color;
@@ -50,4 +56,8 @@ class Type extends Equatable {
         imgUrl: imgUrl ?? this.imgUrl,
         imgUrlOutline: imgUrlOutline ?? this.imgUrlOutline);
   }
+
+  Map<String, dynamic> toJson() => _$TypeToJson(this);
+
+  factory Type.fromJson(Map<String, dynamic> json) => _$TypeFromJson(json);
 }

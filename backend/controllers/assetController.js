@@ -7,7 +7,12 @@ const catchAsync = require("../utils/catchAsync");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const folderName = req.path.split("/").pop();
-    const uploadPath = path.join(__dirname, `../assets/${folderName}s`);
+    const uploadPath = path.join(
+      __dirname,
+      folderName.endsWith("s")
+        ? `../assets/${folderName}`
+        : `../assets/${folderName}s`
+    );
 
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true });
@@ -71,4 +76,23 @@ const uploadProfilePicture = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { uploadImage, uploadProfilePicture };
+const uploadPokemonPicture = catchAsync(async (req, res, next) => {
+  upload.single("image")(req, res, async (err) => {
+    if (err) {
+      return next(new AppError(err.message, 400));
+    }
+
+    if (!req.file) {
+      return next(new AppError("No image uploaded!", 400));
+    }
+
+    // Generate image URL
+    const fileUrl = `http://localhost:3000/assets/pokemons/${req.file.filename}`;
+
+    req.imgUrl = fileUrl;
+
+    return next();
+  });
+});
+
+module.exports = { uploadImage, uploadProfilePicture, uploadPokemonPicture };

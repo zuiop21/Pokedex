@@ -89,65 +89,81 @@ final class StartPokemonCreationEvent extends AdminEvent {
 }
 
 final class EditPokemonNameEvent extends AdminEvent {
-  EditPokemonNameEvent({required this.name, required this.index});
+  EditPokemonNameEvent({
+    required this.name,
+  });
 
   final String name;
-  final int index;
+
   @override
-  List<Object?> get props => [name, index];
+  List<Object?> get props => [
+        name,
+      ];
 }
 
 final class EditPokemonWeightEvent extends AdminEvent {
-  EditPokemonWeightEvent({required this.weight, required this.index});
+  EditPokemonWeightEvent({required this.weight});
 
   final double weight;
-  final int index;
+
   @override
-  List<Object?> get props => [weight, index];
+  List<Object?> get props => [
+        weight,
+      ];
 }
 
 final class EditPokemonHeightEvent extends AdminEvent {
-  EditPokemonHeightEvent({required this.height, required this.index});
+  EditPokemonHeightEvent({
+    required this.height,
+  });
 
   final double height;
-  final int index;
+
   @override
-  List<Object?> get props => [height, index];
+  List<Object?> get props => [
+        height,
+      ];
 }
 
 final class EditPokemonAbilityEvent extends AdminEvent {
-  EditPokemonAbilityEvent({required this.ability, required this.index});
+  EditPokemonAbilityEvent({required this.ability});
 
   final String ability;
-  final int index;
+
   @override
-  List<Object?> get props => [ability, index];
+  List<Object?> get props => [
+        ability,
+      ];
 }
 
 final class EditPokemonCategoryEvent extends AdminEvent {
-  EditPokemonCategoryEvent({required this.category, required this.index});
+  EditPokemonCategoryEvent({required this.category});
 
   final String category;
-  final int index;
+
   @override
-  List<Object?> get props => [category, index];
+  List<Object?> get props => [category];
 }
 
 final class EditPokemonDescriptionEvent extends AdminEvent {
-  EditPokemonDescriptionEvent({required this.description, required this.index});
+  EditPokemonDescriptionEvent({
+    required this.description,
+  });
 
   final String description;
-  final int index;
+
   @override
-  List<Object?> get props => [description, index];
+  List<Object?> get props => [
+        description,
+      ];
 }
 
 final class EditPokemonGenderEvent extends AdminEvent {
-  EditPokemonGenderEvent({required this.gender, required this.index});
+  EditPokemonGenderEvent({required this.gender});
   final double gender;
-  final int index;
+
   @override
-  List<Object?> get props => [gender, index];
+  List<Object?> get props => [gender];
 }
 
 final class StartAddingPokemonStrengthTypeEvent extends AdminEvent {
@@ -169,21 +185,19 @@ final class StopAddingPokemonTypeEvent extends AdminEvent {
 }
 
 final class AddPokemonStrengthTypeEvent extends AdminEvent {
-  AddPokemonStrengthTypeEvent({required this.index, required this.type});
+  AddPokemonStrengthTypeEvent({required this.type});
 
-  final int index;
   final Type type;
   @override
-  List<Object?> get props => [index, type];
+  List<Object?> get props => [type];
 }
 
 final class AddPokemonWeaknessTypeEvent extends AdminEvent {
-  AddPokemonWeaknessTypeEvent({required this.index, required this.type});
+  AddPokemonWeaknessTypeEvent({required this.type});
 
-  final int index;
   final Type type;
   @override
-  List<Object?> get props => [index, type];
+  List<Object?> get props => [type];
 }
 
 final class CancelActionEvent extends AdminEvent {
@@ -194,4 +208,26 @@ final class CancelActionEvent extends AdminEvent {
 final class PopPokemonEvent extends AdminEvent {
   @override
   List<Object?> get props => [];
+}
+
+final class AddPokemonImageEvent extends AdminEvent {
+  AddPokemonImageEvent({required this.image});
+  final File image;
+  @override
+  List<Object?> get props => [image];
+}
+
+final class CreatePokemonEvent extends AdminEvent {
+  CreatePokemonEvent({required this.token});
+  final String token;
+  @override
+  List<Object?> get props => [token];
+}
+
+final class DeletePokemonByIdEvent extends AdminEvent {
+  DeletePokemonByIdEvent({required this.pokemon, required this.token});
+  final Pokemon pokemon;
+  final String token;
+  @override
+  List<Object?> get props => [pokemon, token];
 }

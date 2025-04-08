@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/admin_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminPokemonAppbar extends StatelessWidget {
   final int index;
@@ -15,6 +19,18 @@ class AdminPokemonAppbar extends StatelessWidget {
     }
 
     Navigator.pop(context);
+  }
+
+  Future<void> _pickImageFromGallery(BuildContext context) async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (!context.mounted) return;
+
+    if (returnedImage == null) return;
+    context
+        .read<AdminBloc>()
+        .add(AddPokemonImageEvent(image: File(returnedImage.path)));
   }
 
   @override
@@ -107,9 +123,12 @@ class AdminPokemonAppbar extends StatelessWidget {
                     border: Border.all(color: AppColors.grey, width: 1),
                     color: Colors.white,
                   ),
-                  child: IconButton(
-                      onPressed: () {}, //TODO
-                      icon: Icon(Icons.add, size: 50, color: AppColors.grey)),
+                  child: state.images[index].path.isNotEmpty
+                      ? Image.file(state.images[index])
+                      : IconButton(
+                          onPressed: () => _pickImageFromGallery(context),
+                          icon:
+                              Icon(Icons.add, size: 50, color: AppColors.grey)),
                 ),
               ),
             ),

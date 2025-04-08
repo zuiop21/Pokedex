@@ -88,7 +88,7 @@ router.route("/upload/region").post(authentication, restricted, uploadImage);
  *               image:
  *                 type: string
  *                 format: binary
- *                 description: The image file to upload (Region image).
+ *                 description: The image file to upload (Profile image).
  *     responses:
  *       201:
  *         description: Created

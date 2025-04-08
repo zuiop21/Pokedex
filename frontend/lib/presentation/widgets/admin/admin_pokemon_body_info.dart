@@ -23,33 +23,29 @@ class _AdminPokemonBodyInfoState extends State<AdminPokemonBodyInfo> {
   void _changeWeight(BuildContext context) {
     final weight = double.tryParse(_weightController.text);
     if (weight != null) {
-      context
-          .read<AdminBloc>()
-          .add(EditPokemonWeightEvent(weight: weight, index: widget.index));
+      context.read<AdminBloc>().add(EditPokemonWeightEvent(
+            weight: weight,
+          ));
     }
   }
 
   void _changeHeight(BuildContext context) {
     final height = double.tryParse(_heightController.text);
     if (height != null) {
-      context
-          .read<AdminBloc>()
-          .add(EditPokemonHeightEvent(height: height, index: widget.index));
+      context.read<AdminBloc>().add(EditPokemonHeightEvent(
+            height: height,
+          ));
     }
   }
 
   void _changeCategory(BuildContext context) {
     final category = _categoryController.text;
-    context
-        .read<AdminBloc>()
-        .add(EditPokemonCategoryEvent(category: category, index: 0));
+    context.read<AdminBloc>().add(EditPokemonCategoryEvent(category: category));
   }
 
   void _changeAbility(BuildContext context) {
     final ability = _abilityController.text;
-    context
-        .read<AdminBloc>()
-        .add(EditPokemonAbilityEvent(ability: ability, index: 0));
+    context.read<AdminBloc>().add(EditPokemonAbilityEvent(ability: ability));
   }
 
   @override
@@ -114,7 +110,7 @@ class _AdminPokemonBodyInfoState extends State<AdminPokemonBodyInfo> {
         Expanded(
           flex: 55,
           child: AdminPokemonGenderContainer(
-            index: 0,
+            index: widget.index,
           ),
         )
       ],

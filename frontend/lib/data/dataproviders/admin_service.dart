@@ -1,5 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:frontend/api_config.dart';
+import 'package:frontend/data/models/processed/evolution.dart';
+import 'package:frontend/data/models/processed/pokemon.dart';
+import 'package:frontend/data/models/raw/raw_evolution.dart';
+import 'package:frontend/data/models/raw/raw_pokemon.dart';
 import 'package:frontend/data/models/raw/raw_type.dart';
 import 'package:frontend/data/models/raw/raw_user.dart';
 import 'package:http/http.dart' as http;
@@ -10,13 +15,54 @@ class AdminService {
 
   AdminService({http.Client? client}) : httpClient = client ?? http.Client();
 
-  Future<RawType> _postRequest(
+  Future<RawPokemon> uploadPokemon(
+      String token, File img, Pokemon pokemon) async {
+    try {
+      final uri = Uri.parse('$_baseUrl/pokemons');
+      final request = http.MultipartRequest('POST', uri)
+        ..headers['Authorization'] = 'Bearer $token'
+        ..fields['name'] = pokemon.name
+        ..fields['level'] = pokemon.level.toString()
+        ..fields['gender'] = pokemon.gender.toString()
+        ..fields['region_id'] = pokemon.regionId.toString()
+        ..fields['height'] = pokemon.height.toString()
+        ..fields['weight'] = pokemon.weight.toString()
+        ..fields['ability'] = pokemon.ability
+        ..fields['description'] = pokemon.description
+        ..fields['is_base_form'] = pokemon.isBaseForm.toString()
+        ..fields['category'] = pokemon.category
+        // Encode the types as a string and send as a single field
+        ..fields['types'] =
+            jsonEncode(pokemon.types.map((e) => e.toJson()).toList())
+        ..files.add(await http.MultipartFile.fromPath('image', img.path));
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final Map<String, dynamic> jsonData = jsonDecode(responseBody);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (jsonData.containsKey("data")) {
+          return RawPokemon.fromJson(jsonData["data"]);
+        } else {
+          throw Exception("Missing data");
+        }
+      } else {
+        String errorMessage = jsonData['message'] ?? 'Unknown error';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      throw Exception('Pokémon upload failed: ${e.toString()}');
+    }
+  }
+
+  Future<T> _postRequest<T>(
     String endpoint,
+    T Function(Map<String, dynamic>) fromJson,
     Map<String, dynamic> body, {
     String? authToken,
   }) async {
     final response = await httpClient.post(
-      Uri.parse('$_baseUrl/$endpoint'),
+      Uri.parse('${ApiConfig.baseUrl}/$endpoint'),
       headers: {
         'Content-Type': 'application/json',
         if (authToken != null) 'Authorization': 'Bearer $authToken',
@@ -28,7 +74,7 @@ class AdminService {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       if (jsonData.containsKey("data")) {
-        return RawType.fromJson(jsonData["data"]);
+        return fromJson(jsonData["data"]);
       } else {
         throw Exception("Missing data");
       }
@@ -132,7 +178,24 @@ class AdminService {
       "imgUrlOutline": "",
     };
 
-    return await _postRequest('types', body, authToken: token);
+    return await _postRequest(
+        authToken: token, 'types', RawType.fromJson, body);
+  }
+
+  Future<RawEvolution> createEvolution(
+      String token, Evolution evolution) async {
+    final Map<String, dynamic> body = {
+      'pokemon_id': evolution.pokemonId,
+      'evolves_to_id': evolution.evolvesToId,
+      'condition': evolution.condition,
+    };
+
+    return await _postRequest(
+      'evolutions',
+      RawEvolution.fromJson,
+      body,
+      authToken: token,
+    );
   }
 
   // Methods to fetch raw versions of the data
@@ -187,6 +250,13 @@ class AdminService {
   Future<void> deleteTypeById(String token, int typeId) async {
     await _deleteRequest(
       "types/$typeId",
+      authToken: token,
+    );
+  }
+
+  Future<void> deletePokemonById(String token, int pokemonId) async {
+    await _deleteRequest(
+      "pokemons/$pokemonId",
       authToken: token,
     );
   }

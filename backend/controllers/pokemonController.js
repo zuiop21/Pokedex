@@ -22,6 +22,21 @@ const sequelize = require("../config/database");
 const createPokemon = catchAsync(async (req, res, next) => {
   const body = req.body;
 
+  // Parse the types field if it's a stringified JSON array
+  let typesArray = body.types;
+  if (typeof typesArray === "string") {
+    try {
+      typesArray = JSON.parse(typesArray); // Parse the JSON string into an array
+    } catch (error) {
+      return next(new AppError("Invalid JSON format for types", 400));
+    }
+  }
+
+  // Ensure typesArray is an array before proceeding
+  if (!Array.isArray(typesArray)) {
+    return next(new AppError("Invalid types format. Expected an array.", 400));
+  }
+
   // Transaction creation
   const transaction = await sequelize.transaction();
 
@@ -38,7 +53,7 @@ const createPokemon = catchAsync(async (req, res, next) => {
         category: body.category,
         description: body.description,
         is_base_form: body.is_base_form,
-        imgUrl: body.imgUrl,
+        imgUrl: req.imgUrl,
         region_id: body.region_id,
       },
       { transaction }
@@ -49,11 +64,7 @@ const createPokemon = catchAsync(async (req, res, next) => {
       throw new AppError("Failed to create the Pokémon", 400);
     }
 
-    //Assume that body.types is an array,
-    //Like: [ { name: "Fire", is_weakness: true }, { name: "Water", is_weakness: false } ]
-    const typesArray = body.types;
-
-    //Process the types: get the type record based on the type name
+    // Process the types: get the type record based on the type name
     const pokemonTypeData = await Promise.all(
       typesArray.map(async (typeObj) => {
         const typeRecord = await Type.findOne({
@@ -73,8 +84,7 @@ const createPokemon = catchAsync(async (req, res, next) => {
       })
     );
 
-    //Create the association records (PokemonTypes) within the transaction with bulkCreate
-    //BulkCreate is used to create multiple records at once
+    // Create the association records (PokemonTypes) within the transaction with bulkCreate
     await PokemonType.bulkCreate(pokemonTypeData, { transaction });
 
     // Transaction commit
@@ -87,18 +97,29 @@ const createPokemon = catchAsync(async (req, res, next) => {
         {
           model: Type,
           as: "types",
-          attributes: ["name"],
-          through: {
-            attributes: ["is_weakness"],
-          },
+          attributes: ["name", "id", "color", "imgUrl", "imgUrlOutline"],
+          through: { attributes: ["is_weakness"] },
         },
       ],
     });
 
+    // Convert each Pokémon instance to a plain object and restructure the types array
+    const plainPokemon = createdPokemon.toJSON();
+
+    // Transform the `types` array to include `is_weakness` directly
+    plainPokemon.types = plainPokemon.types.map((type) => ({
+      name: type.name,
+      id: type.id,
+      color: type.color,
+      imgUrl: type.imgUrl,
+      imgUrlOutline: type.imgUrlOutline,
+      is_weakness: type.PokemonTypes.is_weakness,
+    }));
+
     // Return the response
     return res.status(201).json({
       status: "Success",
-      data: createdPokemon.toJSON(),
+      data: plainPokemon,
     });
   } catch (error) {
     // If an error occurs, rollback the transaction

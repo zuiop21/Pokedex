@@ -22,15 +22,16 @@ class _AdminPokemonBasicInfoState extends State<AdminPokemonBasicInfo> {
 
   void _changePokemonName(BuildContext context) {
     final name = _nameController.text;
-    context
-        .read<AdminBloc>()
-        .add(EditPokemonNameEvent(name: name, index: widget.index));
+    context.read<AdminBloc>().add(EditPokemonNameEvent(
+          name: name,
+        ));
   }
 
   void _changePokemonDescription(BuildContext context) {
     final description = _descriptionController.text;
     context.read<AdminBloc>().add(EditPokemonDescriptionEvent(
-        description: description, index: widget.index));
+          description: description,
+        ));
   }
 
   @override

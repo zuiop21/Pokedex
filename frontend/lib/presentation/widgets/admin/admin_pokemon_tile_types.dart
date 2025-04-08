@@ -30,9 +30,7 @@ class AdminPokemonTileTypes extends StatelessWidget {
   }
 
   void _addPokemonType(BuildContext context, Type type) {
-    context
-        .read<AdminBloc>()
-        .add(AddPokemonStrengthTypeEvent(type: type, index: index));
+    context.read<AdminBloc>().add(AddPokemonStrengthTypeEvent(type: type));
     Navigator.of(context).pop();
   }
 

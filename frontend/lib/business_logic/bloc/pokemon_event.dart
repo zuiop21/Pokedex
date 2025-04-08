@@ -81,3 +81,22 @@ final class FavouriteEvent extends PokemonEvent {
   @override
   List<Object?> get props => [pokemon, token];
 }
+
+final class CreateNewPokemonEvent extends PokemonEvent {
+  CreateNewPokemonEvent({required this.pokemons, required this.evolutions});
+
+  final List<Pokemon> pokemons;
+  final List<Evolution> evolutions;
+  @override
+  List<Object?> get props => [pokemons, evolutions];
+}
+
+final class DeletePokemonEvent extends PokemonEvent {
+  DeletePokemonEvent({required this.pokemon});
+  final Pokemon pokemon;
+
+  @override
+  List<Object?> get props => [
+        pokemon,
+      ];
+}

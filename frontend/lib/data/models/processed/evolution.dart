@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import 'package:frontend/data/models/raw/raw_evolution.dart';
 
@@ -25,4 +26,15 @@ class Evolution extends Equatable {
 
   @override
   List<Object?> get props => [id, pokemonId, evolvesToId, condition];
+  Evolution copyWith(
+      {int? id,
+      int? pokemonId,
+      ValueGetter<int?>? evolvesToId,
+      ValueGetter<String?>? condition}) {
+    return Evolution(
+        id: id ?? this.id,
+        pokemonId: pokemonId ?? this.pokemonId,
+        evolvesToId: evolvesToId != null ? evolvesToId() : this.evolvesToId,
+        condition: condition != null ? condition() : this.condition);
+  }
 }

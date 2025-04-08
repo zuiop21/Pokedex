@@ -25,6 +25,27 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
     on<DeleteTypeEvent>(_deleteType);
     on<CreateNewTypeEvent>(_createType);
     on<FavouriteEvent>(_changeFavouriteStatus);
+    on<CreateNewPokemonEvent>(_createPokemon);
+    on<DeletePokemonEvent>(_deletePokemon);
+  }
+
+  void _deletePokemon(
+      DeletePokemonEvent event, Emitter<PokemonState> emit) async {
+    final updatedMap = Map<int, Pokemon>.from(state.pokemons)
+      ..remove(event.pokemon.id);
+
+    emit(state.copyWith(pokemons: updatedMap));
+  }
+
+  void _createPokemon(
+      CreateNewPokemonEvent event, Emitter<PokemonState> emit) async {
+    final updatedMap = Map<int, Pokemon>.from(state.pokemons);
+
+    for (final pokemon in event.pokemons) {
+      updatedMap[pokemon.id] = pokemon;
+    }
+    final updatedEvolutions = [...state.evolutions, ...event.evolutions];
+    emit(state.copyWith(pokemons: updatedMap, evolutions: updatedEvolutions));
   }
 
   Future<void> _changeFavouriteStatus(

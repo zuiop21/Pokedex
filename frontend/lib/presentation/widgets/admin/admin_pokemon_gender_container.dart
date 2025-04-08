@@ -9,9 +9,7 @@ class AdminPokemonGenderContainer extends StatelessWidget {
   const AdminPokemonGenderContainer({super.key, required this.index});
 
   void _changeGender(BuildContext context, double newValue) {
-    context
-        .read<AdminBloc>()
-        .add(EditPokemonGenderEvent(gender: newValue, index: index));
+    context.read<AdminBloc>().add(EditPokemonGenderEvent(gender: newValue));
   }
 
   @override

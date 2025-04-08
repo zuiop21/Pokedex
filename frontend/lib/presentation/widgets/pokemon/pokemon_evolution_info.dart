@@ -13,9 +13,11 @@ class PokemonEvolutionInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     //Find the pokemon by it's id
     final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
+
     //Find the evolution chain of the pokemon
     final evolutionChain =
         context.read<PokemonBloc>().state.findEvolutionChain(pokemon!);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

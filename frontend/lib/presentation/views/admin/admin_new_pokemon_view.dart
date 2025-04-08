@@ -6,15 +6,20 @@ import 'package:frontend/presentation/widgets/admin/admin_pokemon_appbar.dart';
 import 'package:frontend/presentation/widgets/admin/admin_pokemon_body_info.dart';
 import 'package:frontend/presentation/widgets/admin/admin_pokemon_evolution_info.dart';
 import 'package:frontend/presentation/widgets/admin/admin_pokemon_weaknesses_grid.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/admin/admin_pokemon_basic_info.dart';
 
 class AdminNewPokemonView extends StatelessWidget {
   final int index;
   const AdminNewPokemonView({super.key, required this.index});
 
-  void _saveChanges(BuildContext context) {
+  void _saveChanges(BuildContext context) async {
     if (index == 0) {
-      //Todo: SAVE changed/SEND HTTP
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString("token") ?? "";
+      if (!context.mounted) return;
+
+      context.read<AdminBloc>().add(CreatePokemonEvent(token: token));
     }
     context.read<AdminBloc>().add(CancelActionEvent());
     Navigator.pop(context);
@@ -26,9 +31,6 @@ class AdminNewPokemonView extends StatelessWidget {
       backgroundColor: Colors.white,
       body: BlocBuilder<AdminBloc, AdminState>(
         builder: (context, state) {
-          if (state.newPokemons.isNotEmpty) print(state.newPokemons[0]);
-
-          if (state.newPokemons.length == 2) print(state.newPokemons[1]);
           return Column(
             children: [
               SizedBox(

@@ -27,9 +27,7 @@ class AdminPokemonWeaknessesGrid extends StatelessWidget {
   }
 
   void _addPokemonType(BuildContext context, Type type) {
-    context
-        .read<AdminBloc>()
-        .add(AddPokemonWeaknessTypeEvent(type: type, index: index));
+    context.read<AdminBloc>().add(AddPokemonWeaknessTypeEvent(type: type));
     Navigator.of(context).pop();
   }
 

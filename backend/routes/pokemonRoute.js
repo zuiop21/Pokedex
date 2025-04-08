@@ -6,9 +6,9 @@ const {
   deletePokemon,
 } = require("../controllers/pokemonController");
 
-const router = require("express").Router();
-
+const { uploadPokemonPicture } = require("../controllers/assetController");
 const { restricted, authentication } = require("../controllers/authController");
+const router = require("express").Router();
 /**
  * @swagger
  * tags:
@@ -33,28 +33,58 @@ const { restricted, authentication } = require("../controllers/authController");
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
- *               level: { type: integer, example: 69 }
- *               gender: { type: integer, example: 69 }
- *               height: { type: number, format: float, example: 69.9 }
- *               weight: { type: number, format: float, example: 69.6 }
- *               name: { type: string, example: "Pikachu" }
- *               ability: { type: string, example: "Lightning" }
- *               category: { type: string, example: "Rat" }
- *               description: { type: string, example: "Cute" }
- *               is_base_form: { type: boolean, example: true }
- *               imgUrl: { type: string, example: "http://localhost:3000/assets/pokemons/pokemon1.png" }
- *               region_id: { type: integer, example: 1 }
+ *               level:
+ *                 type: integer
+ *                 example: 69
+ *               gender:
+ *                 type: integer
+ *                 example: 69
+ *               height:
+ *                 type: number
+ *                 format: float
+ *                 example: 69.9
+ *               weight:
+ *                 type: number
+ *                 format: float
+ *                 example: 69.6
+ *               name:
+ *                 type: string
+ *                 example: "Pikachu"
+ *               ability:
+ *                 type: string
+ *                 example: "Lightning"
+ *               category:
+ *                 type: string
+ *                 example: "Rat"
+ *               description:
+ *                 type: string
+ *                 example: "Cute"
+ *               is_base_form:
+ *                 type: boolean
+ *                 example: true
+ *               region_id:
+ *                 type: integer
+ *                 example: 1
  *               types:
  *                 type: array
  *                 items:
  *                   type: object
  *                   properties:
- *                     name: { type: string, example: "Fire" }
- *                     is_weakness: { type: boolean, example: true }
+ *                     name:
+ *                       type: string
+ *                       example: "Fire"
+ *                     is_weakness:
+ *                       type: string
+ *                       enum: ["yes", "no", "both"]
+ *                       example: "yes"
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 description: The Pokémon image (multipart file)
  *     responses:
  *       200: { description: Evolution found }
  *       201: { description: Created }
@@ -66,7 +96,12 @@ const { restricted, authentication } = require("../controllers/authController");
 router
   .route("/pokemons")
   .get(readAllPokemon)
-  .post(authentication, restricted, createPokemon);
+  .post(authentication, restricted, uploadPokemonPicture, createPokemon);
+
+router
+  .route("/pokemons")
+  .get(readAllPokemon)
+  .post(authentication, restricted, uploadPokemonPicture, createPokemon);
 
 /**
  * @swagger

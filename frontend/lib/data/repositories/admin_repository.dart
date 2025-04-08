@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:frontend/data/dataproviders/admin_service.dart';
+import 'package:frontend/data/models/processed/evolution.dart';
+import 'package:frontend/data/models/processed/pokemon.dart';
 import 'package:frontend/data/models/processed/user.dart';
 import 'package:frontend/data/models/processed/type.dart';
 
@@ -7,6 +11,20 @@ class AdminRepository {
       : _adminService = adminService ?? AdminService();
 
   final AdminService _adminService;
+
+  Future<Pokemon> uploadPokemon(
+    String token,
+    File img,
+    Pokemon pokemon,
+  ) async {
+    try {
+      final rawPokemon = await _adminService.uploadPokemon(token, img, pokemon);
+      final processedPokemon = Pokemon.fromRaw(rawPokemon);
+      return processedPokemon;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   Future<List<User>> getAllUsers(String token) async {
     try {
@@ -68,6 +86,17 @@ class AdminRepository {
     return Type.fromRaw(rawType);
   }
 
+  Future<Evolution> createEvolution(
+    String token,
+    Evolution evolution,
+  ) async {
+    final rawEvolution = await _adminService.createEvolution(
+      token,
+      evolution,
+    );
+    return Evolution.fromRaw(rawEvolution);
+  }
+
   Future<void> deleteTypeById(
     String token,
     int typeId,
@@ -75,6 +104,16 @@ class AdminRepository {
     await _adminService.deleteTypeById(
       token,
       typeId,
+    );
+  }
+
+  Future<void> deletePokemonById(
+    String token,
+    int pokemonId,
+  ) async {
+    await _adminService.deletePokemonById(
+      token,
+      pokemonId,
     );
   }
 }

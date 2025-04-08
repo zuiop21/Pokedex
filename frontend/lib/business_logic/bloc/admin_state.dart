@@ -31,16 +31,22 @@ final class AdminState extends Equatable {
       this.placeholderType,
       this.error,
       this.deletedType,
+      this.deletedPokemon,
       this.currentIndex = 0,
-      this.newPokemons = const []});
+      this.newPokemons = const [],
+      this.newEvolutions = const [],
+      this.images = const []});
 
   final Type? placeholderType;
   final AdminStatus status;
   final String? error;
   final List<User> users;
   final Type? deletedType;
+  final Pokemon? deletedPokemon;
   final List<Pokemon> newPokemons;
+  final List<Evolution> newEvolutions;
   final int currentIndex;
+  final List<File> images;
 
   AdminState copyWith(
       {ValueGetter<Type?>? placeholderType,
@@ -48,8 +54,11 @@ final class AdminState extends Equatable {
       ValueGetter<String?>? error,
       List<User>? users,
       ValueGetter<Type?>? deletedType,
+      ValueGetter<Pokemon?>? deletedPokemon,
       List<Pokemon>? newPokemons,
-      int? currentIndex}) {
+      List<Evolution>? newEvolutions,
+      int? currentIndex,
+      List<File>? images}) {
     return AdminState(
         placeholderType:
             placeholderType != null ? placeholderType() : this.placeholderType,
@@ -57,8 +66,12 @@ final class AdminState extends Equatable {
         error: error != null ? error() : this.error,
         users: users ?? this.users,
         deletedType: deletedType != null ? deletedType() : this.deletedType,
+        deletedPokemon:
+            deletedPokemon != null ? deletedPokemon() : this.deletedPokemon,
         newPokemons: newPokemons ?? this.newPokemons,
-        currentIndex: currentIndex ?? this.currentIndex);
+        newEvolutions: newEvolutions ?? this.newEvolutions,
+        currentIndex: currentIndex ?? this.currentIndex,
+        images: images ?? this.images);
   }
 
   @override
@@ -68,7 +81,10 @@ final class AdminState extends Equatable {
         error,
         placeholderType,
         deletedType,
+        deletedPokemon,
+        newEvolutions,
         newPokemons,
-        currentIndex
+        currentIndex,
+        images
       ];
 }

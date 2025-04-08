@@ -19,7 +19,7 @@ class PokemonGenderContainer extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 3),
-          child: gender > 0
+          child: gender >= 0
               ? Stack(
                   children: [
                     Row(

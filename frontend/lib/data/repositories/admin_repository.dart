@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:frontend/data/dataproviders/admin_service.dart';
 import 'package:frontend/data/models/processed/evolution.dart';
 import 'package:frontend/data/models/processed/pokemon.dart';
+import 'package:frontend/data/models/processed/region.dart';
 import 'package:frontend/data/models/processed/user.dart';
 import 'package:frontend/data/models/processed/type.dart';
 
@@ -21,6 +22,20 @@ class AdminRepository {
       final rawPokemon = await _adminService.uploadPokemon(token, img, pokemon);
       final processedPokemon = Pokemon.fromRaw(rawPokemon);
       return processedPokemon;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Region> uploadRegion(
+    String token,
+    File img,
+    Region region,
+  ) async {
+    try {
+      final rawRegion = await _adminService.uploadRegion(token, img, region);
+      final processedRegion = Region.fromRaw(rawRegion);
+      return processedRegion;
     } catch (e) {
       rethrow;
     }
@@ -73,16 +88,26 @@ class AdminRepository {
     return Type.fromRaw(rawType);
   }
 
+  Future<Region> updateRegionById(
+    String token,
+    Region region,
+  ) async {
+    final rawRegion = await _adminService.updateRegionById(
+      token,
+      region,
+    );
+    return Region.fromRaw(rawRegion);
+  }
+
   Future<Type> createType(
     String token,
+    File img,
+    File imgOutline,
     String name,
     String color,
   ) async {
-    final rawType = await _adminService.createType(
-      token,
-      name,
-      color,
-    );
+    final rawType =
+        await _adminService.uploadType(token, img, imgOutline, name, color);
     return Type.fromRaw(rawType);
   }
 
@@ -114,6 +139,16 @@ class AdminRepository {
     await _adminService.deletePokemonById(
       token,
       pokemonId,
+    );
+  }
+
+  Future<void> deleteRegionById(
+    String token,
+    int regionId,
+  ) async {
+    await _adminService.deleteRegionById(
+      token,
+      regionId,
     );
   }
 }

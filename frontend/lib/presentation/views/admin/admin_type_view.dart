@@ -6,7 +6,7 @@ import 'package:frontend/business_logic/bloc/pokemon_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/data/models/processed/type.dart';
 import 'package:frontend/presentation/widgets/other/type_edit_dialog.dart';
-import 'package:frontend/presentation/widgets/other/type_edit_dialog2.dart';
+import 'package:frontend/presentation/widgets/other/type_new_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminTypeView extends StatelessWidget {
@@ -57,7 +57,7 @@ class AdminTypeView extends StatelessWidget {
         .add(DeleteTypeByIdEvent(type: type, token: token));
   }
 
-  void _showColorEditor(BuildContext context) {
+  void _showEditor(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => PopScope(
@@ -69,20 +69,19 @@ class AdminTypeView extends StatelessWidget {
     );
   }
 
-  //TODO rename
-  void _showColorEdito(BuildContext context) {
+  void _showCreator(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => PopScope(
         onPopInvokedWithResult: (didPop, result) => {
           if (didPop) {_stopUpdatingType(context)}
         },
-        child: TypeEditDialog2(),
+        child: TypeNewDialog(),
       ),
     );
   }
 
-  void _showSuccessDialog(BuildContext context, String type, String text) {
+  void _showResponseDialog(BuildContext context, String type, String text) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -103,25 +102,25 @@ class AdminTypeView extends StatelessWidget {
     return BlocListener<AdminBloc, AdminState>(
       listener: (context, state) {
         if (state.status.isFailure) {
-          _showSuccessDialog(context, "Error", state.error!);
+          _showResponseDialog(context, "Error", state.error!);
         }
         if (state.status.isUpdating) {
-          _showColorEditor(context);
+          _showEditor(context);
         }
         if (state.status.isUpdated) {
           _updatePokemonTypes(context, state.placeholderType!);
-          _showSuccessDialog(context, "Success", "Type has been updated.");
+          _showResponseDialog(context, "Success", "Type has been updated.");
         }
-        if (state.status.isDeleted) {
+        if (state.status.isPopped) {
           _deletePokemonTypes(context, state.deletedType!);
-          _showSuccessDialog(context, "Success", "Type has been deleted.");
+          _showResponseDialog(context, "Success", "Type has been deleted.");
         }
         if (state.status.isCreating) {
-          _showColorEdito(context);
+          _showCreator(context);
         }
         if (state.status.isCreated) {
           _createPokemonTypes(context, state.placeholderType!);
-          _showSuccessDialog(context, "Success", "Type has been created.");
+          _showResponseDialog(context, "Success", "Type has been created.");
         }
       },
       listenWhen: (previous, current) {

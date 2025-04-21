@@ -5,6 +5,7 @@ import 'package:frontend/constants/app_colors.dart';
 import 'package:frontend/presentation/widgets/admin/admin_pokemon_appbar.dart';
 import 'package:frontend/presentation/widgets/admin/admin_pokemon_body_info.dart';
 import 'package:frontend/presentation/widgets/admin/admin_pokemon_evolution_info.dart';
+import 'package:frontend/presentation/widgets/admin/admin_pokemon_region.dart';
 import 'package:frontend/presentation/widgets/admin/admin_pokemon_weaknesses_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/admin/admin_pokemon_basic_info.dart';
@@ -69,6 +70,16 @@ class AdminNewPokemonView extends StatelessWidget {
                             child: AdminPokemonBodyInfo(
                               index: index,
                             )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 20),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: AdminPokemonRegion(
+                            index: index,
+                          ),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(

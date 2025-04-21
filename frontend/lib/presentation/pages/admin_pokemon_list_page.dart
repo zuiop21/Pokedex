@@ -76,26 +76,23 @@ class AdminPokemonListPage extends StatelessWidget {
             const Divider(color: Colors.white),
         itemCount: pokemons.length,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () => {}, //TODO
-            child: PokemonFavouriteTile(
-              actions: [
-                CustomSlidableAction(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      bottomLeft: Radius.circular(15)),
-                  autoClose: true,
-                  onPressed: (context) =>
-                      _deletePokemon(context, pokemons[index]),
-                  backgroundColor: Colors.red,
-                  child: Icon(
-                    Icons.delete,
-                    size: 45,
-                  ),
+          return PokemonFavouriteTile(
+            actions: [
+              CustomSlidableAction(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    bottomLeft: Radius.circular(15)),
+                autoClose: true,
+                onPressed: (context) =>
+                    _deletePokemon(context, pokemons[index]),
+                backgroundColor: Colors.red,
+                child: Icon(
+                  Icons.delete,
+                  size: 45,
                 ),
-              ],
-              pokemonId: pokemons[index].id,
-            ),
+              ),
+            ],
+            pokemonId: pokemons[index].id,
           );
         },
       ),

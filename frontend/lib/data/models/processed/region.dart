@@ -25,4 +25,11 @@ class Region extends Equatable {
 
   @override
   List<Object?> get props => [id, name, difficulty, imgUrl];
+  Region copyWith({int? id, String? name, int? difficulty, String? imgUrl}) {
+    return Region(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        difficulty: difficulty ?? this.difficulty,
+        imgUrl: imgUrl ?? this.imgUrl);
+  }
 }

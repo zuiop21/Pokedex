@@ -28,8 +28,7 @@ class FlowButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32),
             ),
-            padding: const EdgeInsets.symmetric(
-                vertical: 12), //TODO make this value changeable
+            padding: const EdgeInsets.symmetric(vertical: 12),
           ),
           child: child,
         ),

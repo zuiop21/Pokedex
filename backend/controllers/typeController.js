@@ -23,8 +23,8 @@ const createType = catchAsync(async (req, res, next) => {
   const newType = await Type.create({
     name: body.name,
     color: body.color,
-    imgUrl: body.imgUrl,
-    imgUrlOutline: body.imgUrlOutline,
+    imgUrl: req.imgUrl,
+    imgUrlOutline: req.imgUrlOutline,
   });
 
   // If the type creation fails, throw an error

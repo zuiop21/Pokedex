@@ -54,7 +54,7 @@ class InfoSwitch extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: Switch(
                 activeColor: AppColors.blue,
-                value: true, // TODO cubit
+                value: true,
                 onChanged: (value) => function(),
               ),
             ),

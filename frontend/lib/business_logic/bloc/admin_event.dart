@@ -178,8 +178,8 @@ final class StartAddingPokemonWeaknessTypeEvent extends AdminEvent {
   List<Object?> get props => [];
 }
 
-final class StopAddingPokemonTypeEvent extends AdminEvent {
-  StopAddingPokemonTypeEvent();
+final class CancelPokemonEvent extends AdminEvent {
+  CancelPokemonEvent();
   @override
   List<Object?> get props => [];
 }
@@ -230,4 +230,95 @@ final class DeletePokemonByIdEvent extends AdminEvent {
   final String token;
   @override
   List<Object?> get props => [pokemon, token];
+}
+
+final class StartCreatingRegionEvent extends AdminEvent {
+  StartCreatingRegionEvent();
+  @override
+  List<Object?> get props => [];
+}
+
+final class StartUpdatingRegionEvent extends AdminEvent {
+  StartUpdatingRegionEvent({required this.region});
+  final Region region;
+  @override
+  List<Object?> get props => [region];
+}
+
+final class CancelRegionEvent extends AdminEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+final class AddRegionImageEvent extends AdminEvent {
+  AddRegionImageEvent({required this.image});
+  final File image;
+  @override
+  List<Object?> get props => [image];
+}
+
+final class CreateRegionEvent extends AdminEvent {
+  CreateRegionEvent({
+    required this.token,
+  });
+
+  final String token;
+
+  @override
+  List<Object?> get props => [token];
+}
+
+final class EditRegionEvent extends AdminEvent {
+  EditRegionEvent({this.name, this.difficulty});
+
+  final String? name;
+  final double? difficulty;
+  @override
+  List<Object?> get props => [
+        name,
+        difficulty,
+      ];
+}
+
+final class DeleteRegionByIdEvent extends AdminEvent {
+  DeleteRegionByIdEvent({required this.region, required this.token});
+  final Region region;
+  final String token;
+  @override
+  List<Object?> get props => [region, token];
+}
+
+final class UpdateRegionByIdEvent extends AdminEvent {
+  UpdateRegionByIdEvent({required this.token, required this.region});
+  final String token;
+  final Region region;
+  @override
+  List<Object?> get props => [token, region];
+}
+
+final class AddTypeImageEvent extends AdminEvent {
+  AddTypeImageEvent({required this.image});
+  final File image;
+  @override
+  List<Object?> get props => [image];
+}
+
+final class AddTypeImageOutlineEvent extends AdminEvent {
+  AddTypeImageOutlineEvent({required this.image});
+  final File image;
+  @override
+  List<Object?> get props => [image];
+}
+
+final class StartAddingPokemonRegionEvent extends AdminEvent {
+  StartAddingPokemonRegionEvent();
+  @override
+  List<Object?> get props => [];
+}
+
+final class AddPokemonRegionEvent extends AdminEvent {
+  AddPokemonRegionEvent({required this.region});
+  final Region region;
+  @override
+  List<Object?> get props => [region];
 }

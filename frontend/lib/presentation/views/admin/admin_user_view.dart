@@ -43,6 +43,9 @@ class _AdminUserViewState extends State<AdminUserView> {
           case AdminStatus.created:
           case AdminStatus.updating:
           case AdminStatus.updated:
+          case AdminStatus.popped:
+          case AdminStatus.adding:
+          case AdminStatus.added:
           case AdminStatus.deleted:
             return Scaffold(
                 body: AdminInitPage(func: () => _refreshData(context)));

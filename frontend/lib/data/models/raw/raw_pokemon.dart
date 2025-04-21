@@ -16,7 +16,7 @@ class RawPokemon {
   final String category;
   final String description;
   final bool is_base_form;
-  final int region_id;
+  final int? region_id;
   final String imgUrl;
   final List<RawType> types;
 

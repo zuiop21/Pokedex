@@ -89,7 +89,7 @@ class _TypeEditDialogState extends State<TypeEditDialog> {
                     ),
                     controller: _controller,
                     decoration: InputDecoration(
-                      border: InputBorder.none, // Removes the underline
+                      border: InputBorder.none,
                     ),
                   ),
                 ),

@@ -47,14 +47,14 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       region_id: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.INTEGER,
         references: {
           model: "Regions",
           key: "id",
         },
         onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        onDelete: "SET NULL",
       },
       imgUrl: {
         allowNull: false,

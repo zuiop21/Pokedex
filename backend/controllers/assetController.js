@@ -75,6 +75,46 @@ const uploadProfilePicture = catchAsync(async (req, res, next) => {
     });
   });
 });
+const uploadTypeImages = catchAsync(async (req, res, next) => {
+  const uploadFields = upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "imageUrlOutline", maxCount: 1 },
+  ]);
+
+  uploadFields(req, res, async (err) => {
+    if (err) {
+      return next(new AppError(err.message, 400));
+    }
+
+    if (!req.files || !req.files.image || !req.files.imageUrlOutline) {
+      return next(new AppError("Both images are required!", 400));
+    }
+
+    req.imgUrl = `http://localhost:3000/assets/types/${req.files.image[0].filename}`;
+    req.imgUrlOutline = `http://localhost:3000/assets/types/${req.files.imageUrlOutline[0].filename}`;
+
+    next();
+  });
+});
+
+const uploadRegionPicture = catchAsync(async (req, res, next) => {
+  upload.single("image")(req, res, async (err) => {
+    if (err) {
+      return next(new AppError(err.message, 400));
+    }
+
+    if (!req.file) {
+      return next(new AppError("No image uploaded!", 400));
+    }
+
+    // Generate image URL
+    const fileUrl = `http://localhost:3000/assets/regions/${req.file.filename}`;
+
+    req.imgUrl = fileUrl;
+
+    return next();
+  });
+});
 
 const uploadPokemonPicture = catchAsync(async (req, res, next) => {
   upload.single("image")(req, res, async (err) => {
@@ -95,4 +135,10 @@ const uploadPokemonPicture = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { uploadImage, uploadProfilePicture, uploadPokemonPicture };
+module.exports = {
+  uploadImage,
+  uploadProfilePicture,
+  uploadPokemonPicture,
+  uploadRegionPicture,
+  uploadTypeImages,
+};

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/auth_bloc.dart';
@@ -40,12 +41,12 @@ class PokemonUserPage extends StatelessWidget {
               InfoText(
                   title: "From",
                   subTitle: context
-                      .read<PokemonBloc>()
-                      .state
-                      .regions
-                      .where((r) => r.id == user.regionId)
-                      .first
-                      .name),
+                          .read<PokemonBloc>()
+                          .state
+                          .regions
+                          .firstWhereOrNull((r) => r.id == user.regionId)
+                          ?.name ??
+                      "Unknown region"),
               InfoText(title: "Role", subTitle: user.role),
 
               Padding(

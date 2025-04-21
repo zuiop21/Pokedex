@@ -28,7 +28,6 @@ class PokemonInfoAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO no need for blocbuilder?
     return BlocBuilder<PokemonBloc, PokemonState>(
       builder: (context, state) {
         final pokemon = state.getPokemonById(pokemonId);
@@ -42,8 +41,6 @@ class PokemonInfoAppbar extends StatelessWidget {
               top: -MediaQuery.of(context).size.width * 0.6,
               left: -MediaQuery.of(context).size.width * 0.055,
               child: ShaderMask(
-                //TODO blurred img
-                //TODO kör alapján levágás
                 shaderCallback: (Rect bounds) {
                   return LinearGradient(
                     begin: Alignment.topLeft,

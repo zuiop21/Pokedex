@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/business_logic/bloc/admin_bloc.dart';
 import 'package:frontend/constants/app_colors.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminPokemonAppbar extends StatelessWidget {
   final int index;
@@ -18,7 +17,7 @@ class AdminPokemonAppbar extends StatelessWidget {
       context.read<AdminBloc>().add(PopPokemonEvent());
     }
 
-    Navigator.pop(context);
+    Navigator.of(context).pop();
   }
 
   Future<void> _pickImageFromGallery(BuildContext context) async {
@@ -36,7 +35,7 @@ class AdminPokemonAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AdminBloc, AdminState>(
-      buildWhen: (previous, current) => !current.status.isDeleted,
+      buildWhen: (previous, current) => !current.status.isPopped,
       builder: (context, state) {
         final strengthTypes = context
             .read<AdminBloc>()
@@ -51,8 +50,6 @@ class AdminPokemonAppbar extends StatelessWidget {
               top: -MediaQuery.of(context).size.width * 0.6,
               left: -MediaQuery.of(context).size.width * 0.055,
               child: ShaderMask(
-                //TODO blurred img
-                //TODO kör alapján levágás
                 shaderCallback: (Rect bounds) {
                   return LinearGradient(
                     begin: Alignment.topLeft,

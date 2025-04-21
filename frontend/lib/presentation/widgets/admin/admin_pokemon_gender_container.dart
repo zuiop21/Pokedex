@@ -15,7 +15,7 @@ class AdminPokemonGenderContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AdminBloc, AdminState>(
-      buildWhen: (previous, current) => !current.status.isDeleted,
+      buildWhen: (previous, current) => !current.status.isPopped,
       builder: (context, state) {
         final pokemon = state.newPokemons[index];
         return Column(
@@ -118,11 +118,7 @@ class AdminPokemonGenderContainer extends StatelessWidget {
                       value: pokemon.gender < 0,
                       onChanged: (value) {
                         if (value == null) return;
-                        _changeGender(
-                            context,
-                            value
-                                ? -1
-                                : 0); //TODO reset to previous state instead of 0
+                        _changeGender(context, value ? -1 : 0);
                       },
                     ),
                   ),

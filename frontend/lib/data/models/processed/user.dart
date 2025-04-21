@@ -27,7 +27,7 @@ class User extends Equatable {
     return User(
         id: rawUser.id,
         role: rawUser.role,
-        regionId: rawUser.region_id,
+        regionId: rawUser.region_id ?? 0,
         name: rawUser.name,
         email: rawUser.email,
         isLocked: rawUser.is_locked,

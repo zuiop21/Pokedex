@@ -14,7 +14,7 @@ class AdminUserPage extends StatelessWidget {
   Map<String, List<User>> groupUsersByRole(List<User> users) {
     final grouped = groupBy(users, (user) => user.role);
 
-    final sortedEntries = grouped.entries.toList() //TODO DARQ
+    final sortedEntries = grouped.entries.toList()
       ..sort((a, b) => a.value.length.compareTo(b.value.length));
 
     return Map<String, List<User>>.fromEntries(sortedEntries);

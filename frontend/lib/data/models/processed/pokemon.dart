@@ -120,7 +120,7 @@ class Pokemon extends Equatable {
         description: rawPokemon.description,
         isBaseForm: rawPokemon.is_base_form,
         imgUrl: rawPokemon.imgUrl,
-        regionId: rawPokemon.region_id,
+        regionId: rawPokemon.region_id ?? 0,
         types: rawPokemon.types.map((t) => Type.fromRaw(t)).toList(),
         isFavourited: false);
   }

@@ -35,7 +35,7 @@ class AdminPokemonTileTypes extends StatelessWidget {
   }
 
   void _stopAddingType(BuildContext context) {
-    context.read<AdminBloc>().add(StopAddingPokemonTypeEvent());
+    context.read<AdminBloc>().add(CancelPokemonEvent());
   }
 
   void _showDialog(BuildContext context) {
@@ -104,7 +104,7 @@ class AdminPokemonTileTypes extends StatelessWidget {
             _showDialog(context);
           }
         },
-        buildWhen: (previous, current) => !current.status.isDeleted,
+        buildWhen: (previous, current) => !current.status.isPopped,
         builder: (context, state) {
           final pokemon = state.newPokemons[state.currentIndex];
           final strengthTypes = pokemon.types

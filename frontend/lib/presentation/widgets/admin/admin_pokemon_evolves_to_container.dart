@@ -77,13 +77,19 @@ class AdminPokemonEvolvesToContainer extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
-                              child: pokemon.imgUrl.isNotEmpty
-                                  ? CachedNetworkImage(
+                              child: context
+                                      .read<AdminBloc>()
+                                      .state
+                                      .images[index]
+                                      .path
+                                      .isNotEmpty
+                                  ? Image.file(
+                                      context
+                                          .read<AdminBloc>()
+                                          .state
+                                          .images[index],
                                       fit: BoxFit.contain,
-                                      imageUrl: pokemon.imgUrl,
-                                      placeholder: (context, url) =>
-                                          CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) =>
+                                      errorBuilder: (context, error, stack) =>
                                           Icon(Icons.error),
                                     )
                                   : Icon(Icons.error),

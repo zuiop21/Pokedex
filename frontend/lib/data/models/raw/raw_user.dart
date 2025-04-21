@@ -7,7 +7,7 @@ part 'raw_user.g.dart';
 class RawUser {
   final int id;
   final String role;
-  final int region_id;
+  final int? region_id;
   final String? token;
   final String name;
   final String email;

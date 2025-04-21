@@ -31,14 +31,14 @@ module.exports = {
         type: Sequelize.STRING,
       },
       region_id: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.INTEGER,
         references: {
           model: "Regions",
           key: "id",
         },
         onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        onDelete: "SET NULL",
       },
       is_locked: {
         allowNull: false,

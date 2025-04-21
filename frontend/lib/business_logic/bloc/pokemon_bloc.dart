@@ -27,6 +27,36 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
     on<FavouriteEvent>(_changeFavouriteStatus);
     on<CreateNewPokemonEvent>(_createPokemon);
     on<DeletePokemonEvent>(_deletePokemon);
+    on<CreateNewRegionEvent>(_createRegion);
+    on<DeleteRegionEvent>(_deleteRegion);
+    on<UpdateRegionEvent>(_updateRegion);
+  }
+
+  void _updateRegion(
+      UpdateRegionEvent event, Emitter<PokemonState> emit) async {
+    final updatedRegions = state.regions.map((region) {
+      if (region.id == event.region.id) {
+        return event.region;
+      }
+      return region;
+    }).toList();
+
+    emit(state.copyWith(regions: updatedRegions));
+  }
+
+  void _deleteRegion(
+      DeleteRegionEvent event, Emitter<PokemonState> emit) async {
+    final updatedRegions =
+        state.regions.where((r) => r.id != event.region.id).toList();
+
+    emit(state.copyWith(regions: updatedRegions));
+  }
+
+  void _createRegion(
+      CreateNewRegionEvent event, Emitter<PokemonState> emit) async {
+    final updatedRegions = [...state.regions, event.newRegion];
+
+    emit(state.copyWith(regions: updatedRegions));
   }
 
   void _deletePokemon(
@@ -172,7 +202,6 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
           .toList();
     }
 
-//TODO DARQ
     switch (state.dropDownValue2) {
       case "Ascending":
         filteredPokemons.sort((a, b) => a.id.compareTo(b.id));

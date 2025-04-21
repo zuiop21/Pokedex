@@ -32,7 +32,7 @@ class AdminPokemonWeaknessesGrid extends StatelessWidget {
   }
 
   void _stopAddingType(BuildContext context) {
-    context.read<AdminBloc>().add(StopAddingPokemonTypeEvent());
+    context.read<AdminBloc>().add(CancelPokemonEvent());
   }
 
   void _showDialog(BuildContext context) {
@@ -96,7 +96,7 @@ class AdminPokemonWeaknessesGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AdminBloc, AdminState>(
-      buildWhen: (previous, current) => !current.status.isDeleted,
+      buildWhen: (previous, current) => !current.status.isPopped,
       listener: (context, state) {
         if (state.status.isCreating && state.currentIndex == index) {
           _showDialog(context);

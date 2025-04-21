@@ -100,8 +100,7 @@ class PokemonFavouriteTile extends StatelessWidget {
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height,
                           child: Padding(
-                            padding:
-                                const EdgeInsets.all(8.0), //TODO blurredimage
+                            padding: const EdgeInsets.all(8.0),
                             child: ShaderMask(
                               shaderCallback: (Rect bounds) {
                                 return LinearGradient(

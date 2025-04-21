@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/data/models/processed/evolution.dart';
 import 'package:frontend/data/models/processed/pokemon.dart';
+import 'package:frontend/data/models/processed/region.dart';
 import 'package:frontend/data/models/processed/user.dart';
 import 'package:frontend/data/repositories/admin_repository.dart';
 import 'package:frontend/data/models/processed/type.dart';
@@ -35,7 +36,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     on<EditPokemonGenderEvent>(_editPokemonGender);
     on<StartAddingPokemonStrengthTypeEvent>(_startAddingPokemonStrengthType);
     on<AddPokemonStrengthTypeEvent>(_addPokemonStrengthType);
-    on<StopAddingPokemonTypeEvent>(_stopAddingPokemonType);
+    on<CancelPokemonEvent>(_cancelPokemonEvent);
     on<StartAddingPokemonWeaknessTypeEvent>(_startAddingPokemonWeaknessType);
     on<AddPokemonWeaknessTypeEvent>(_addPokemonWeaknessType);
     on<CancelActionEvent>(_cancelAction);
@@ -43,6 +44,154 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     on<AddPokemonImageEvent>(_addPokemonImage);
     on<CreatePokemonEvent>(_createPokemon);
     on<DeletePokemonByIdEvent>(_deletePokemon);
+    on<StartCreatingRegionEvent>(_startCreatingRegion);
+    on<CancelRegionEvent>(_cancelRegion);
+    on<StartUpdatingRegionEvent>(_startUpdatingRegion);
+    on<AddRegionImageEvent>(_addRegionImage);
+    on<CreateRegionEvent>(_createRegion);
+    on<EditRegionEvent>(_editRegion);
+    on<DeleteRegionByIdEvent>(_deleteRegion);
+    on<UpdateRegionByIdEvent>(_updateRegion);
+    on<AddTypeImageEvent>(_addTypeImage);
+    on<AddTypeImageOutlineEvent>(_addTypeImageOutline);
+    on<StartAddingPokemonRegionEvent>(_startAddingPokemonRegion);
+    on<AddPokemonRegionEvent>(_addPokemonRegion);
+  }
+
+  void _addPokemonRegion(
+      AddPokemonRegionEvent event, Emitter<AdminState> emit) {
+    final List<Pokemon> currentPokemons = List.from(state.newPokemons);
+
+    final updatedPokemons = currentPokemons.asMap().entries.map((entry) {
+      final index = entry.key;
+      final pokemon = entry.value;
+
+      if (index == state.currentIndex) {
+        return pokemon.copyWith(regionId: event.region.id);
+      }
+      return pokemon;
+    }).toList();
+
+    emit(state.copyWith(
+      status: AdminStatus.added,
+      newPokemons: updatedPokemons,
+    ));
+  }
+
+  void _startAddingPokemonRegion(
+      StartAddingPokemonRegionEvent event, Emitter<AdminState> emit) {
+    emit(state.copyWith(
+      status: AdminStatus.adding,
+    ));
+  }
+
+  void _addTypeImageOutline(
+      AddTypeImageOutlineEvent event, Emitter<AdminState> emit) {
+    emit(state.copyWith(
+      status: AdminStatus.success,
+      placeholderFileOutline: () => event.image,
+    ));
+  }
+
+  void _addTypeImage(AddTypeImageEvent event, Emitter<AdminState> emit) {
+    emit(state.copyWith(
+      status: AdminStatus.success,
+      placeholderFile: () => event.image,
+    ));
+  }
+
+  Future<void> _updateRegion(
+      UpdateRegionByIdEvent event, Emitter<AdminState> emit) async {
+    emit(state.copyWith(status: AdminStatus.loading));
+    try {
+      final updatedRegion = await _adminRepository.updateRegionById(
+          event.token, state.placeholderRegion!);
+      emit(state.copyWith(
+          status: AdminStatus.updated, placeholderRegion: () => updatedRegion));
+    } catch (e) {
+      emit(state.copyWith(
+        status: AdminStatus.failure,
+        error: () => e.toString(),
+      ));
+    }
+  }
+
+  void _deleteRegion(
+      DeleteRegionByIdEvent event, Emitter<AdminState> emit) async {
+    emit(state.copyWith(status: AdminStatus.loading));
+    try {
+      await _adminRepository.deleteRegionById(event.token, event.region.id);
+      emit(state.copyWith(
+          status: AdminStatus.popped, placeholderRegion: () => event.region));
+    } catch (e) {
+      emit(state.copyWith(
+        status: AdminStatus.failure,
+        error: () => e.toString(),
+      ));
+    }
+  }
+
+  void _editRegion(EditRegionEvent event, Emitter<AdminState> emit) {
+    final Region region = state.placeholderRegion!;
+
+    final updatedRegion = region.copyWith(
+      name: event.name != null ? event.name! : region.name,
+      difficulty: event.difficulty != null
+          ? event.difficulty!.toInt()
+          : region.difficulty,
+    );
+
+    emit(state.copyWith(placeholderRegion: () => updatedRegion));
+  }
+
+  Future<void> _createRegion(
+      CreateRegionEvent event, Emitter<AdminState> emit) async {
+    emit(state.copyWith(status: AdminStatus.loading));
+    try {
+      final newRegion = await _adminRepository.uploadRegion(
+          event.token, state.placeholderFile!, state.placeholderRegion!);
+
+      emit(state.copyWith(
+          status: AdminStatus.created,
+          placeholderRegion: () => newRegion,
+          placeholderFile: () => null));
+    } catch (e) {
+      emit(state.copyWith(
+        status: AdminStatus.failure,
+        error: () => e.toString(),
+      ));
+    }
+  }
+
+  void _addRegionImage(AddRegionImageEvent event, Emitter<AdminState> emit) {
+    emit(state.copyWith(
+        status: AdminStatus.success, placeholderFile: () => event.image));
+  }
+
+  void _startUpdatingRegion(
+      StartUpdatingRegionEvent event, Emitter<AdminState> emit) {
+    emit(state.copyWith(
+      status: AdminStatus.updating,
+      placeholderRegion: () => event.region,
+    ));
+  }
+
+  void _cancelRegion(CancelRegionEvent event, Emitter<AdminState> emit) {
+    emit(state.copyWith(
+        status: AdminStatus.success, placeholderFile: () => null));
+  }
+
+  void _startCreatingRegion(
+      StartCreatingRegionEvent event, Emitter<AdminState> emit) {
+    emit(state.copyWith(
+      status: AdminStatus.creating,
+      placeholderRegion: () => Region(
+        id: 0,
+        name: "",
+        imgUrl: "",
+        difficulty: 0,
+      ),
+    ));
   }
 
   Future<void> _deletePokemon(
@@ -137,7 +286,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
 
   void _popPokemon(PopPokemonEvent event, Emitter<AdminState> emit) {
     emit(state.copyWith(
-      status: AdminStatus.deleted,
+      status: AdminStatus.popped,
       newPokemons: state.newPokemons.sublist(0, state.newPokemons.length - 1),
       newEvolutions:
           state.newEvolutions.sublist(0, state.newEvolutions.length - 1),
@@ -174,8 +323,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
         status: AdminStatus.updated, newPokemons: updatedPokemons));
   }
 
-  void _stopAddingPokemonType(
-      StopAddingPokemonTypeEvent event, Emitter<AdminState> emit) {
+  void _cancelPokemonEvent(CancelPokemonEvent event, Emitter<AdminState> emit) {
     emit(state.copyWith(
       status: AdminStatus.success,
     ));
@@ -311,7 +459,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
         isBaseForm: event.index == 0 ? true : false,
         imgUrl: "",
         isFavourited: false,
-        regionId: 1,
+        regionId: -1,
         types: const []);
 
     final File newFile = File("");
@@ -361,7 +509,11 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     emit(state.copyWith(status: AdminStatus.loading));
     try {
       final newType = await _adminRepository.createType(
-          event.token, event.name, state.placeholderType!.color);
+          event.token,
+          state.placeholderFile!,
+          state.placeholderFileOutline!,
+          event.name,
+          state.placeholderType!.color);
       emit(state.copyWith(
           status: AdminStatus.created, placeholderType: () => newType));
     } catch (e) {
@@ -379,7 +531,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     try {
       await _adminRepository.deleteTypeById(event.token, event.type.id);
       emit(state.copyWith(
-          status: AdminStatus.deleted, deletedType: () => event.type));
+          status: AdminStatus.popped, deletedType: () => event.type));
     } catch (e) {
       emit(state.copyWith(
         status: AdminStatus.failure,
@@ -432,7 +584,10 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
   }
 
   void _cancelType(CancelTypeEvent event, Emitter<AdminState> emit) {
-    emit(state.copyWith(status: AdminStatus.success));
+    emit(state.copyWith(
+        status: AdminStatus.success,
+        placeholderFile: () => null,
+        placeholderFileOutline: () => null));
   }
 
   void _startUpdatingType(

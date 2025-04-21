@@ -9,7 +9,7 @@ part of 'raw_user.dart';
 RawUser _$RawUserFromJson(Map<String, dynamic> json) => RawUser(
       id: (json['id'] as num).toInt(),
       role: json['role'] as String,
-      region_id: (json['region_id'] as num).toInt(),
+      region_id: (json['region_id'] as num?)?.toInt(),
       token: json['token'] as String?,
       name: json['name'] as String,
       email: json['email'] as String,

@@ -73,6 +73,15 @@ final class CreateNewTypeEvent extends PokemonEvent {
       ];
 }
 
+final class CreateNewRegionEvent extends PokemonEvent {
+  CreateNewRegionEvent({required this.newRegion});
+  final Region newRegion;
+  @override
+  List<Object?> get props => [
+        newRegion,
+      ];
+}
+
 final class FavouriteEvent extends PokemonEvent {
   FavouriteEvent({required this.pokemon, required this.token});
 
@@ -99,4 +108,18 @@ final class DeletePokemonEvent extends PokemonEvent {
   List<Object?> get props => [
         pokemon,
       ];
+}
+
+final class DeleteRegionEvent extends PokemonEvent {
+  DeleteRegionEvent({required this.region});
+  final Region region;
+  @override
+  List<Object?> get props => [region];
+}
+
+final class UpdateRegionEvent extends PokemonEvent {
+  UpdateRegionEvent({required this.region});
+  final Region region;
+  @override
+  List<Object?> get props => [region];
 }

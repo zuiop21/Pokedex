@@ -32,12 +32,14 @@ class RegionTile extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             child: Stack(children: [
               region.imgUrl.isNotEmpty
-                  ? CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      imageUrl: region.imgUrl,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                  ? Positioned.fill(
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: region.imgUrl,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
                     )
                   : Icon(Icons.error),
               Container(

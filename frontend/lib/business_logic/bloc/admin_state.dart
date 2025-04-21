@@ -7,9 +7,12 @@ enum AdminStatus {
   failure,
   creating,
   created,
+  adding,
+  added,
   updating,
+  deleted,
   updated,
-  deleted
+  popped,
 }
 
 extension AdminStatusX on AdminStatus {
@@ -21,6 +24,9 @@ extension AdminStatusX on AdminStatus {
   bool get isCreated => this == AdminStatus.created;
   bool get isUpdating => this == AdminStatus.updating;
   bool get isUpdated => this == AdminStatus.updated;
+  bool get isPopped => this == AdminStatus.popped;
+  bool get isAdding => this == AdminStatus.adding;
+  bool get isAdded => this == AdminStatus.added;
   bool get isDeleted => this == AdminStatus.deleted;
 }
 
@@ -29,7 +35,10 @@ final class AdminState extends Equatable {
       {this.status = AdminStatus.initial,
       this.users = const [],
       this.placeholderType,
+      this.placeholderRegion,
       this.error,
+      this.placeholderFile,
+      this.placeholderFileOutline,
       this.deletedType,
       this.deletedPokemon,
       this.currentIndex = 0,
@@ -38,6 +47,9 @@ final class AdminState extends Equatable {
       this.images = const []});
 
   final Type? placeholderType;
+  final Region? placeholderRegion;
+  final File? placeholderFile;
+  final File? placeholderFileOutline;
   final AdminStatus status;
   final String? error;
   final List<User> users;
@@ -50,6 +62,9 @@ final class AdminState extends Equatable {
 
   AdminState copyWith(
       {ValueGetter<Type?>? placeholderType,
+      ValueGetter<Region?>? placeholderRegion,
+      ValueGetter<File?>? placeholderFile,
+      ValueGetter<File?>? placeholderFileOutline,
       AdminStatus? status,
       ValueGetter<String?>? error,
       List<User>? users,
@@ -62,6 +77,14 @@ final class AdminState extends Equatable {
     return AdminState(
         placeholderType:
             placeholderType != null ? placeholderType() : this.placeholderType,
+        placeholderRegion: placeholderRegion != null
+            ? placeholderRegion()
+            : this.placeholderRegion,
+        placeholderFile:
+            placeholderFile != null ? placeholderFile() : this.placeholderFile,
+        placeholderFileOutline: placeholderFileOutline != null
+            ? placeholderFileOutline()
+            : this.placeholderFileOutline,
         status: status ?? this.status,
         error: error != null ? error() : this.error,
         users: users ?? this.users,
@@ -80,6 +103,9 @@ final class AdminState extends Equatable {
         users,
         error,
         placeholderType,
+        placeholderRegion,
+        placeholderFile,
+        placeholderFileOutline,
         deletedType,
         deletedPokemon,
         newEvolutions,

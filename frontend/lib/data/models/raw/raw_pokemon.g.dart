@@ -17,7 +17,7 @@ RawPokemon _$RawPokemonFromJson(Map<String, dynamic> json) => RawPokemon(
       category: json['category'] as String,
       description: json['description'] as String,
       is_base_form: json['is_base_form'] as bool,
-      region_id: (json['region_id'] as num).toInt(),
+      region_id: (json['region_id'] as num?)?.toInt(),
       types: (json['types'] as List<dynamic>)
           .map((e) => RawType.fromJson(e as Map<String, dynamic>))
           .toList(),

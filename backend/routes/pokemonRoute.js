@@ -98,11 +98,6 @@ router
   .get(readAllPokemon)
   .post(authentication, restricted, uploadPokemonPicture, createPokemon);
 
-router
-  .route("/pokemons")
-  .get(readAllPokemon)
-  .post(authentication, restricted, uploadPokemonPicture, createPokemon);
-
 /**
  * @swagger
  * /pokemons/{id}:

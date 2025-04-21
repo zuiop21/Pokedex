@@ -6,6 +6,8 @@ const {
 } = require("../controllers/typeController");
 const { authentication, restricted } = require("../controllers/authController");
 
+const { uploadTypeImages } = require("../controllers/assetController");
+
 const router = require("express").Router();
 
 /**
@@ -32,14 +34,12 @@ const router = require("express").Router();
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
  *               name: { type: string, example: "Fire" }
  *               color: { type: string, example: "0xFF000000" }
- *               imgUrl: { type: string, example: "http://localhost:3000/assets/types/fire.png" }
- *               imgUrlOutline: { type: string, example: "http://localhost:3000/assets/types/fireOutline.png" }
  *     responses:
  *       201: { description: Created }
  *       400: { description: Bad request }
@@ -47,10 +47,13 @@ const router = require("express").Router();
  *       403: { description: Forbidden }
  *       404: { description: Evolution not found }
  */
-router
-  .route("/types")
-  .get(readAllType)
-  .post(authentication, restricted, createType);
+router.route("/types").get(readAllType).post(
+  authentication,
+  restricted,
+  uploadTypeImages,
+
+  createType
+);
 
 /**
  * @swagger

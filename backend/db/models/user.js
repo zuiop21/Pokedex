@@ -86,18 +86,15 @@ const User = sequelize.define("Users", {
     },
   },
   region_id: {
-    allowNull: false,
+    allowNull: true,
     type: Sequelize.INTEGER,
     references: {
       model: "Regions",
       key: "id",
     },
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
     validate: {
-      notNull: {
-        msg: "Region cannot be null",
-      },
       isNumeric: {
         msg: "Region id must be a number",
       },

@@ -6,7 +6,6 @@ import 'package:frontend/constants/app_colors.dart';
 //A widget that displays a search bar for the pokemon list
 class PokemonSearchBar extends StatelessWidget {
   const PokemonSearchBar({super.key});
-//TODO sugesstions
 
 //Method that is called when the search bar value changes
   void _onSearchBarValueChanged(BuildContext context, String? value) {

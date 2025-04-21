@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:frontend/api_config.dart';
 import 'package:frontend/data/models/processed/evolution.dart';
 import 'package:frontend/data/models/processed/pokemon.dart';
+import 'package:frontend/data/models/processed/region.dart';
 import 'package:frontend/data/models/raw/raw_evolution.dart';
 import 'package:frontend/data/models/raw/raw_pokemon.dart';
+import 'package:frontend/data/models/raw/raw_region.dart';
 import 'package:frontend/data/models/raw/raw_type.dart';
 import 'package:frontend/data/models/raw/raw_user.dart';
 import 'package:http/http.dart' as http;
@@ -43,6 +45,65 @@ class AdminService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (jsonData.containsKey("data")) {
           return RawPokemon.fromJson(jsonData["data"]);
+        } else {
+          throw Exception("Missing data");
+        }
+      } else {
+        String errorMessage = jsonData['message'] ?? 'Unknown error';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      throw Exception('Pokémon upload failed: ${e.toString()}');
+    }
+  }
+
+  Future<RawType> uploadType(String token, File img, File imgOutline,
+      String name, String color) async {
+    try {
+      final uri = Uri.parse('$_baseUrl/types');
+      final request = http.MultipartRequest('POST', uri)
+        ..headers['Authorization'] = 'Bearer $token'
+        ..files.add(await http.MultipartFile.fromPath('image', img.path))
+        ..files.add(await http.MultipartFile.fromPath(
+            'imageUrlOutline', imgOutline.path))
+        ..fields['name'] = name.toString()
+        ..fields['color'] = color.toString();
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final Map<String, dynamic> jsonData = jsonDecode(responseBody);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (jsonData.containsKey("data")) {
+          return RawType.fromJson(jsonData["data"]);
+        } else {
+          throw Exception("Missing data");
+        }
+      } else {
+        String errorMessage = jsonData['message'] ?? 'Unknown error';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      throw Exception('Type upload failed: ${e.toString()}');
+    }
+  }
+
+  Future<RawRegion> uploadRegion(String token, File img, Region region) async {
+    try {
+      final uri = Uri.parse('$_baseUrl/regions');
+      final request = http.MultipartRequest('POST', uri)
+        ..headers['Authorization'] = 'Bearer $token'
+        ..files.add(await http.MultipartFile.fromPath('image', img.path))
+        ..fields['name'] = region.name.toString()
+        ..fields['difficulty'] = region.difficulty.toString();
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final Map<String, dynamic> jsonData = jsonDecode(responseBody);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (jsonData.containsKey("data")) {
+          return RawRegion.fromJson(jsonData["data"]);
         } else {
           throw Exception("Missing data");
         }
@@ -170,18 +231,6 @@ class AdminService {
     }
   }
 
-  Future<RawType> createType(String token, String name, String color) async {
-    final Map<String, dynamic> body = {
-      'name': name,
-      'color': color,
-      "imgUrl": "",
-      "imgUrlOutline": "",
-    };
-
-    return await _postRequest(
-        authToken: token, 'types', RawType.fromJson, body);
-  }
-
   Future<RawEvolution> createEvolution(
       String token, Evolution evolution) async {
     final Map<String, dynamic> body = {
@@ -247,6 +296,26 @@ class AdminService {
     ));
   }
 
+  Future<RawRegion> updateRegionById(
+    String token,
+    Region region,
+  ) async {
+    final Map<String, dynamic> body = {
+      "name": region.name,
+      "difficulty": region.difficulty,
+    };
+
+    if (body.isEmpty) {
+      throw Exception('No data provided for update.');
+    }
+
+    return RawRegion.fromJson(await _patchRequest(
+      "regions/${region.id}",
+      body,
+      authToken: token,
+    ));
+  }
+
   Future<void> deleteTypeById(String token, int typeId) async {
     await _deleteRequest(
       "types/$typeId",
@@ -257,6 +326,13 @@ class AdminService {
   Future<void> deletePokemonById(String token, int pokemonId) async {
     await _deleteRequest(
       "pokemons/$pokemonId",
+      authToken: token,
+    );
+  }
+
+  Future<void> deleteRegionById(String token, int regionId) async {
+    await _deleteRequest(
+      "regions/$regionId",
       authToken: token,
     );
   }

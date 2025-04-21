@@ -102,7 +102,7 @@ class _AuthLoginInitialViewState extends State<AuthLoginInitialView> {
               ),
               child3: TextButton(
                 onPressed: () {},
-                child: Text(
+                child: const Text(
                   "Forgot your password?",
                   style: TextStyle(color: AppColors.blue, fontSize: 18),
                 ),

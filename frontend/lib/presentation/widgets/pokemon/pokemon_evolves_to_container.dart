@@ -74,11 +74,11 @@ class PokemonEvolvesToContainer extends StatelessWidget {
                                           imageUrl:
                                               strengthTypes[0].imgUrlOutline,
                                           placeholder: (context, url) =>
-                                              CircularProgressIndicator(),
+                                              const CircularProgressIndicator(),
                                           errorWidget: (context, url, error) =>
-                                              Icon(Icons.error),
+                                              const Icon(Icons.error),
                                         )
-                                      : Icon(Icons.error),
+                                      : const Icon(Icons.error),
                                 ),
                               ),
                             ),
@@ -91,11 +91,11 @@ class PokemonEvolvesToContainer extends StatelessWidget {
                                       fit: BoxFit.contain,
                                       imageUrl: pokemon.imgUrl,
                                       placeholder: (context, url) =>
-                                          CircularProgressIndicator(),
+                                          const CircularProgressIndicator(),
                                       errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
+                                          const Icon(Icons.error),
                                     )
-                                  : Icon(Icons.error),
+                                  : const Icon(Icons.error),
                             ),
                           ),
                         ],
@@ -111,11 +111,11 @@ class PokemonEvolvesToContainer extends StatelessWidget {
                         children: [
                           Text(
                             pokemon.name,
-                            style: TextStyle(fontSize: 20),
+                            style: const TextStyle(fontSize: 20),
                           ),
                           Text(
                             "Number ${pokemon.id}",
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                           PokemonEvolutionTypes(pokemonId: pokemon.id),
                         ],
@@ -133,11 +133,11 @@ class PokemonEvolvesToContainer extends StatelessWidget {
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.arrow_downward),
+                          const Icon(Icons.arrow_downward),
                           Text(evolution.condition!),
                         ],
                       )
-                    : SizedBox.shrink(),
+                    : const SizedBox.shrink(),
           ),
         ],
       ),

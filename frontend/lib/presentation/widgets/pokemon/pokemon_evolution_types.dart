@@ -19,7 +19,7 @@ class PokemonEvolutionTypes extends StatelessWidget {
     final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
     final List<Type> strengthTypes = pokemon!.getStrengthTypesForPokemon();
     return Padding(
-      padding: EdgeInsets.only(bottom: 5, right: 30),
+      padding: const EdgeInsets.only(bottom: 5, right: 30),
       child: Row(
         children: [
           Container(

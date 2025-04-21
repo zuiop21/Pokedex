@@ -26,12 +26,12 @@ class PokemonListPage extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.41,
                 height: MediaQuery.of(context).size.width * 0.12,
-                child: PokemonTypeSortingButton(),
+                child: const PokemonTypeSortingButton(),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.41,
                 height: MediaQuery.of(context).size.width * 0.12,
-                child: PokemonIdSortingButton(),
+                child: const PokemonIdSortingButton(),
               ),
             ],
           ),

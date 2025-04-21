@@ -54,9 +54,9 @@ class AdminNewPokemonView extends StatelessWidget {
                               index: index,
                             )),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         child: Divider(
                           color: AppColors.lightGrey,
                           thickness: 1,
@@ -91,8 +91,8 @@ class AdminNewPokemonView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
                         child: SizedBox(
                           width: double.infinity,
                           child: AdminPokemonEvolutionInfo(),
@@ -104,7 +104,7 @@ class AdminNewPokemonView extends StatelessWidget {
                           width: double.infinity,
                           child: TextButton(
                               onPressed: () => _saveChanges(context),
-                              child: Text("SAVE")),
+                              child: const Text("SAVE")),
                         ),
                       ),
                     ],

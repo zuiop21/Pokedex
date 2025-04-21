@@ -16,7 +16,7 @@ part 'admin_state.dart';
 
 class AdminBloc extends Bloc<AdminEvent, AdminState> {
   final AdminRepository _adminRepository;
-  AdminBloc(this._adminRepository) : super(AdminState()) {
+  AdminBloc(this._adminRepository) : super(const AdminState()) {
     on<GetAllUsersEvent>(_getAllUsers);
     on<UpdateUserByIdEvent>(_updateUserById);
     on<StartUpdatingTypeEvent>(_startUpdatingType);
@@ -185,7 +185,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       StartCreatingRegionEvent event, Emitter<AdminState> emit) {
     emit(state.copyWith(
       status: AdminStatus.creating,
-      placeholderRegion: () => Region(
+      placeholderRegion: () => const Region(
         id: 0,
         name: "",
         imgUrl: "",
@@ -463,7 +463,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
         types: const []);
 
     final File newFile = File("");
-    final Evolution newEvolution = Evolution(
+    final Evolution newEvolution = const Evolution(
       id: 0,
       pokemonId: 0,
       evolvesToId: null,
@@ -493,7 +493,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     emit(
       state.copyWith(
         status: AdminStatus.creating,
-        placeholderType: () => Type(
+        placeholderType: () => const Type(
             id: 0,
             name: "",
             color: "0x00000000",

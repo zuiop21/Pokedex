@@ -27,8 +27,8 @@ class AdminUserPage extends StatelessWidget {
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.0),
+        bottom: const PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
           child: Divider(
             color: AppColors.lightGrey,
             thickness: 1,

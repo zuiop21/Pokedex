@@ -43,10 +43,10 @@ class PokemonIdSortingButton extends StatelessWidget {
           ],
           onChanged: (String? value) => _dropdownCallback(context, value),
           underline: Container(),
-          iconStyleData: IconStyleData(
+          iconStyleData: const IconStyleData(
             icon: Padding(
-              padding: const EdgeInsets.only(right: 5, top: 10, bottom: 10),
-              child: const Icon(
+              padding: EdgeInsets.only(right: 5, top: 10, bottom: 10),
+              child: Icon(
                 Icons.arrow_drop_down,
                 size: 32,
                 color: Colors.white,

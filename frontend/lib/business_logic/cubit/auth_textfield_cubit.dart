@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'auth_textfield_state.dart';
 
 class AuthTextfieldCubit extends Cubit<AuthTextfieldState> {
-  AuthTextfieldCubit() : super(AuthTextfieldInitial());
+  AuthTextfieldCubit() : super(const AuthTextfieldInitial());
 
 //Method to validate the form
 //Optional parameter for the second textfield (if there is a second one)

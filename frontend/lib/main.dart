@@ -55,16 +55,17 @@ class MyApp extends StatelessWidget {
 
         //Routes of the app
         routes: {
-          "/": (context) => OnboardingView(),
-          "/auth/onboarding/option": (context) => OnboardingAuthOptionView(),
-          "/auth/onboarding/new": (context) => OnboardingAuthView(
+          "/": (context) => const OnboardingView(),
+          "/auth/onboarding/option": (context) =>
+              const OnboardingAuthOptionView(),
+          "/auth/onboarding/new": (context) => const OnboardingAuthView(
                 emailPath: "/auth/register/email",
                 imagePath: AppAssets.trainer4,
                 title: "Create an account",
                 pageTitle: "There is little time left to explore this world!",
                 pageSubTitle: "How would you like to register?",
               ),
-          "/auth/onboarding/login": (context) => OnboardingAuthView(
+          "/auth/onboarding/login": (context) => const OnboardingAuthView(
                 emailPath: "/auth/login",
                 imagePath: AppAssets.trainer5,
                 title: "Login",
@@ -73,11 +74,11 @@ class MyApp extends StatelessWidget {
               ),
           "/auth/login": (context) => BlocProvider(
                 create: (context) => AuthTextfieldCubit(),
-                child: AuthLoginInitialView(),
+                child: const AuthLoginInitialView(),
               ),
           "/auth/register/email": (context) => BlocProvider(
                 create: (context) => AuthTextfieldCubit(),
-                child: AuthRegisterEmailView(),
+                child: const AuthRegisterEmailView(),
               ),
           "/auth/register/password": (context) {
             final email = ModalRoute.of(context)!.settings.arguments as String;
@@ -95,10 +96,10 @@ class MyApp extends StatelessWidget {
                 ModalRoute.of(context)!.settings.arguments as String;
             return PokemonListRegionView(regionName: regionName);
           },
-          "/admin/users": (context) => AdminUserView(),
-          "/admin/pokemons": (context) => AdminPokemonView(),
-          "/admin/regions": (context) => AdminRegionView(),
-          "/admin/types": (context) => AdminTypeView(),
+          "/admin/users": (context) => const AdminUserView(),
+          "/admin/pokemons": (context) => const AdminPokemonView(),
+          "/admin/regions": (context) => const AdminRegionView(),
+          "/admin/types": (context) => const AdminTypeView(),
           "/admin/pokemons/new": (context) {
             final index = ModalRoute.of(context)!.settings.arguments as int;
             return AdminNewPokemonView(index: index);

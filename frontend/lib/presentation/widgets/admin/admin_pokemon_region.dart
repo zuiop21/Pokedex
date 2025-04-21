@@ -82,7 +82,7 @@ class AdminPokemonRegion extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Region",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
@@ -101,7 +101,7 @@ class AdminPokemonRegion extends StatelessWidget {
                 child: Center(
                   child: IconButton(
                     onPressed: () => _startAddingRegion(context),
-                    icon: Icon(Icons.add, color: AppColors.grey),
+                    icon: const Icon(Icons.add, color: AppColors.grey),
                     padding: EdgeInsets.zero,
                   ),
                 ),
@@ -128,7 +128,7 @@ class AdminPokemonRegion extends StatelessWidget {
                             .firstWhere(
                                 (region) => region.id == pokemon.regionId)
                             .name,
-                        style: TextStyle(color: AppColors.grey),
+                        style: const TextStyle(color: AppColors.grey),
                       ),
                     ),
                   ),
@@ -147,7 +147,7 @@ class AdminPokemonRegion extends StatelessWidget {
                       child: Center(
                         child: IconButton(
                           onPressed: () => _startAddingRegion(context),
-                          icon: Icon(Icons.add, color: AppColors.grey),
+                          icon: const Icon(Icons.add, color: AppColors.grey),
                           padding: EdgeInsets.zero,
                         ),
                       ),

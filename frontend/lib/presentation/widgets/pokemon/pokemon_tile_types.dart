@@ -38,11 +38,11 @@ class PokemonTileTypes extends StatelessWidget {
                 child: Row(
                   children: [
                     PokemonCircledType(type: strengthTypes[0]),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Text(
                       strengthTypes[0].name,
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -62,10 +62,10 @@ class PokemonTileTypes extends StatelessWidget {
                   child: Row(
                     children: [
                       PokemonCircledType(type: strengthTypes[1]),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
                         strengthTypes[1].name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                     ],

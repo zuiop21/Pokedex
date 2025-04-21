@@ -33,12 +33,12 @@ class AdminPokemonEvolvesToButton extends StatelessWidget {
               ),
               child: IconButton(
                 onPressed: () => _addAnotherPokemon(context),
-                icon: Icon(Icons.add, color: AppColors.grey),
+                icon: const Icon(Icons.add, color: AppColors.grey),
                 padding: EdgeInsets.zero,
               ),
             ),
           ),
-          Spacer(
+          const Spacer(
             flex: 35,
           )
         ],

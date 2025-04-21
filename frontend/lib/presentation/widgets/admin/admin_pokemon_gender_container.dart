@@ -20,7 +20,7 @@ class AdminPokemonGenderContainer extends StatelessWidget {
         final pokemon = state.newPokemons[index];
         return Column(
           children: [
-            Align(
+            const Align(
               alignment: Alignment.topCenter,
               child: Text(
                 "Gender",
@@ -37,8 +37,8 @@ class AdminPokemonGenderContainer extends StatelessWidget {
                         data: SliderTheme.of(context).copyWith(
                           trackHeight: 15,
                           trackShape: EdgeToEdgeTrackShape(),
-                          thumbShape:
-                              RoundSliderThumbShape(enabledThumbRadius: 15),
+                          thumbShape: const RoundSliderThumbShape(
+                              enabledThumbRadius: 15),
                         ),
                         child: Slider(
                           activeColor: Colors.blue,
@@ -72,11 +72,11 @@ class AdminPokemonGenderContainer extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.male, color: Colors.blue),
-                            SizedBox(width: 4),
+                            const Icon(Icons.male, color: Colors.blue),
+                            const SizedBox(width: 4),
                             Text(
                               "${(pokemon.gender * 100).toStringAsFixed(1)}%",
-                              style: TextStyle(fontSize: 16),
+                              style: const TextStyle(fontSize: 16),
                             ),
                           ],
                         ),
@@ -84,16 +84,16 @@ class AdminPokemonGenderContainer extends StatelessWidget {
                           children: [
                             Text(
                               "${((1 - pokemon.gender) * 100).toStringAsFixed(1)}%",
-                              style: TextStyle(fontSize: 16),
+                              style: const TextStyle(fontSize: 16),
                             ),
-                            SizedBox(width: 4),
-                            Icon(Icons.female, color: Colors.pink),
+                            const SizedBox(width: 4),
+                            const Icon(Icons.female, color: Colors.pink),
                           ],
                         ),
                       ],
                     ),
                   )
-                : SizedBox(
+                : const SizedBox(
                     height: 30,
                     child: Align(
                       alignment: Alignment.bottomCenter,
@@ -122,7 +122,7 @@ class AdminPokemonGenderContainer extends StatelessWidget {
                       },
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Unknown",
                     style: TextStyle(fontSize: 16),
                   )

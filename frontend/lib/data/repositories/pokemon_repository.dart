@@ -76,7 +76,7 @@ class PokemonRepository {
           )
       ];
 
-      final allTypesOption = Type(
+      final allTypesOption = const Type(
         id: 0,
         name: "All Types",
         color: "0xFF333333",

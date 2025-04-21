@@ -14,7 +14,7 @@ part 'pokemon_state.dart';
 class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
   final PokemonRepository _pokemonRepository;
 
-  PokemonBloc(this._pokemonRepository) : super(PokemonState()) {
+  PokemonBloc(this._pokemonRepository) : super(const PokemonState()) {
     on<GetPokemonEvent>(_getAllData);
     on<SortPokemonByTypeEvent>(_sortByType);
     on<OrderPokemonByIdEvent>(_orderById);

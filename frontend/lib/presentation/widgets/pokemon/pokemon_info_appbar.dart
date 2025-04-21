@@ -42,7 +42,7 @@ class PokemonInfoAppbar extends StatelessWidget {
               left: -MediaQuery.of(context).size.width * 0.055,
               child: ShaderMask(
                 shaderCallback: (Rect bounds) {
-                  return LinearGradient(
+                  return const LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [Colors.black, Colors.transparent],
@@ -64,7 +64,8 @@ class PokemonInfoAppbar extends StatelessWidget {
               top: 50,
               left: 20,
               child: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                icon:
+                    const Icon(Icons.arrow_back, color: Colors.white, size: 28),
                 onPressed: () => _navigateBack(context),
               ),
             ),
@@ -91,7 +92,7 @@ class PokemonInfoAppbar extends StatelessWidget {
                   height: 135,
                   child: ShaderMask(
                     shaderCallback: (Rect bounds) {
-                      return LinearGradient(
+                      return const LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomCenter,
                         colors: [Colors.black, Colors.transparent],
@@ -104,11 +105,11 @@ class PokemonInfoAppbar extends StatelessWidget {
                             imageUrl: strengthTypes[0].imgUrlOutline,
                             fit: BoxFit.contain,
                             placeholder: (context, url) =>
-                                CircularProgressIndicator(),
+                                const CircularProgressIndicator(),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                           )
-                        : Icon(Icons.error),
+                        : const Icon(Icons.error),
                   ),
                 ),
               ),
@@ -123,10 +124,11 @@ class PokemonInfoAppbar extends StatelessWidget {
                         height: 125,
                         imageUrl: pokemon.imgUrl,
                         placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       )
-                    : Icon(Icons.error),
+                    : const Icon(Icons.error),
               ),
             ),
           ],

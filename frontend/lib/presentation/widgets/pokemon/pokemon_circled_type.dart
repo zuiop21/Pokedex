@@ -12,7 +12,7 @@ class PokemonCircledType extends StatelessWidget {
     return Container(
       width: 25,
       height: 25,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
         color: Colors.white,
       ),
@@ -21,14 +21,15 @@ class PokemonCircledType extends StatelessWidget {
         child: type.imgUrl.isNotEmpty
             ? CachedNetworkImage(
                 imageUrl: type.imgUrl,
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(
                   Icons.error,
                   size: 20,
                   color: Colors.red,
                 ),
               )
-            : Icon(
+            : const Icon(
                 Icons.error,
                 size: 20,
                 color: Colors.red,

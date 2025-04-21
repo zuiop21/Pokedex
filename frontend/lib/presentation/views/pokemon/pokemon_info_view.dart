@@ -38,9 +38,9 @@ class PokemonInfoView extends StatelessWidget {
                             width: double.infinity,
                             child: PokemonBasicInfo(pokemonId: pokemon.id)),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         child: Divider(
                           color: AppColors.lightGrey,
                           thickness: 1,

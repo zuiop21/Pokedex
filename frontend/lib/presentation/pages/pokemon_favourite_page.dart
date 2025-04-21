@@ -15,7 +15,7 @@ class PokemonFavouritePage extends StatelessWidget {
           builder: (context, state) {
             final favourites = state.findFavouritedPokemons();
             return favourites.isEmpty
-                ? PokemonEmptyFavouritePage()
+                ? const PokemonEmptyFavouritePage()
                 : PokemonFavouriteListPage(favourites: favourites);
           },
         ));

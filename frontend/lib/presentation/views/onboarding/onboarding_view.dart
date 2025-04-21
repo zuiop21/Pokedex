@@ -61,7 +61,7 @@ class _OnboardingViewState extends State<OnboardingView> {
             builder: (context, state) {
               return Column(
                 children: [
-                  Spacer(
+                  const Spacer(
                     flex: 13,
                   ),
                   Expanded(
@@ -70,13 +70,13 @@ class _OnboardingViewState extends State<OnboardingView> {
                       physics: const NeverScrollableScrollPhysics(),
                       controller: _pageController,
                       children: [
-                        OnboardingPage(
+                        const OnboardingPage(
                           title: "All Pokémons in one place",
                           subtitle:
                               "Access a vast list of Pokémons from every generation ever made by Nintendo",
                           imagePath: AppAssets.trainer2,
                         ),
-                        OnboardingPage(
+                        const OnboardingPage(
                           title: "Keep your Pokédex up to date",
                           subtitle:
                               "Register and keep your profile, favourite Pokémons, settings and much more!",

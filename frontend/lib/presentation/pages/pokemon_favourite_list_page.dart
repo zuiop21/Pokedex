@@ -30,14 +30,14 @@ class PokemonFavouriteListPage extends StatelessWidget {
         return PokemonFavouriteTile(
           actions: [
             CustomSlidableAction(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(15),
                   bottomLeft: Radius.circular(15)),
               autoClose: true,
               onPressed: (context) =>
                   _changeFavouriteStatus(context, favourites[index]),
               backgroundColor: Colors.red,
-              child: Icon(
+              child: const Icon(
                 Icons.delete,
                 size: 45,
               ),

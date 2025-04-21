@@ -65,11 +65,11 @@ class AdminPokemonEvolvesToContainer extends StatelessWidget {
                                           imageUrl:
                                               strengthTypes[0].imgUrlOutline,
                                           placeholder: (context, url) =>
-                                              CircularProgressIndicator(),
+                                              const CircularProgressIndicator(),
                                           errorWidget: (context, url, error) =>
-                                              Icon(Icons.error),
+                                              const Icon(Icons.error),
                                         )
-                                      : Icon(Icons.error),
+                                      : const Icon(Icons.error),
                                 ),
                               ),
                             ),
@@ -90,9 +90,9 @@ class AdminPokemonEvolvesToContainer extends StatelessWidget {
                                           .images[index],
                                       fit: BoxFit.contain,
                                       errorBuilder: (context, error, stack) =>
-                                          Icon(Icons.error),
+                                          const Icon(Icons.error),
                                     )
-                                  : Icon(Icons.error),
+                                  : const Icon(Icons.error),
                             ),
                           ),
                         ],
@@ -108,11 +108,11 @@ class AdminPokemonEvolvesToContainer extends StatelessWidget {
                         children: [
                           Text(
                             pokemon.name,
-                            style: TextStyle(fontSize: 20),
+                            style: const TextStyle(fontSize: 20),
                           ),
                           Text(
                             "Number $index",
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                           AdminPokemonEvolutionTypes(index: index),
                         ],
@@ -123,7 +123,7 @@ class AdminPokemonEvolvesToContainer extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
+          const Expanded(
             flex: 35,
             child:
                 // evolution.condition != null && evolution.condition!.isNotEmpty

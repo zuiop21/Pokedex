@@ -10,7 +10,7 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;
-  AuthBloc(this._authRepository) : super(AuthState()) {
+  AuthBloc(this._authRepository) : super(const AuthState()) {
     on<LoginEvent>(_login);
     on<RegisterEvent>(_register);
     on<UploadProfilePictureEvent>(_uploadImage);

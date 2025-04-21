@@ -100,9 +100,9 @@ class _RegionEditDialogState extends State<RegionEditDialog> {
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: "Name",
-                              hintStyle: const TextStyle(
+                              hintStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -124,8 +124,8 @@ class _RegionEditDialogState extends State<RegionEditDialog> {
                           data: SliderTheme.of(context).copyWith(
                             trackHeight: 10,
                             trackShape: EdgeToEdgeTrackShape(),
-                            thumbShape:
-                                RoundSliderThumbShape(enabledThumbRadius: 10),
+                            thumbShape: const RoundSliderThumbShape(
+                                enabledThumbRadius: 10),
                           ),
                           child: Slider(
                             activeColor: AppColors.blue,

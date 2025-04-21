@@ -67,7 +67,7 @@ class AuthLoginSuccessView extends StatelessWidget {
                 child: Column(
                   children: [
                     const Spacer(flex: 17),
-                    Expanded(
+                    const Expanded(
                       flex: 65,
                       child: OnboardingPage(
                         imagePath: AppAssets.trainer7,

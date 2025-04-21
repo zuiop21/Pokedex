@@ -59,13 +59,13 @@ class UserTile extends StatelessWidget {
                     child: user.role == "admin"
                         ? Transform.rotate(
                             angle: 3.14159, //Rotate with PI
-                            child: Icon(
+                            child: const Icon(
                               Icons.upgrade,
                               size: 45,
                               color: Colors.white,
                             ),
                           )
-                        : Icon(
+                        : const Icon(
                             Icons.upgrade,
                             size: 45,
                             color: Colors.white,
@@ -76,7 +76,7 @@ class UserTile extends StatelessWidget {
                 CustomSlidableAction(
                   borderRadius: currentUser?.role == "super"
                       ? BorderRadius.zero
-                      : BorderRadius.only(
+                      : const BorderRadius.only(
                           topLeft: Radius.circular(15),
                           bottomLeft: Radius.circular(15),
                         ),
@@ -85,12 +85,12 @@ class UserTile extends StatelessWidget {
                       _updateUserById(context, newLock: !user.isLocked),
                   backgroundColor: user.isLocked ? AppColors.blue : Colors.red,
                   child: user.isLocked
-                      ? Icon(
+                      ? const Icon(
                           Icons.lock_open,
                           size: 45,
                           color: Colors.white,
                         )
-                      : Icon(
+                      : const Icon(
                           Icons.lock_outline,
                           size: 45,
                           color: Colors.white,

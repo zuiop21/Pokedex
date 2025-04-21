@@ -9,13 +9,13 @@ class PokemonEmptyFavouritePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Spacer(),
+        const Spacer(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 100),
           child: Image.asset(AppAssets.magikarp),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           child: Text(
             textAlign: TextAlign.center,
             "You haven't liked any Pokémons yet :(",
@@ -25,8 +25,8 @@ class PokemonEmptyFavouritePage extends StatelessWidget {
                 color: AppColors.lightBlack),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             textAlign: TextAlign.center,
             "Click on the heart icon of your favourite Pokémon and they will appear here.",
@@ -36,7 +36,7 @@ class PokemonEmptyFavouritePage extends StatelessWidget {
             ),
           ),
         ),
-        Spacer(),
+        const Spacer(),
       ],
     );
   }

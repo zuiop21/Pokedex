@@ -33,12 +33,12 @@ class AdminRegionTile extends StatelessWidget {
                           fit: BoxFit.cover,
                           imageUrl: region.imgUrl,
                           placeholder: (context, url) =>
-                              CircularProgressIndicator(),
+                              const CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                              const Icon(Icons.error),
                         ),
                       )
-                    : Icon(Icons.error),
+                    : const Icon(Icons.error),
                 Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -55,7 +55,7 @@ class AdminRegionTile extends StatelessWidget {
                 Center(
                   child: Text(
                     region.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 30),

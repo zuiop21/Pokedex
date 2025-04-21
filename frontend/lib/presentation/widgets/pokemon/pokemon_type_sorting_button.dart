@@ -52,7 +52,7 @@ class PokemonTypeSortingButton extends StatelessWidget {
               return DropdownMenuItem<String>(
                 value: type.name,
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 5),
+                  padding: const EdgeInsets.symmetric(vertical: 5),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
@@ -77,11 +77,11 @@ class PokemonTypeSortingButton extends StatelessWidget {
           ).toList(),
           onChanged: (String? value) => _dropdownCallback(context, value),
           underline: Container(),
-          iconStyleData: IconStyleData(
+          iconStyleData: const IconStyleData(
             icon: Padding(
-              padding: const EdgeInsets.only(
-                  right: 10, top: 10, bottom: 10, left: 10),
-              child: const Icon(
+              padding:
+                  EdgeInsets.only(right: 10, top: 10, bottom: 10, left: 10),
+              child: Icon(
                 Icons.arrow_drop_down,
                 size: 32,
                 color: Colors.white,

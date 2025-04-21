@@ -32,8 +32,8 @@ class PokemonAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       surfaceTintColor: Colors.transparent,
       backgroundColor: Colors.white,
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(1.0),
+      bottom: const PreferredSize(
+        preferredSize: Size.fromHeight(1.0),
         child: Divider(
           color: AppColors.lightGrey,
           thickness: 1,
@@ -87,16 +87,16 @@ class PokemonAppBar extends StatelessWidget implements PreferredSizeWidget {
                                         fit: BoxFit.cover,
                                         imageUrl: currentUser?.imgUrl ?? "",
                                         placeholder: (context, url) =>
-                                            CircularProgressIndicator(),
+                                            const CircularProgressIndicator(),
                                         errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
+                                            const Icon(Icons.error),
                                       )
-                                    : Icon(Icons.error),
+                                    : const Icon(Icons.error),
                               ),
                             )
                           : IconButton(
                               onPressed: () => _pickImageFromGallery(context),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.add,
                                 size: 30,
                                 color: AppColors.grey,
@@ -107,7 +107,7 @@ class PokemonAppBar extends StatelessWidget implements PreferredSizeWidget {
                       padding: const EdgeInsets.only(left: 15.0),
                       child: Text(
                         context.read<AuthBloc>().state.user!.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 22),
                       ),
                     ),
@@ -116,7 +116,7 @@ class PokemonAppBar extends StatelessWidget implements PreferredSizeWidget {
               );
             },
           ),
-        4 => Align(
+        4 => const Align(
             alignment: Alignment.centerLeft,
             child: Text(
               "Administration",

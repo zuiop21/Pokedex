@@ -27,7 +27,7 @@ class InfoSwitch extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.lightBlack,
@@ -37,7 +37,7 @@ class InfoSwitch extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   subTitle,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.grey,

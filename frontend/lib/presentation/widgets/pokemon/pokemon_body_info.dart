@@ -21,12 +21,12 @@ class PokemonBodyInfo extends StatelessWidget {
           child: Row(
             children: [
               PokemonInfoContainer(
-                  padding: EdgeInsets.only(right: 5),
+                  padding: const EdgeInsets.only(right: 5),
                   icon: Icons.line_weight,
                   data: "${pokemon!.weight} kg",
                   dataName: "Weight"),
               PokemonInfoContainer(
-                  padding: EdgeInsets.only(left: 5),
+                  padding: const EdgeInsets.only(left: 5),
                   icon: Icons.height,
                   data: "${pokemon.height} m",
                   dataName: "Height"),
@@ -38,7 +38,7 @@ class PokemonBodyInfo extends StatelessWidget {
           child: Row(
             children: [
               PokemonInfoContainer(
-                  padding: EdgeInsets.only(right: 5),
+                  padding: const EdgeInsets.only(right: 5),
                   icon: Icons.category,
                   data: pokemon.category.endsWith(" Pokémon")
                       ? pokemon.category
@@ -46,7 +46,7 @@ class PokemonBodyInfo extends StatelessWidget {
                       : pokemon.category,
                   dataName: "Category"),
               PokemonInfoContainer(
-                  padding: EdgeInsets.only(left: 5),
+                  padding: const EdgeInsets.only(left: 5),
                   icon: Icons.accessibility,
                   data: pokemon.ability,
                   dataName: "Ability"),

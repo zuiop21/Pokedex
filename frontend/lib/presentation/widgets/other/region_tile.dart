@@ -37,11 +37,12 @@ class RegionTile extends StatelessWidget {
                         fit: BoxFit.cover,
                         imageUrl: region.imgUrl,
                         placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     )
-                  : Icon(Icons.error),
+                  : const Icon(Icons.error),
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -65,19 +66,19 @@ class RegionTile extends StatelessWidget {
                       children: [
                         Text(
                           region.name,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               fontSize: 22),
                         ),
                         Text(
                           "DIFFICULTY ${region.difficulty}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15, color: AppColors.lightWhite),
                         )
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     if (pokemons.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(left: 30),
@@ -89,11 +90,11 @@ class RegionTile extends StatelessWidget {
                                   fit: BoxFit.fill,
                                   imageUrl: pokemons[0].imgUrl,
                                   placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
+                                      const CircularProgressIndicator(),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      const Icon(Icons.error),
                                 )
-                              : Icon(Icons.error),
+                              : const Icon(Icons.error),
                         ),
                       ),
                     if (pokemons.length > 1)
@@ -107,11 +108,11 @@ class RegionTile extends StatelessWidget {
                                   fit: BoxFit.fill,
                                   imageUrl: pokemons[1].imgUrl,
                                   placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
+                                      const CircularProgressIndicator(),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      const Icon(Icons.error),
                                 )
-                              : Icon(Icons.error),
+                              : const Icon(Icons.error),
                         ),
                       ),
                     if (pokemons.length > 2)
@@ -125,14 +126,14 @@ class RegionTile extends StatelessWidget {
                                   fit: BoxFit.fill,
                                   imageUrl: pokemons[2].imgUrl,
                                   placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
+                                      const CircularProgressIndicator(),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      const Icon(Icons.error),
                                 )
-                              : Icon(Icons.error),
+                              : const Icon(Icons.error),
                         ),
                       ),
-                    Spacer(),
+                    const Spacer(),
                   ],
                 ),
               )

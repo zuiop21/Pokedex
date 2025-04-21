@@ -25,7 +25,7 @@ class PokemonListRegionView extends StatelessWidget {
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             elevation: 0,
-            bottom: PreferredSize(
+            bottom: const PreferredSize(
               preferredSize: Size.fromHeight(1.0),
               child: Divider(
                 color: AppColors.lightGrey,
@@ -39,20 +39,20 @@ class PokemonListRegionView extends StatelessWidget {
                   children: [
                     IconButton(
                         onPressed: () => _handleNavigation(context),
-                        icon: Icon(Icons.arrow_back)),
+                        icon: const Icon(Icons.arrow_back)),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: Text(
                         regionName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 22),
                       ),
                     ),
                   ],
                 ),
-                PokemonSearchBar(),
+                const PokemonSearchBar(),
               ],
             )),
-        body: PokemonListPage());
+        body: const PokemonListPage());
   }
 }

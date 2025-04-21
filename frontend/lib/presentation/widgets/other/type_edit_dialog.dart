@@ -88,7 +88,7 @@ class _TypeEditDialogState extends State<TypeEditDialog> {
                       fontWeight: FontWeight.bold,
                     ),
                     controller: _controller,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                     ),
                   ),

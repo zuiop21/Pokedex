@@ -68,7 +68,7 @@ class _AdminPokemonBodyInfoState extends State<AdminPokemonBodyInfo> {
               AdminPokemonInfoContainer(
                 controller: _weightController,
                 function: () => _changeWeight(context),
-                padding: EdgeInsets.only(right: 5),
+                padding: const EdgeInsets.only(right: 5),
                 hintText: "12.3 kg",
                 icon: Icons.line_weight,
                 dataName: "Weight",
@@ -76,7 +76,7 @@ class _AdminPokemonBodyInfoState extends State<AdminPokemonBodyInfo> {
               AdminPokemonInfoContainer(
                 controller: _heightController,
                 function: () => _changeHeight(context),
-                padding: EdgeInsets.only(left: 5),
+                padding: const EdgeInsets.only(left: 5),
                 hintText: "1.2 m",
                 icon: Icons.height,
                 dataName: "Height",
@@ -91,7 +91,7 @@ class _AdminPokemonBodyInfoState extends State<AdminPokemonBodyInfo> {
               AdminPokemonInfoContainer(
                 controller: _categoryController,
                 function: () => _changeCategory(context),
-                padding: EdgeInsets.only(right: 5),
+                padding: const EdgeInsets.only(right: 5),
                 hintText: "Cat",
                 icon: Icons.category,
                 dataName: "Category",
@@ -99,7 +99,7 @@ class _AdminPokemonBodyInfoState extends State<AdminPokemonBodyInfo> {
               AdminPokemonInfoContainer(
                 controller: _abilityController,
                 function: () => _changeAbility(context),
-                padding: EdgeInsets.only(left: 5),
+                padding: const EdgeInsets.only(left: 5),
                 hintText: "Meow",
                 icon: Icons.accessibility,
                 dataName: "Ability",

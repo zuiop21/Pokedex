@@ -28,12 +28,12 @@ class PokemonInfoContainer extends StatelessWidget {
                 Icon(icon),
                 Text(
                   dataName,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 )
               ],
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
@@ -42,7 +42,7 @@ class PokemonInfoContainer extends StatelessWidget {
               ),
               child: Text(
                 data,
-                style: TextStyle(fontSize: 22),
+                style: const TextStyle(fontSize: 22),
                 textAlign: TextAlign.center,
               ),
             )

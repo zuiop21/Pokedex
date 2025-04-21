@@ -10,7 +10,7 @@ class PokemonGenderContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Align(
+        const Align(
           alignment: Alignment.topCenter,
           child: Text(
             "Gender",
@@ -31,13 +31,13 @@ class PokemonGenderContainer extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Colors.blue,
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              bottomLeft: Radius.circular(30),
+                              topLeft: const Radius.circular(30),
+                              bottomLeft: const Radius.circular(30),
                               topRight: gender == 1.0
-                                  ? Radius.circular(30)
+                                  ? const Radius.circular(30)
                                   : Radius.zero,
                               bottomRight: gender == 1.0
-                                  ? Radius.circular(30)
+                                  ? const Radius.circular(30)
                                   : Radius.zero,
                             ),
                           ),
@@ -48,13 +48,13 @@ class PokemonGenderContainer extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Colors.pink,
                               borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(30),
-                                bottomRight: Radius.circular(30),
+                                topRight: const Radius.circular(30),
+                                bottomRight: const Radius.circular(30),
                                 topLeft: gender == 0.0
-                                    ? Radius.circular(30)
+                                    ? const Radius.circular(30)
                                     : Radius.zero,
                                 bottomLeft: gender == 0.0
-                                    ? Radius.circular(30)
+                                    ? const Radius.circular(30)
                                     : Radius.zero,
                               ),
                             ),
@@ -79,11 +79,11 @@ class PokemonGenderContainer extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.male, color: Colors.blue),
-                      SizedBox(width: 4),
+                      const Icon(Icons.male, color: Colors.blue),
+                      const SizedBox(width: 4),
                       Text(
                         "${(gender * 100).toStringAsFixed(1)}%",
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
@@ -91,15 +91,15 @@ class PokemonGenderContainer extends StatelessWidget {
                     children: [
                       Text(
                         "${((1 - gender) * 100).toStringAsFixed(1)}%",
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
-                      SizedBox(width: 4),
-                      Icon(Icons.female, color: Colors.pink),
+                      const SizedBox(width: 4),
+                      const Icon(Icons.female, color: Colors.pink),
                     ],
                   ),
                 ],
               )
-            : Align(
+            : const Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(
                   "UNKNOWN GENDER",

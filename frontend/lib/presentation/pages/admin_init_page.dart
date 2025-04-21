@@ -14,8 +14,8 @@ class AdminInitPage extends StatelessWidget {
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.0),
+        bottom: const PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
           child: Divider(
             color: AppColors.lightGrey,
             thickness: 1,
@@ -37,7 +37,7 @@ class AdminInitPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.error_outline,
               size: 80,
               color: Colors.redAccent,
@@ -45,7 +45,7 @@ class AdminInitPage extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               error ?? "An unexpected error occurred.",
-              style: TextStyle(fontSize: 16, color: Colors.black54),
+              style: const TextStyle(fontSize: 16, color: Colors.black54),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),

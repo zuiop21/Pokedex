@@ -23,7 +23,7 @@ class AuthButton extends StatelessWidget {
         child: OutlinedButton(
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
-            side: BorderSide(color: AppColors.grey),
+            side: const BorderSide(color: AppColors.grey),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32),
             ),
@@ -33,7 +33,7 @@ class AuthButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(iconPath, height: 24),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               AutoSizeText(
                 text,
                 style: const TextStyle(fontSize: 22, color: AppColors.darkGrey),

@@ -23,14 +23,14 @@ class InfoButton extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.lightBlack),
               ),
               Text(
                 subTitle,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.grey),
@@ -39,7 +39,7 @@ class InfoButton extends StatelessWidget {
           ),
           IconButton(
             onPressed: function,
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_forward_ios,
               size: 20,
             ),

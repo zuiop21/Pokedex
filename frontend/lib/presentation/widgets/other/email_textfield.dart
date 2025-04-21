@@ -31,14 +31,15 @@ class EmailTextField extends StatelessWidget {
               borderRadius: BorderRadius.zero,
               borderSide: BorderSide(color: AppColors.lightGrey, width: 2),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.zero,
               borderSide: BorderSide(color: Colors.black, width: 2),
             ),
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
             hintText: label,
-            hintStyle: TextStyle(color: AppColors.lightGrey, fontSize: 20),
+            hintStyle:
+                const TextStyle(color: AppColors.lightGrey, fontSize: 20),
           ),
         ),
       ],

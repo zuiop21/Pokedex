@@ -22,7 +22,7 @@ class PokemonUserPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Account information",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
@@ -49,8 +49,8 @@ class PokemonUserPage extends StatelessWidget {
                       "Unknown region"),
               InfoText(title: "Role", subTitle: user.role),
 
-              Padding(
-                padding: const EdgeInsets.only(top: 50),
+              const Padding(
+                padding: EdgeInsets.only(top: 50),
                 child: Text(
                   "Pokédex",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -64,36 +64,37 @@ class PokemonUserPage extends StatelessWidget {
                   title: "Other forms",
                   subTitle: "Enables the display of a Pokémon's other forms.",
                   function: () {}),
-              Padding(
-                padding: const EdgeInsets.only(top: 50),
+              const Padding(
+                padding: EdgeInsets.only(top: 50),
                 child: Text(
                   "Language",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-              InfoText(
+              const InfoText(
                   title: "Interface language", subTitle: "English (en-US)"),
-              InfoText(
+              const InfoText(
                   title: "In-game information language",
                   subTitle: "English (US)"),
-              Padding(
-                padding: const EdgeInsets.only(top: 50),
+              const Padding(
+                padding: EdgeInsets.only(top: 50),
                 child: Text(
                   "General",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-              InfoText(title: "Version", subTitle: "1.0.0"),
+              const InfoText(title: "Version", subTitle: "1.0.0"),
 
-              InfoText(
+              const InfoText(
                   title: "Terms and conditions",
                   subTitle: "Everything you need to know."),
 
-              InfoText(
+              const InfoText(
                   title: "Help center", subTitle: "Need help? Contact us!"),
-              InfoText(title: "About", subTitle: "Learn more about the app."),
-              Padding(
-                padding: const EdgeInsets.only(top: 50),
+              const InfoText(
+                  title: "About", subTitle: "Learn more about the app."),
+              const Padding(
+                padding: EdgeInsets.only(top: 50),
                 child: Text(
                   "Outros",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

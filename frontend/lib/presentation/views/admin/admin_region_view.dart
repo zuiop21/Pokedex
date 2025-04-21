@@ -32,7 +32,7 @@ class AdminRegionView extends StatelessWidget {
           onPopInvokedWithResult: (didPop, result) => {
                 if (didPop) {_cancelRegionAction(context)}
               },
-          child: RegionNewDialog()),
+          child: const RegionNewDialog()),
     );
   }
 
@@ -43,7 +43,7 @@ class AdminRegionView extends StatelessWidget {
           onPopInvokedWithResult: (didPop, result) => {
                 if (didPop) {_cancelRegionAction(context)}
               },
-          child: RegionEditDialog()),
+          child: const RegionEditDialog()),
     );
   }
 
@@ -120,8 +120,8 @@ class AdminRegionView extends StatelessWidget {
         appBar: AppBar(
           surfaceTintColor: Colors.transparent,
           backgroundColor: Colors.white,
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(1.0),
+          bottom: const PreferredSize(
+            preferredSize: Size.fromHeight(1.0),
             child: Divider(
               color: AppColors.lightGrey,
               thickness: 1,
@@ -153,7 +153,7 @@ class AdminRegionView extends StatelessWidget {
                     border: Border.all(color: AppColors.grey, width: 1),
                     color: Colors.white,
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.add,
                     size: 30,
                     color: AppColors.grey,
@@ -193,7 +193,7 @@ class AdminRegionView extends StatelessWidget {
                             onPressed: (context) =>
                                 _deleteRegionById(context, regions[index]),
                             backgroundColor: Colors.red,
-                            child: Icon(
+                            child: const Icon(
                               Icons.delete,
                               size: 45,
                             ),

@@ -55,9 +55,9 @@ class _AdminPokemonBasicInfoState extends State<AdminPokemonBasicInfo> {
               TextFormField(
                 controller: _nameController,
                 onChanged: (value) => _changePokemonName(context),
-                style: TextStyle(fontSize: 36),
+                style: const TextStyle(fontSize: 36),
                 cursorHeight: 36,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "Name",
                     hintStyle: TextStyle(fontSize: 36),
                     border: OutlineInputBorder(),
@@ -74,11 +74,11 @@ class _AdminPokemonBasicInfoState extends State<AdminPokemonBasicInfo> {
           TextFormField(
             controller: _descriptionController,
             onChanged: (value) => _changePokemonDescription(context),
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
             maxLines: null,
             keyboardType: TextInputType.multiline,
             cursorHeight: 18,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText:
                   "This is the description of the Pokemon, that describes the Pokemon in a few words.",
               hintStyle: TextStyle(fontSize: 18),

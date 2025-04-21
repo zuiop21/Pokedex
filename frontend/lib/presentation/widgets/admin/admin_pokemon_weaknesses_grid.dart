@@ -113,7 +113,7 @@ class AdminPokemonWeaknessesGrid extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Weaknesses",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
@@ -132,16 +132,16 @@ class AdminPokemonWeaknessesGrid extends StatelessWidget {
                 child: Center(
                   child: IconButton(
                     onPressed: () => _startAddingNewPokemonType(context),
-                    icon: Icon(Icons.add, color: AppColors.grey),
+                    icon: const Icon(Icons.add, color: AppColors.grey),
                     padding: EdgeInsets.zero,
                   ),
                 ),
               )
             else
               GridView.builder(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
@@ -162,7 +162,7 @@ class AdminPokemonWeaknessesGrid extends StatelessWidget {
                       child: Center(
                         child: IconButton(
                           onPressed: () => _startAddingNewPokemonType(context),
-                          icon: Icon(Icons.add, color: AppColors.grey),
+                          icon: const Icon(Icons.add, color: AppColors.grey),
                           padding: EdgeInsets.zero,
                         ),
                       ),

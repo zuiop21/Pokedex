@@ -66,6 +66,10 @@ class AuthService {
         "email": email,
         "password": password,
         "confirmPassword": password,
-        "role": "user"
+        "name": email.split('@').first,
+        "role": "user",
+        "imgUrl": null,
+        "region_id": 1,
+        "is_locked": false,
       });
 }

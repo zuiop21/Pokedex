@@ -23,8 +23,8 @@ class AdminPokemonView extends StatelessWidget {
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.0),
+        bottom: const PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
           child: Divider(
             color: AppColors.lightGrey,
             thickness: 1,
@@ -56,7 +56,7 @@ class AdminPokemonView extends StatelessWidget {
                   border: Border.all(color: AppColors.grey, width: 1),
                   color: Colors.white,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.add,
                   size: 30,
                   color: AppColors.grey,

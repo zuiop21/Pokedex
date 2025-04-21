@@ -107,9 +107,9 @@ class _RegionNewDialogState extends State<RegionNewDialog> {
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: "Name",
-                              hintStyle: const TextStyle(
+                              hintStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -134,7 +134,7 @@ class _RegionNewDialogState extends State<RegionNewDialog> {
                               ),
                               width: 50,
                               height: 50,
-                              child: Icon(
+                              child: const Icon(
                                 Icons.add,
                                 size: 30,
                                 color: AppColors.grey,
@@ -155,8 +155,8 @@ class _RegionNewDialogState extends State<RegionNewDialog> {
                           data: SliderTheme.of(context).copyWith(
                             trackHeight: 10,
                             trackShape: EdgeToEdgeTrackShape(),
-                            thumbShape:
-                                RoundSliderThumbShape(enabledThumbRadius: 10),
+                            thumbShape: const RoundSliderThumbShape(
+                                enabledThumbRadius: 10),
                           ),
                           child: Slider(
                             activeColor: AppColors.blue,

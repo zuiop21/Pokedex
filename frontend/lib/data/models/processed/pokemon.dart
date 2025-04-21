@@ -33,7 +33,7 @@ class Pokemon extends Equatable {
         .toList();
     if (strengthTypes.isEmpty) {
       return [
-        Type(
+        const Type(
           id: 0,
           name: "None",
           color: "0xFF999999",
@@ -57,7 +57,7 @@ class Pokemon extends Equatable {
 
     if (weaknessTypes.isEmpty) {
       return [
-        Type(
+        const Type(
           id: 0,
           name: "None",
           color: "0xFF999999",

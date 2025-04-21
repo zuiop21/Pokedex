@@ -43,6 +43,8 @@ const register = catchAsync(async (req, res, next) => {
     confirmPassword: body.confirmPassword,
     role: body.role,
     region_id: body.region_id,
+    is_locked: body.is_locked,
+    imgUrl: body.imgUrl,
     name: body.name,
   });
 
@@ -62,6 +64,8 @@ const register = catchAsync(async (req, res, next) => {
       region_id: newUser.region_id,
       email: newUser.email,
       name: newUser.name,
+      is_locked: newUser.is_locked,
+      imgUrl: newUser.imgUrl,
       token: token,
     },
   });

@@ -114,7 +114,7 @@ class AdminPokemonTileTypes extends StatelessWidget {
               .toList();
 
           return Padding(
-            padding: EdgeInsets.only(bottom: 5, right: 5),
+            padding: const EdgeInsets.only(bottom: 5, right: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -133,7 +133,7 @@ class AdminPokemonTileTypes extends StatelessWidget {
                     child: Center(
                       child: IconButton(
                         onPressed: () => _startAddingNewPokemonType(context),
-                        icon: Icon(Icons.add, color: AppColors.grey),
+                        icon: const Icon(Icons.add, color: AppColors.grey),
                         padding: EdgeInsets.zero,
                       ),
                     ),
@@ -152,10 +152,10 @@ class AdminPokemonTileTypes extends StatelessWidget {
                         child: Row(
                           children: [
                             PokemonCircledType(type: strengthTypes[0]),
-                            SizedBox(width: 5),
+                            const SizedBox(width: 5),
                             Text(
                               strengthTypes[0].name,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -181,7 +181,7 @@ class AdminPokemonTileTypes extends StatelessWidget {
                       child: Center(
                         child: IconButton(
                           onPressed: () => _startAddingNewPokemonType(context),
-                          icon: Icon(Icons.add, color: AppColors.grey),
+                          icon: const Icon(Icons.add, color: AppColors.grey),
                           padding: EdgeInsets.zero,
                         ),
                       ),
@@ -201,10 +201,10 @@ class AdminPokemonTileTypes extends StatelessWidget {
                         child: Row(
                           children: [
                             PokemonCircledType(type: strengthTypes[1]),
-                            SizedBox(width: 5),
+                            const SizedBox(width: 5),
                             Text(
                               strengthTypes[1].name,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                           ],

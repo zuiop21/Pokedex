@@ -126,7 +126,7 @@ class _TypeEditDialogState extends State<TypeNewDialog> {
                         fontWeight: FontWeight.bold,
                       ),
                       controller: _controller,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                       ),
                     ),
@@ -145,7 +145,7 @@ class _TypeEditDialogState extends State<TypeNewDialog> {
                             ),
                             width: 40,
                             height: 40,
-                            child: Icon(
+                            child: const Icon(
                               Icons.add,
                               size: 30,
                               color: AppColors.grey,
@@ -227,7 +227,7 @@ class _TypeEditDialogState extends State<TypeNewDialog> {
                             ),
                             width: 40,
                             height: 40,
-                            child: Icon(
+                            child: const Icon(
                               Icons.add,
                               size: 30,
                               color: AppColors.grey,

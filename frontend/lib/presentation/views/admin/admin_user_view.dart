@@ -54,7 +54,7 @@ class _AdminUserViewState extends State<AdminUserView> {
             return const LoadingView();
 
           case AdminStatus.success:
-            return AdminUserPage();
+            return const AdminUserPage();
         }
       },
     );

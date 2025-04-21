@@ -48,7 +48,7 @@ class OnboardingAuthView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Spacer(),
+            const Spacer(),
             Expanded(
               flex: 65,
               child: OnboardingPage(
@@ -57,7 +57,7 @@ class OnboardingAuthView extends StatelessWidget {
                 subtitle: pageSubTitle,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Expanded(
               flex: 10,
               child: AuthButton(
@@ -80,16 +80,16 @@ class OnboardingAuthView extends StatelessWidget {
                 buttonColor: AppColors.blue,
                 paddingVertical: 10,
                 onPressed: () => _handleEmailLogin(context),
-                child: AutoSizeText(
+                child: const AutoSizeText(
                   "Continue with email",
-                  style: const TextStyle(fontSize: 22, color: Colors.white),
+                  style: TextStyle(fontSize: 22, color: Colors.white),
                   minFontSize: 18,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
-            Spacer()
+            const Spacer()
           ],
         ),
       ),

@@ -21,7 +21,7 @@ class OnboardingAuthOptionView extends StatelessWidget {
         child: Column(
           children: [
             Expanded(flex: 4, child: Container()),
-            Expanded(
+            const Expanded(
               flex: 65,
               child: OnboardingPage(
                 imagePath: AppAssets.trainer3,
@@ -35,9 +35,9 @@ class OnboardingAuthOptionView extends StatelessWidget {
               child: FlowButton(
                 buttonColor: AppColors.blue,
                 paddingVertical: 29,
-                child: AutoSizeText(
+                child: const AutoSizeText(
                   "Create an account",
-                  style: const TextStyle(fontSize: 22, color: Colors.white),
+                  style: TextStyle(fontSize: 22, color: Colors.white),
                   minFontSize: 18,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -52,9 +52,9 @@ class OnboardingAuthOptionView extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () =>
                       Navigator.of(context).pushNamed("/auth/onboarding/login"),
-                  child: AutoSizeText(
+                  child: const AutoSizeText(
                     "I already have an account",
-                    style: const TextStyle(fontSize: 22, color: AppColors.blue),
+                    style: TextStyle(fontSize: 22, color: AppColors.blue),
                     minFontSize: 18,
                     overflow: TextOverflow.ellipsis,
                   ),

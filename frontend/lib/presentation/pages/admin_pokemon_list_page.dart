@@ -79,14 +79,14 @@ class AdminPokemonListPage extends StatelessWidget {
           return PokemonFavouriteTile(
             actions: [
               CustomSlidableAction(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(15),
                     bottomLeft: Radius.circular(15)),
                 autoClose: true,
                 onPressed: (context) =>
                     _deletePokemon(context, pokemons[index]),
                 backgroundColor: Colors.red,
-                child: Icon(
+                child: const Icon(
                   Icons.delete,
                   size: 45,
                 ),

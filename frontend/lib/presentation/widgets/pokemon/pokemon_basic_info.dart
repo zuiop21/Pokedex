@@ -22,11 +22,11 @@ class PokemonBasicInfo extends StatelessWidget {
           children: [
             Text(
               pokemon!.name,
-              style: TextStyle(fontSize: 36),
+              style: const TextStyle(fontSize: 36),
             ),
             Text(
               "Number ${pokemon.id}",
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
           ],
         ),
@@ -35,7 +35,7 @@ class PokemonBasicInfo extends StatelessWidget {
           pokemonId: pokemon.id,
           leftPadding: 0,
         ),
-        Text(pokemon.description, style: TextStyle(fontSize: 18))
+        Text(pokemon.description, style: const TextStyle(fontSize: 18))
       ],
     );
   }

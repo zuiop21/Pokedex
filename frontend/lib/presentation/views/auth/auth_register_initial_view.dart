@@ -52,10 +52,37 @@ class _AuthRegisterInitialViewState extends State<AuthRegisterInitialView> {
     super.dispose();
   }
 
+  void _showErrorDialog(BuildContext context, String? errorMessage) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Login Failed"),
+        content: Text(errorMessage ?? "Something went wrong"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    //TODO alertdialog
-    return BlocBuilder<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state.status.isFailure) {
+          _showErrorDialog(context, state.error);
+        }
+      },
+      //We need this buildwhen method to avoid rebuilding the whole tree, when uploading a new image
+      buildWhen: (previous, current) {
+        return previous.user?.copyWith(imgUrl: () => current.user?.imgUrl) !=
+            current.user;
+      },
       builder: (context, state) {
         return switch (state.status) {
           AuthStatus.initial => AuthPage(
@@ -76,12 +103,12 @@ class _AuthRegisterInitialViewState extends State<AuthRegisterInitialView> {
               ),
               onPressed: () => _handlePasswordRegister(context),
             ),
-          AuthStatus.loading => LoadingView(),
+          AuthStatus.loading => const LoadingView(),
           AuthStatus.failure => Container(
               color: Colors.red,
               child: Text(state.error!),
             ),
-          AuthStatus.success => AuthRegisterSuccessView(),
+          AuthStatus.success => const AuthRegisterSuccessView(),
         };
       },
     );

@@ -59,28 +59,28 @@ class UserCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       name,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontSize: 18),
                     ),
                     Text(
                       email,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.lightWhite,
                           fontSize: 18),
                     )
                   ],
                 ),
-                Spacer(
+                const Spacer(
                   flex: 3,
                 ),
               ],

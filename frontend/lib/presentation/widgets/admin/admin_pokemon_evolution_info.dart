@@ -14,7 +14,7 @@ class AdminPokemonEvolutionInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "Evolutions",
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
@@ -29,9 +29,9 @@ class AdminPokemonEvolutionInfo extends StatelessWidget {
               final pokemons = state.newPokemons;
               final currentIndex = state.currentIndex == 0;
               return GridView.builder(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1,
                   mainAxisSpacing: 0,

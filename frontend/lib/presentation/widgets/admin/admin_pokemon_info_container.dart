@@ -31,22 +31,22 @@ class AdminPokemonInfoContainer extends StatelessWidget {
                 Icon(icon),
                 Text(
                   dataName,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 )
               ],
             ),
             TextFormField(
               controller: controller,
               onChanged: (value) => function(),
-              style: TextStyle(fontSize: 22),
+              style: const TextStyle(fontSize: 22),
               cursorHeight: 22,
               decoration: InputDecoration(
                   hintText: hintText,
-                  hintStyle: TextStyle(fontSize: 22),
+                  hintStyle: const TextStyle(fontSize: 22),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  contentPadding: EdgeInsets.all(12.0)),
+                  contentPadding: const EdgeInsets.all(12.0)),
             ),
           ],
         ),

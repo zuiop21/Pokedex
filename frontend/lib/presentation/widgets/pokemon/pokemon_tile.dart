@@ -38,7 +38,7 @@ class PokemonTile extends StatelessWidget {
                 flex: 70,
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(15),
                       bottomLeft: Radius.circular(15),
                     ),
@@ -54,7 +54,7 @@ class PokemonTile extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 10, top: 5),
                           child: Text(
                             "Number ${pokemon.id}",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -64,7 +64,7 @@ class PokemonTile extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: Text(pokemon.name,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 24, fontWeight: FontWeight.bold)),
                           )),
                       Expanded(
@@ -84,7 +84,7 @@ class PokemonTile extends StatelessWidget {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(15),
                           bottomRight: Radius.circular(15),
                         ),
@@ -105,7 +105,7 @@ class PokemonTile extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: ShaderMask(
                             shaderCallback: (Rect bounds) {
-                              return LinearGradient(
+                              return const LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomCenter,
                                 colors: [
@@ -121,11 +121,11 @@ class PokemonTile extends StatelessWidget {
                                     fit: BoxFit.fill,
                                     imageUrl: strengthTypes[0].imgUrlOutline,
                                     placeholder: (context, url) =>
-                                        CircularProgressIndicator(),
+                                        const CircularProgressIndicator(),
                                     errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
+                                        const Icon(Icons.error),
                                   )
-                                : Icon(Icons.error),
+                                : const Icon(Icons.error),
                           ),
                         ),
                       ),
@@ -139,11 +139,11 @@ class PokemonTile extends StatelessWidget {
                               ? CachedNetworkImage(
                                   imageUrl: pokemon.imgUrl,
                                   placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
+                                      const CircularProgressIndicator(),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      const Icon(Icons.error),
                                 )
-                              : Icon(Icons.error),
+                              : const Icon(Icons.error),
                         ),
                       ),
                     ),

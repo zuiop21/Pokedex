@@ -47,7 +47,7 @@ class PasswordTextField extends StatelessWidget {
                     borderSide:
                         BorderSide(color: AppColors.lightGrey, width: 2),
                   ),
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.zero,
                     borderSide: BorderSide(color: Colors.black, width: 2),
                   ),
@@ -55,7 +55,7 @@ class PasswordTextField extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                   hintText: label,
                   hintStyle:
-                      TextStyle(color: AppColors.lightGrey, fontSize: 20),
+                      const TextStyle(color: AppColors.lightGrey, fontSize: 20),
                   suffixIcon: GestureDetector(
                     onTap: () => _handlePasswordVisibility(context),
                     child: Icon(

@@ -29,7 +29,7 @@ class PokemonAdminPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Operations",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),

@@ -16,15 +16,17 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
 
   PokemonBloc(this._pokemonRepository) : super(const PokemonState()) {
     on<GetPokemonEvent>(_getAllData);
+    on<FavouriteEvent>(_changeFavouriteStatus);
+
     on<SortPokemonByTypeEvent>(_sortByType);
     on<OrderPokemonByIdEvent>(_orderById);
     on<SortPokemonByNameEvent>(_sortByName);
     on<SortPokemonByRegionEvent>(_sortByRegion);
     on<ResetSearchBarEvent>(_resetSearchBar);
+
     on<UpdateTypeEvent>(_updateType);
     on<DeleteTypeEvent>(_deleteType);
     on<CreateNewTypeEvent>(_createType);
-    on<FavouriteEvent>(_changeFavouriteStatus);
     on<CreateNewPokemonEvent>(_createPokemon);
     on<DeletePokemonEvent>(_deletePokemon);
     on<CreateNewRegionEvent>(_createRegion);

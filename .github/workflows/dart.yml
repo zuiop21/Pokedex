@@ -1,4 +1,4 @@
-name: Dart
+name: Flutter
 
 on:
   push:
@@ -13,23 +13,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Setup Dart SDK
-      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+      # ✅ Set up Flutter (not Dart)
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.5' # or 'stable'
 
-      # Set the working directory to the Pokedex/frontend folder
+      # ✅ Install dependencies using Flutter
       - name: Install dependencies
-        run: dart pub get
-        working-directory: frontend  # Correct directory path here
+        run: flutter pub get
+        working-directory: frontend
 
-      # Uncomment this step to verify the use of 'dart format' on each commit.
-      # - name: Verify formatting
-      #   run: dart format --output=none --set-exit-if-changed .
-      #   working-directory: Pokedex/frontend
-
+      # ✅ Analyze code
       - name: Analyze project source
         run: flutter analyze
         working-directory: frontend
 
+      # ✅ Run Flutter tests
       - name: Run tests
         run: flutter test
         working-directory: frontend

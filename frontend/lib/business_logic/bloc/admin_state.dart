@@ -104,13 +104,13 @@ final class AdminState extends Equatable {
         error,
         placeholderType,
         placeholderRegion,
-        placeholderFile,
-        placeholderFileOutline,
+        placeholderFile?.path ?? "",
+        placeholderFileOutline?.path ?? "",
         deletedType,
         deletedPokemon,
         newEvolutions,
         newPokemons,
         currentIndex,
-        images
+        images.map((file) => file.path).toList(),
       ];
 }

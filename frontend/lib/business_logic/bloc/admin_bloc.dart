@@ -19,13 +19,14 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
   AdminBloc(this._adminRepository) : super(const AdminState()) {
     on<GetAllUsersEvent>(_getAllUsers);
     on<UpdateUserByIdEvent>(_updateUserById);
+
     on<StartUpdatingTypeEvent>(_startUpdatingType);
-    on<CancelTypeEvent>(_cancelType);
     on<CreateTypeEvent>(_createType);
     on<UpdateTypeVisuallyEvent>(_updateTypeVisually);
     on<UpdateTypeByIdEvent>(_updateType);
     on<DeleteTypeByIdEvent>(_deleteType);
     on<StartCreatingTypeEvent>(_startCreatingType);
+
     on<StartPokemonCreationEvent>(_startPokemonCreation);
     on<EditPokemonNameEvent>(_editPokemonName);
     on<EditPokemonAbilityEvent>(_editPokemonAbility);
@@ -36,26 +37,30 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     on<EditPokemonGenderEvent>(_editPokemonGender);
     on<StartAddingPokemonStrengthTypeEvent>(_startAddingPokemonStrengthType);
     on<AddPokemonStrengthTypeEvent>(_addPokemonStrengthType);
-    on<CancelPokemonEvent>(_cancelPokemonEvent);
     on<StartAddingPokemonWeaknessTypeEvent>(_startAddingPokemonWeaknessType);
     on<AddPokemonWeaknessTypeEvent>(_addPokemonWeaknessType);
-    on<CancelActionEvent>(_cancelAction);
     on<PopPokemonEvent>(_popPokemon);
-    on<AddPokemonImageEvent>(_addPokemonImage);
     on<CreatePokemonEvent>(_createPokemon);
     on<DeletePokemonByIdEvent>(_deletePokemon);
+
     on<StartCreatingRegionEvent>(_startCreatingRegion);
-    on<CancelRegionEvent>(_cancelRegion);
     on<StartUpdatingRegionEvent>(_startUpdatingRegion);
-    on<AddRegionImageEvent>(_addRegionImage);
     on<CreateRegionEvent>(_createRegion);
     on<EditRegionEvent>(_editRegion);
     on<DeleteRegionByIdEvent>(_deleteRegion);
     on<UpdateRegionByIdEvent>(_updateRegion);
-    on<AddTypeImageEvent>(_addTypeImage);
-    on<AddTypeImageOutlineEvent>(_addTypeImageOutline);
     on<StartAddingPokemonRegionEvent>(_startAddingPokemonRegion);
     on<AddPokemonRegionEvent>(_addPokemonRegion);
+
+    on<AddPokemonImageEvent>(_addPokemonImage);
+    on<AddTypeImageEvent>(_addTypeImage);
+    on<AddTypeImageOutlineEvent>(_addTypeImageOutline);
+    on<AddRegionImageEvent>(_addRegionImage);
+
+    on<CancelActionEvent>(_cancelAction);
+    on<CancelTypeEvent>(_cancelType);
+    on<CancelRegionEvent>(_cancelRegion);
+    on<CancelPokemonEvent>(_cancelPokemonEvent);
   }
 
   void _addPokemonRegion(

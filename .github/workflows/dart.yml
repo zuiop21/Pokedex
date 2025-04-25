@@ -18,7 +18,7 @@ jobs:
 
       # Set the working directory to the Pokedex/frontend folder
       - name: Install dependencies
-        run: dart pub get
+        run: flutter pub get
         working-directory: frontend  # Correct directory path here
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
@@ -27,9 +27,9 @@ jobs:
       #   working-directory: Pokedex/frontend
 
       - name: Analyze project source
-        run: dart analyze
+        run: flutter analyze
         working-directory: frontend
 
       - name: Run tests
-        run: dart test
+        run: flutter test
         working-directory: frontend

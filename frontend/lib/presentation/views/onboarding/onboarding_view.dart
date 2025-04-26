@@ -59,37 +59,37 @@ class _OnboardingViewState extends State<OnboardingView> {
               );
             },
             builder: (context, state) {
-              return Column(
-                children: [
-                  const Spacer(
-                    flex: 13,
-                  ),
-                  Expanded(
-                    flex: 65,
-                    child: PageView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      controller: _pageController,
-                      children: [
-                        const OnboardingPage(
-                          title: "All Pokémons in one place",
-                          subtitle:
-                              "Access a vast list of Pokémons from every generation ever made by Nintendo",
-                          imagePath: AppAssets.trainer2,
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 60),
+                      SizedBox(
+                        height: 540,
+                        child: PageView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          controller: _pageController,
+                          children: const [
+                            OnboardingPage(
+                              title: "All Pokémons in one place",
+                              subtitle:
+                                  "Access a vast list of Pokémons from every generation ever made by Nintendo",
+                              imagePath: AppAssets.trainer2,
+                            ),
+                            OnboardingPage(
+                              title: "Keep your Pokédex up to date",
+                              subtitle:
+                                  "Register and keep your profile, favourite Pokémons, settings and much more!",
+                              imagePath: AppAssets.trainer6,
+                            ),
+                          ],
                         ),
-                        const OnboardingPage(
-                          title: "Keep your Pokédex up to date",
-                          subtitle:
-                              "Register and keep your profile, favourite Pokémons, settings and much more!",
-                          imagePath: AppAssets.trainer6,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: AnimatedSmoothIndicator(
+                      ),
+                      const SizedBox(height: 30),
+                      AnimatedSmoothIndicator(
                         activeIndex: state.page,
                         count: 2,
                         effect: ExpandingDotsEffect(
@@ -97,36 +97,34 @@ class _OnboardingViewState extends State<OnboardingView> {
                           dotColor: AppColors.lightBlue.withAlpha(64),
                         ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 14,
-                    child: FlowButton(
-                      buttonColor: AppColors.blue,
-                      paddingVertical: 30,
-                      onPressed: () => _handleNavigation(context, state.page),
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 300),
-                        transitionBuilder:
-                            (Widget child, Animation<double> animation) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        },
-                        child: AutoSizeText(
-                          state.buttonTexts[state.page],
-                          key: ValueKey<String>(state.buttonTexts[state.page]),
-                          style: const TextStyle(
-                              fontSize: 22, color: Colors.white),
-                          minFontSize: 18,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
+                      FlowButton(
+                        key: const Key('onboarding_next_button'),
+                        buttonColor: AppColors.blue,
+                        paddingVertical: 30,
+                        onPressed: () => _handleNavigation(context, state.page),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          transitionBuilder: (child, animation) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          child: AutoSizeText(
+                            state.buttonTexts[state.page],
+                            key:
+                                ValueKey<String>(state.buttonTexts[state.page]),
+                            style: const TextStyle(
+                                fontSize: 22, color: Colors.white),
+                            minFontSize: 18,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               );
             },
           ),

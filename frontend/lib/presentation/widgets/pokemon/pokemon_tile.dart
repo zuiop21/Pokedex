@@ -24,6 +24,7 @@ class PokemonTile extends StatelessWidget {
     final pokemon = context.read<PokemonBloc>().state.getPokemonById(pokemonId);
     final strengthTypes = pokemon!.getStrengthTypesForPokemon();
     return GestureDetector(
+      key: const Key("pokemon_tile"),
       onTap: () => _handleNavigationToInfoView(context),
       child: Card(
         shape: RoundedRectangleBorder(

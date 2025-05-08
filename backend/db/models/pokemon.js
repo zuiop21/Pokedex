@@ -7,6 +7,7 @@ const AppError = require("../../utils/appError");
 // Pokemon Model: Represents the core attributes of a Pokémon
 // This model stores fundamental data such as height, weight, abilities, and other characteristics.
 // It also includes metadata like region, level, and category.
+
 const Pokemon = sequelize.define("Pokemons", {
   id: {
     allowNull: false,
@@ -34,7 +35,7 @@ const Pokemon = sequelize.define("Pokemons", {
         msg: "Height cannot be null",
       },
       isDecimal: {
-        msg: "Weight must be a decimal",
+        msg: "Height must be a decimal",
       },
     },
   },

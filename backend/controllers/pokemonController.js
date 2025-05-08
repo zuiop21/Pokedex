@@ -254,8 +254,8 @@ const updatePokemon = catchAsync(async (req, res, next) => {
 
 /**
  * @function deletePokemon
- * @description Deletes a Pokémon by its name.
- * @param {Object} req - Express request object containing Pokémon name in the params.
+ * @description Deletes a Pokémon by its id.
+ * @param {Object} req - Express request object containing Pokémon id in the params.
  * @param {Object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  * @returns {Promise<void>} - Returns a JSON response confirming the deletion.
@@ -263,7 +263,7 @@ const updatePokemon = catchAsync(async (req, res, next) => {
 const deletePokemon = catchAsync(async (req, res, next) => {
   const { id } = req.params;
 
-  // Find the Pokémon by its name
+  // Find the Pokémon by its id
   const pokemon = await Pokemon.findByPk(id);
 
   // If the Pokémon is not found, throw an error

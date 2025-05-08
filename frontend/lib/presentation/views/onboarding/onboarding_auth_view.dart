@@ -77,6 +77,7 @@ class OnboardingAuthView extends StatelessWidget {
             Expanded(
               flex: 10,
               child: FlowButton(
+                key: const Key("email_button"),
                 buttonColor: AppColors.blue,
                 paddingVertical: 10,
                 onPressed: () => _handleEmailLogin(context),

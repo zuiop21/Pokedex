@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Pokédex',
 
         //Routes of the app
         routes: {

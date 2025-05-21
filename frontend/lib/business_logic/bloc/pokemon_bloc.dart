@@ -83,7 +83,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
   Future<void> _changeFavouriteStatus(
       FavouriteEvent event, Emitter<PokemonState> emit) async {
     final originalList = state.pokemons;
-    //Update list optimistically
+    //Update map optimistically
     final updatedPokemons = Map.fromEntries(
       state.pokemons.entries.map((entry) => entry.value.id == event.pokemon.id
           ? MapEntry(entry.key,
@@ -91,6 +91,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
           : MapEntry(entry.key, entry.value)),
     );
 
+    //Emit success state with updated map
     emit(state.copyWith(
         status: PokemonStatus.success, pokemons: updatedPokemons));
 
@@ -104,7 +105,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
             event.token, event.pokemon.id);
       }
     }
-    //If request fails, revert the changes
+    //If request fails, revert the changes (rollback)
     catch (e) {
       emit(state.copyWith(
           status: PokemonStatus.failure,

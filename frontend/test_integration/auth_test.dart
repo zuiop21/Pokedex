@@ -10,36 +10,43 @@ import 'package:frontend/main.dart' as app;
 void main() {
   group("Integration test", () {
     //Initialize the integration test
-    IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+    final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
     testWidgets("Login test", (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
-      await tester.pumpAndSettle(const Duration(seconds: 1));
 
       final continueButton = find.byKey(const Key("onboarding_next_button"));
 
       //Tap button 2 times to skip the onboarding
       await tester.tap(continueButton);
       await tester.pumpAndSettle();
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      await binding.convertFlutterSurfaceToImage();
+      await tester.pumpAndSettle();
+      await binding.takeScreenshot("view1");
 
       await tester.tap(continueButton);
       await tester.pumpAndSettle();
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      await binding.convertFlutterSurfaceToImage();
+      await tester.pumpAndSettle();
+      await binding.takeScreenshot("view2");
 
       final loginButton = find.byKey(const Key("login_button"));
 
       //Login
       await tester.tap(loginButton);
       await tester.pumpAndSettle();
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      await binding.convertFlutterSurfaceToImage();
+      await tester.pumpAndSettle();
+      await binding.takeScreenshot("view3");
 
       final emailButton = find.byKey(const Key("email_button"));
 
       //Tap the email button
       await tester.tap(emailButton);
       await tester.pumpAndSettle();
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      await binding.convertFlutterSurfaceToImage();
+      await tester.pumpAndSettle();
+      await binding.takeScreenshot("view4");
 
       final emailField = find.byType(EmailTextField);
 
@@ -48,17 +55,20 @@ void main() {
       //Fill out credentials
       await tester.enterText(emailField, "admin@ex.com");
       await tester.pumpAndSettle();
-      await tester.pumpAndSettle(const Duration(seconds: 1));
       await tester.enterText(passwordField, "admin");
       await tester.pumpAndSettle();
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      await binding.convertFlutterSurfaceToImage();
+      await tester.pumpAndSettle();
+      await binding.takeScreenshot("view5");
 
       //Tap the login button
-
       final loginButton2 = find.byType(FlowButton);
       await tester.tap(loginButton2);
       await tester.pumpAndSettle();
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+
+      await binding.convertFlutterSurfaceToImage();
+      await tester.pumpAndSettle();
+      await binding.takeScreenshot("view6");
 
       //Check if the Success view is shown
       expect(find.byType(AuthLoginSuccessView), findsOneWidget);
